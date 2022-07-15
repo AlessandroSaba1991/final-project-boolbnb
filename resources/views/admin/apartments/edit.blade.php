@@ -16,15 +16,15 @@
   <!-- ./input title  -->
 
   <div class="mb-3">
-    <label for="rooms" class="form-label">Stanze</label>
-    <input type="number" min="0" class="form-control @error('rooms') is-invalid @enderror" name="rooms" id="rooms" aria-describedby="roomshelp" value="{{old('rooms', $apartment->rooms)}}">
-    <div id="roomshelp" class="form-text">Inserire il numero di stanze</div>
+    <label for="rooms" class="form-label">Numero camere</label>
+    <input type="number" min="1" class="form-control @error('rooms') is-invalid @enderror" name="rooms" id="rooms" aria-describedby="roomshelp" value="{{old('rooms', $apartment->rooms)}}">
+    <div id="roomshelp" class="form-text">Inserire il numero di camere</div>
   </div>
   <!-- ./input rooms  -->
 
   <div class="mb-3">
     <label for="bathrooms" class="form-label">Bagni</label>
-    <input type="number" min="0" class="form-control @error('bathrooms') is-invalid @enderror" name="bathrooms" id="bathrooms" aria-describedby="bathroomshelp" value="{{old('bathrooms', $apartment->bathrooms)}}">
+    <input type="number" min="1" class="form-control @error('bathrooms') is-invalid @enderror" name="bathrooms" id="bathrooms" aria-describedby="bathroomshelp" value="{{old('bathrooms', $apartment->bathrooms)}}">
     <div id="bathroomshelp" class="form-text">Inserire il numero di bagni</div>
   </div>
   <!-- ./input bathrooms  -->
@@ -74,7 +74,7 @@
   <!-- ./input visible  -->
 
 
- 
+
     <div class="d-flex align-items-center mb-3">
         <div class="old_img me-3">
             <img width="120" src="{{asset('storage/' . $apartment->cover_image)}}" alt="">

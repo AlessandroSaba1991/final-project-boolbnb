@@ -37,7 +37,7 @@ class ApartmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request->all());
     }
 
     /**
@@ -71,7 +71,7 @@ class ApartmentController extends Controller
      */
     public function update(Request $request, Apartment $apartment)
     {
-        //
+        dd($request->all());
     }
 
     /**
