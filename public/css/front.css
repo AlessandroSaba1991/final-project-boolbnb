@@ -10212,3 +10212,14 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+.laravel_button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.5rem;
+  z-index: 1;
+}
+
+.navbar.backend {
+  padding: 0;
+}
