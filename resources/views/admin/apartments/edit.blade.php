@@ -3,7 +3,7 @@
 
 <div class="container py-5">
   <h3>Stai modificando: {{$apartment->title}}</h3>
-
+  @include('partials.error')
 <form action="{{route('admin.apartments.update', $apartment->id)}}" method="post" enctype="multipart/form-data">
     @csrf
     @method('PUT')
