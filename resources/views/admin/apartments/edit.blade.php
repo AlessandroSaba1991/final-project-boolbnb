@@ -23,14 +23,14 @@
   <!-- ./input rooms  -->
 
   <div class="mb-3">
-    <label for="beds" class="form-label">Stanze</label>
+    <label for="beds" class="form-label">Posti letto</label>
     <input type="number" min="0" class="form-control @error('beds') is-invalid @enderror" name="beds" id="beds" aria-describedby="bedshelp" value="{{old('beds', $apartment->beds)}}">
-    <div id="bedshelp" class="form-text">Inserire il numero di stanze</div>
+    <div id="bedshelp" class="form-text">Inserire il numero di posti letto</div>
   </div>
   <!-- ./input beds  -->
 
   <div class="mb-3">
-    <label for="bathrooms" class="form-label">Bagni</label>
+    <label for="bathrooms" class="form-label">Numero Bagni</label>
     <input type="number" min="1" class="form-control @error('bathrooms') is-invalid @enderror" name="bathrooms" id="bathrooms" aria-describedby="bathroomshelp" value="{{old('bathrooms', $apartment->bathrooms)}}">
     <div id="bathroomshelp" class="form-text">Inserire il numero di bagni</div>
   </div>
@@ -38,7 +38,7 @@
 
   <div class="mb-3">
     <label for="square_meters" class="form-label">Metri Quadri</label>
-    <input type="number" min="0" class="form-control @error('square_meters') is-invalid @enderror" name="square_meters" id="square_meters" aria-describedby="square_metershelp" value="{{old('square_meters', $apartment->square_meters)}}">
+    <input type="number" min="1" class="form-control @error('square_meters') is-invalid @enderror" name="square_meters" id="square_meters" aria-describedby="square_metershelp" value="{{old('square_meters', $apartment->square_meters)}}">
     <div id="square_metershelp" class="form-text">Inserire il numero di metri quadri</div>
   </div>
   <!-- ./input square_meters  -->
@@ -52,24 +52,29 @@
 
   <div class="mb-3">
     <label for="latitude" class="form-label">Latitudine</label>
-    <input type="number" min="-90" max="90" step=".00000001" class="form-control @error('latitude') is-invalid @enderror" name="latitude" id="latitude" aria-describedby="latitudehelp" value="{{old('latitude', $apartment->latitude)}}">
+    <input type="number" min="-90" max="90" step="0.000001" class="form-control @error('latitude') is-invalid @enderror" name="latitude" id="latitude" aria-describedby="latitudehelp" value="{{old('latitude', $apartment->latitude)}}">
     <div id="latitudehelp" class="form-text">Inserire la latitudine</div>
   </div>
   <!-- ./input latitude  -->
 
   <div class="mb-3">
     <label for="longitude" class="form-label">Longitudine</label>
-    <input type="number" min="-180" max="180" step=".00000001" class="form-control @error('longitude') is-invalid @enderror" name="longitude" id="longitude" aria-describedby="longitudehelp" value="{{old('longitude', $apartment->longitude)}}">
+    <input type="number" min="-180" max="180" step=".000001" class="form-control @error('longitude') is-invalid @enderror" name="longitude" id="longitude" aria-describedby="longitudehelp" value="{{old('longitude', $apartment->longitude)}}">
     <div id="longitudehelp" class="form-text">Inserire la longitudine</div>
   </div>
   <!-- ./input longitude  -->
 
-  <div class="mb-3">
-    <label for="description" class="form-label">Descrizione</label>
-    <textarea rows="5" type="text" class="form-control" name="description" id="description" aria-describedby="descriptionhelp">{{$apartment->description , old('description') }}</textarea>
-    <div id="descriptionhelp" class="form-text">Inserire la descrizione dell'immobile</div>
-  </div>
-  <!-- ./input description  -->
+  <div class="d-flex align-items-center mb-3">
+        <div class="old_img me-3">
+            <img width="120" src="{{asset('storage/' . $apartment->cover_image)}}" alt="">
+        </div>
+        <div>
+            <label for="cover_image" class="form-label">Immagine</label>
+            <input type="file" class="form-control" name="cover_image" id="cover_image" aria-describedby="cover_imagehelp">
+            <div id="cover_imagehelp" class="form-text">Inserire Immagine dell'annuncio</div>
+        </div>
+    </div>
+    <!-- ./input cover-image  -->
 
   <div class="mb-3">
     <label for="visible" class="form-label">Visibile</label>
@@ -82,20 +87,16 @@
 
 
 
-    <div class="d-flex align-items-center mb-3">
-        <div class="old_img me-3">
-            <img width="120" src="{{asset('storage/' . $apartment->cover_image)}}" alt="">
-        </div>
-        <div>
-            <label for="cover_image" class="form-label">Immagine</label>
-            <input type="file" class="form-control" name="cover_image" id="cover_image" aria-describedby="cover_imagehelp">
-            <div id="cover_imagehelp" class="form-text">Inserire Immagine dell'annuncio</div>
-        </div>
-    </div>
-    <!-- ./input cover-image  -->
 
 
-  <button type="submit" class="btn btn-primary">Modifica</button>
+    <div class="mb-3">
+    <label for="description" class="form-label">Descrizione</label>
+    <textarea rows="5" type="text" class="form-control @error('description') is-invalid @enderror" name="description" id="description" aria-describedby="descriptionhelp">{{$apartment->description , old('description') }}</textarea>
+    <div id="descriptionhelp" class="form-text">Inserire la descrizione dell'immobile</div>
+  </div>
+  <!-- ./input description  -->
+
+  <button type="submit" class="btn btn-primary">Modifica Annuncio</button>
 </form>
 </div>
 

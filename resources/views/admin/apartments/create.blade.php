@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 @section('content')
     <h1 class="text-center">Inserisci un nuovo annuncio</h1>
+    @include('partials.error')
     <form class="container p-5" action="{{route('admin.apartments.store')}}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">
@@ -34,7 +35,7 @@
 
         <div class="mb-3">
             <label for="square_meters">Metri quadri</label>
-            <input type="number" class="form-control" name="square_meters" id="square_meters"
+            <input type="number" class="form-control @error('square_meters') is-invalid @enderror" min="1" name="square_meters" id="square_meters"
                 aria-describedby="square_metersHelper" value="{{ old('square_meters') }}"
                 placeholder="inserisci la dimensione dell'immobile...">
                 <small id="square_metersHelper" class="text-muted">Inserisci i metri quadri</small>
@@ -42,21 +43,21 @@
 
         <div class="mb-3">
             <label for="address">Indirizzo</label>
-            <input type="text" class="form-control" name="address" id="address" aria-describedby="addressHelper"
+            <input type="text" class="form-control @error('address') is-invalid @enderror" name="address" id="address" aria-describedby="addressHelper"
                 value="{{ old('address') }}" placeholder="inserisci l'indirizzo...">
                 <small id="addressHelper" class="text-muted">Inserisci l'indirizzo</small>
         </div>
 
         <div class="mb-3">
             <label for="latitude">Latitudine</label>
-            <input type="text" class="form-control" name="latitude" id="latitude" aria-describedby="latitudeHelper"
+            <input type="number" min="-90" max="90" step="0.000001" class="form-control @error('latitude') is-invalid @enderror" name="latitude" id="latitude" aria-describedby="latitudeHelper"
                 value="{{ old('latitude') }}" placeholder="inserisci la latitudine...">
                 <small id="latitudeHelper" class="text-muted">Inserisci la latitudine</small>
         </div>
 
         <div class="mb-3">
             <label for="longitude">Longitudine</label>
-            <input type="text" class="form-control" name="longitude" id="longitude" aria-describedby="addressHelper"
+            <input type="number" min="-180" max="180" step=".000001" class="form-control @error('longitude') is-invalid @enderror" name="longitude" id="longitude" aria-describedby="addressHelper"
                 value="{{ old('longitude') }}" placeholder="inserisci la longitudine...">
                 <small id="longitudeHelper" class="text-muted">Inserisci la longitudine</small>
         </div>
@@ -67,20 +68,21 @@
                 aria-describedby="cover_imageHelper" placeholder="seleziona un immagine">
             <small id="cover_imageHelper" class="text-muted">Inserisci un immagine della struttura</small>
         </div>
-
+        <div class="mb-3">
+            <label for="visible" class="form-label">Visibile</label>
         <select class="form-select mb-3" id="visible" name="visible" aria-label="Default select" style="width: 90px">
-            <option selected>Visibilità annuncio</option>
             <option value="true">Si</option>
             <option value="false">No</option>
-
         </select>
+        </div>
+
 
         <div class="mb-3">
             <label for="description">Descrivi l'immobile</label>
-            <textarea class="form-control" name="description" id="description" rows="4">{{ old('description') }}</textarea>
+            <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="description" rows="5">{{ old('description') }}</textarea>
             <small id="descriptionHelper" class="text-muted">Inserisci una descrizione</small>
         </div>
-        <button type="submit" class="btn btn-primary">Aggiungi</button>
+        <button type="submit" class="btn btn-primary">Aggiungi Annuncio</button>
 
     </form>
 @endsection
