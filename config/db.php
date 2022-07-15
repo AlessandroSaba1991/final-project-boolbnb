@@ -290,6 +290,56 @@ return [
     ],
     'services' => [
         'Wi-Fi', 'Portineria', 'Posto Auto', 'Piscina', 'Sauna', 'Vista Mare', 'Cassaforte', 'Balcone', 'Giardino', 'TV',
-        'Climatizzatore', 'Colazione', 'Ristorante', 'Bar', 'Bagno Turco', 'Jacuzzi','Ascensore','Lavanderia','Sistema di Sicurezza'
+        'Climatizzatore', 'Colazione', 'Ristorante', 'Bar', 'Bagno Turco', 'Jacuzzi', 'Ascensore', 'Lavanderia', 'Sistema di Sicurezza'
+    ],
+    'messages' => [
+        [
+            'fullname' => 'Alessandro Saba',
+            'email' => 'saba_alessandro@gmail.com',
+            'content' => 'E un bel appartamento, ma si puo scendere con il prezzo?'
+        ],
+        [
+            'fullname' => 'Roberto Latini',
+            'email' => 'roberto_latini@gmail.com',
+            'content' => 'Ma si vede il colosseo dalla Jacuzzi? Chiedo per un amico.'
+        ],
+        [
+            'fullname' => 'Davide Ferraro',
+            'email' => 'davide_ferraro@gmail.com',
+            'content' => 'Ma l\'appartamento quanti Square Maters sono? Ma "true"?'
+        ],
+        [
+            'fullname' => 'Rosario Trovato',
+            'email' => 'rosariotrovato@gmail.com',
+            'content' => 'Ma l\'appartamento e nullable?'
+        ],
+    ],
+    'visualizations'=>[
+        [
+            'ip'=>'192.168.1.162'
+        ],
+        [
+            'ip'=>'192.168.1.162'
+        ],
+        [
+            'ip'=>'192.168.1.162'
+        ],
+    ],
+    'sponsorizations' => [
+        [
+            'name' => 'Standard',
+            'price' => 2.99,
+            'duration' => 24,
+        ],
+        [
+            'name' => 'Plus',
+            'price' => 5.99,
+            'duration' => 72,
+        ],
+        [
+            'name' => 'Premium',
+            'price' => 9.99,
+            'duration' => 144,
+        ],
     ]
 ];
