@@ -15,7 +15,8 @@ class ApartmentController extends Controller
      */
     public function index()
     {
-        //
+        $apartments=Apartment::all()->sortDesc();
+        return view('admin.apartments.index',compact('apartments'));
     }
 
     /**
@@ -25,7 +26,7 @@ class ApartmentController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.apartments.create');
     }
 
     /**
@@ -58,7 +59,7 @@ class ApartmentController extends Controller
      */
     public function edit(Apartment $apartment)
     {
-        //
+        return view('admin.apartments.edit',compact('apartment'));
     }
 
     /**

@@ -18,20 +18,10 @@ use Illuminate\Support\Facades\Auth;
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
 Route::middleware('auth')->prefix('admin')->namespace('Admin')->name('admin.')->group(function ()
 {
     Route::get('/', 'HomeController@index')->name('home');
-    /* Route::resource('posts','PostController')->parameters([
-        'posts' => 'post:slug'
-    ]);
-    Route::resource('categories','CategoryController')->parameters([
-        'categories' => 'category:slug'
-    ])->except(['show','create','edit']);
-    Route::resource('tags','TagController')->parameters([
-        'tags' => 'tag:slug'
-    ])->except(['show','create','edit']);
-    Route::resource('messages','MessageController'); */
+    Route::resource('apartments','ApartmentController');
 });
 
 

@@ -33,6 +33,9 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
+                        <a class="me-3" href="{{route('admin.apartments.index')}}">Index</a>
+                        <a href="{{route('admin.apartments.create')}}">Create</a>
+
 
                     </ul>
 
