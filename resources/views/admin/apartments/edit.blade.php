@@ -74,12 +74,18 @@
   <!-- ./input visible  -->
 
 
-  <div class="mb-3">
-    <label for="cover_image" class="form-label">Immagine</label>
-    <input type="file" class="form-control" name="cover_image" id="cover_image" aria-describedby="cover_imagehelp">
-    <div id="cover_imagehelp" class="form-text">Inserire Immagine dell'annuncio</div>
-  </div>
-  <!-- ./input cover-image  -->
+ 
+    <div class="d-flex align-items-center mb-3">
+        <div class="old_img me-3">
+            <img width="120" src="{{asset('storage/' . $apartment->cover_image)}}" alt="">
+        </div>
+        <div>
+            <label for="cover_image" class="form-label">Immagine</label>
+            <input type="file" class="form-control" name="cover_image" id="cover_image" aria-describedby="cover_imagehelp">
+            <div id="cover_imagehelp" class="form-text">Inserire Immagine dell'annuncio</div>
+        </div>
+    </div>
+    <!-- ./input cover-image  -->
 
 
   <button type="submit" class="btn btn-primary">Modifica</button>
