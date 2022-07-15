@@ -10223,3 +10223,6 @@ textarea.form-control-lg {
 .navbar.backend {
   padding: 0;
 }
+.navbar.backend .navbar-nav .dropdown-menu {
+  position: absolute;
+}

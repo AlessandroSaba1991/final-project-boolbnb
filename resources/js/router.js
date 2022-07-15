@@ -41,7 +41,7 @@ const routes = [
     component: Apartment
   },
   {
-    path: '/',
+    path: '/*',
     name: 'not-found',
     component: NotFound
   },

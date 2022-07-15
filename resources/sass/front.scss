@@ -17,4 +17,8 @@
 
 .navbar.backend {
     padding: 0;
+    .navbar-nav .dropdown-menu {
+        position: absolute;
+    }
 }
+

@@ -5118,7 +5118,38 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'Apartment'
+  name: 'Apartment',
+  data: function data() {
+    return {
+      apartment: "",
+      loading: true
+    };
+  },
+  methods: {
+    getApartment: function getApartment() {
+      var _this = this;
+
+      axios.get("/api/apartments/" + this.$route.params.id).then(function (response) {
+        console.log(response.data);
+
+        if (response.data.status_code === 404) {
+          _this.loading = false;
+
+          _this.$router.push({
+            name: "not-found"
+          });
+        } else {
+          _this.apartment = response.data;
+          _this.loading = false;
+        }
+      })["catch"](function (e) {
+        console.error(e);
+      });
+    }
+  },
+  mounted: function mounted() {
+    this.getApartment();
+  }
 });
 
 /***/ }),
@@ -5198,7 +5229,7 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("div");
+  return _c("h1", [_vm._v("Search")]);
 };
 
 var staticRenderFns = [];
@@ -5222,7 +5253,26 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("div");
+  return _c("div", {
+    staticClass: "single_page h-100"
+  }, [!_vm.loading ? _c("div", {
+    staticClass: "wrapper h-100"
+  }, [_c("div", {
+    staticClass: "p-5 hero_image",
+    style: {
+      backgroundImage: "url(/storage/" + _vm.apartment.cover_image + ")"
+    }
+  }, [_c("div", {
+    staticClass: "container"
+  }, [_c("h1", {
+    staticClass: "display-3"
+  }, [_vm._v(_vm._s(_vm.apartment.title))]), _vm._v(" "), _c("p", {
+    staticClass: "lead"
+  }, [_vm._v(_vm._s(_vm.apartment.description))]), _vm._v(" "), _c("hr", {
+    staticClass: "my-2 bg-white"
+  })])])]) : _c("div", {
+    staticClass: "loading bg-dark text-center text-white"
+  }, [_vm._v("⏲️ Loading")])]);
 };
 
 var staticRenderFns = [];
@@ -5246,7 +5296,7 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("div");
+  return _c("h1", [_vm._v("Apartments")]);
 };
 
 var staticRenderFns = [];
@@ -5270,7 +5320,7 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("div");
+  return _c("h1", [_vm._v("Home")]);
 };
 
 var staticRenderFns = [];
@@ -5294,7 +5344,7 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("div");
+  return _c("h1", [_vm._v("Not Found")]);
 };
 
 var staticRenderFns = [];
@@ -57738,10 +57788,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 /* harmony import */ var _Pages_Home__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Pages/Home */ "./resources/js/Pages/Home.vue");
-/* harmony import */ var _Pages_AdvancedSearch__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Pages/AdvancedSearch */ "./resources/js/Pages/AdvancedSearch.vue");
+/* harmony import */ var _Pages_AdvancedSearch__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Pages/AdvancedSearch */ "./resources/js/Pages/AdvancedSearch.vue");
 /* harmony import */ var _Pages_Apartments__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Pages/Apartments */ "./resources/js/Pages/Apartments.vue");
 /* harmony import */ var _Pages_Apartment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Pages/Apartment */ "./resources/js/Pages/Apartment.vue");
-/* harmony import */ var _Pages_NotFound__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Pages/NotFound */ "./resources/js/Pages/NotFound.vue");
+/* harmony import */ var _Pages_NotFound__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Pages/NotFound */ "./resources/js/Pages/NotFound.vue");
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]); // 0. If using a module system (e.g. via vue-cli), import Vue and VueRouter
@@ -57766,7 +57816,7 @@ var routes = [{
 }, {
   path: '/advancedsearch',
   name: 'advancedsearch',
-  component: _Pages_AdvancedSearch__WEBPACK_IMPORTED_MODULE_6__["default"]
+  component: _Pages_AdvancedSearch__WEBPACK_IMPORTED_MODULE_3__["default"]
 }, {
   path: '/apartments',
   name: 'apartments',
@@ -57776,9 +57826,9 @@ var routes = [{
   name: 'apartment',
   component: _Pages_Apartment__WEBPACK_IMPORTED_MODULE_5__["default"]
 }, {
-  path: '/',
+  path: '/*',
   name: 'not-found',
-  component: _Pages_NotFound__WEBPACK_IMPORTED_MODULE_7__["default"]
+  component: _Pages_NotFound__WEBPACK_IMPORTED_MODULE_6__["default"]
 }]; // 3. Create the router instance and pass the `routes` option
 // You can pass in additional options here, but let's
 // keep it simple for now.
