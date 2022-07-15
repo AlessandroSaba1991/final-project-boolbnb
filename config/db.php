@@ -287,5 +287,9 @@ return [
             "description" => "Abitazione indipendente libera su 4 lati, ambienti abitativi disposti su unico livello zona Ferrara Sud vicino a San Martino. L’abitazione degli anni 60 oggetto di ristrutturazione e rammodernata oggi si compone di ingresso, pranzo/soggiorno unico ambiente, 3 stanze oggi tutte adibite a camera doppia e matrimoniale, 1 bagno. Al piano seminterrato grande quanto il piano primo, troviamo ex garage oggi ampia cantina, 3 ripostigli comodi, il secondo bagno completo e finestrato. All’esterno in corte privata ampio garage accessibile però da stradello per sola utilitaria. L’immobile è in buone condizioni, le utenze sono autonome ed è pronto per essere abitato.",
             "visible" => true,
         ]
+    ],
+    'services' => [
+        'Wi-Fi', 'Portineria', 'Posto Auto', 'Piscina', 'Sauna', 'Vista Mare', 'Cassaforte', 'Balcone', 'Giardino', 'TV',
+        'Climatizzatore', 'Colazione', 'Ristorante', 'Bar', 'Bagno Turco', 'Jacuzzi','Ascensore','Lavanderia','Sistema di Sicurezza'
     ]
 ];
