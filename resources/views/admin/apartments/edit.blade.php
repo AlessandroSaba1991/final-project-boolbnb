@@ -16,11 +16,18 @@
   <!-- ./input title  -->
 
   <div class="mb-3">
-    <label for="rooms" class="form-label">Stanze</label>
+    <label for="rooms" class="form-label">Posti Letto</label>
     <input type="number" min="0" class="form-control @error('rooms') is-invalid @enderror" name="rooms" id="rooms" aria-describedby="roomshelp" value="{{old('rooms', $apartment->rooms)}}">
-    <div id="roomshelp" class="form-text">Inserire il numero di stanze</div>
+    <div id="roomshelp" class="form-text">Inserire il numero di posti letto</div>
   </div>
   <!-- ./input rooms  -->
+
+  <div class="mb-3">
+    <label for="beds" class="form-label">Stanze</label>
+    <input type="number" min="0" class="form-control @error('beds') is-invalid @enderror" name="beds" id="beds" aria-describedby="bedshelp" value="{{old('beds', $apartment->beds)}}">
+    <div id="bedshelp" class="form-text">Inserire il numero di stanze</div>
+  </div>
+  <!-- ./input beds  -->
 
   <div class="mb-3">
     <label for="bathrooms" class="form-label">Bagni</label>
