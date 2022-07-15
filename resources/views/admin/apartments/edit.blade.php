@@ -3,7 +3,7 @@
 
 <div class="container py-5">
   <h3>Stai modificando: {{$apartment->title}}</h3>
-
+  @include('partials.error')
 <form action="{{route('admin.apartments.update', $apartment->id)}}" method="post" enctype="multipart/form-data">
     @csrf
     @method('PUT')
@@ -17,10 +17,17 @@
 
   <div class="mb-3">
     <label for="rooms" class="form-label">Numero camere</label>
-    <input type="number" min="1" class="form-control @error('rooms') is-invalid @enderror" name="rooms" id="rooms" aria-describedby="roomshelp" value="{{old('rooms', $apartment->rooms)}}">
+    <input type="number" min="0" class="form-control @error('rooms') is-invalid @enderror" name="rooms" id="rooms" aria-describedby="roomshelp" value="{{old('rooms', $apartment->rooms)}}">
     <div id="roomshelp" class="form-text">Inserire il numero di camere</div>
   </div>
   <!-- ./input rooms  -->
+
+  <div class="mb-3">
+    <label for="beds" class="form-label">Stanze</label>
+    <input type="number" min="0" class="form-control @error('beds') is-invalid @enderror" name="beds" id="beds" aria-describedby="bedshelp" value="{{old('beds', $apartment->beds)}}">
+    <div id="bedshelp" class="form-text">Inserire il numero di stanze</div>
+  </div>
+  <!-- ./input beds  -->
 
   <div class="mb-3">
     <label for="bathrooms" class="form-label">Bagni</label>
