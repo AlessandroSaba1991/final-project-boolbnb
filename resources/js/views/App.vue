@@ -18,7 +18,7 @@
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="collapsibleNavId">
-            <ul class="navbar-nav me-auto mt-2 mt-lg-0">
+            <ul class="navbar-nav me-auto">
               <li class="nav-item">
                 <router-link class="nav-link" :to="{ name: 'advancedsearch' }">
                   Search Page

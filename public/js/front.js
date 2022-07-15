@@ -5335,7 +5335,7 @@ var render = function render() {
       id: "collapsibleNavId"
     }
   }, [_c("ul", {
-    staticClass: "navbar-nav me-auto mt-2 mt-lg-0"
+    staticClass: "navbar-nav me-auto"
   }, [_c("li", {
     staticClass: "nav-item"
   }, [_c("router-link", {
