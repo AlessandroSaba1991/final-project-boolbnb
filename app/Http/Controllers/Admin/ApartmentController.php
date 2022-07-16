@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Apartment;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ApartmentRequest;
+use Illuminate\Support\Facades\Storage;
 
 class ApartmentController extends Controller
 {
@@ -71,7 +72,24 @@ class ApartmentController extends Controller
      */
     public function update(ApartmentRequest $request, Apartment $apartment)
     {
-        dd($request->all());
+        //dd($request->all());
+        $validated_data = $request->validated();
+
+        //validazione, aggiunta path nuova immagine, e cancello la vecchia immagine
+        if($request->hasFile('cover_image')) {
+            $request->validate([
+                'cover_image' => 'nullable|image|mimes:jpeg,png,jpg'
+            ]);
+            Storage::delete($apartment->cover_image);
+            $path_img = Storage::put('apartment_images', $request->cover_image);
+            $validated_data['cover_image'] = $path_img;
+        }
+
+        //aggiorno i campi con i dati validati
+        $apartment->update($validated_data);
+
+        //reindirizzo la pagina
+        return redirect()->route('admin.apartments.index')->with('message', 'Annuncio modificato correttamente');
     }
 
     /**

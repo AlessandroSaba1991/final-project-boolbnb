@@ -79,8 +79,8 @@
   <div class="mb-3">
     <label for="visible" class="form-label">Visibile</label>
     <select class="form-select" name="visible" id="visible" style="width: 90px">
-      <option value="true">Si</option>
-      <option value="false">No</option>
+      <option value="1">Si</option>
+      <option value="0">No</option>
     </select>
   </div>
   <!-- ./input visible  -->
