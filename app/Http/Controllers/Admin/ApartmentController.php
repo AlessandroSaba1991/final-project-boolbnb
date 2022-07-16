@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Apartment;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ApartmentRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ApartmentController extends Controller
 {
@@ -32,12 +34,31 @@ class ApartmentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Request\ApartmentRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(ApartmentRequest $request)
     {
-        dd($request->all());
+        //$request->all();
+        $val_data = $request->validated();
+        $val_data['user_id'] = Auth::user()->id;
+        //dd($val_data);
+        if($request->hasfile('cover_image')){
+           
+            $request->validate([
+                'cover_image' => 'nullable|image|max:3000',
+            ]);  
+
+            $path = Storage::put('apartment_images', $request->cover_image);
+           
+            $val_data['cover_image']= $path;
+
+        }
+         
+
+        $new_apartment = Apartment::create($val_data);
+                       
+        return redirect()->route('admin.apartments.index')->with('message', 'Apartment created');
     }
 
     /**
@@ -82,6 +103,6 @@ class ApartmentController extends Controller
      */
     public function destroy(Apartment $apartment)
     {
-        //
+        
     }
 }
