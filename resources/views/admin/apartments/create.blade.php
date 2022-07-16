@@ -57,7 +57,7 @@
 
         <div class="mb-3">
             <label for="longitude">Longitudine</label>
-            <input type="number" min="-180" max="180" step=".000001" class="form-control @error('longitude') is-invalid @enderror" name="longitude" id="longitude" aria-describedby="addressHelper"
+            <input type="number" min="-180" max="180" step=".000001" class="form-control @error('longitude') is-invalid @enderror" name="longitude" id="longitude" aria-describedby="longitudeHelper"
                 value="{{ old('longitude') }}" placeholder="inserisci la longitudine...">
                 <small id="longitudeHelper" class="text-muted">Inserisci la longitudine</small>
         </div>
@@ -71,8 +71,8 @@
         <div class="mb-3">
             <label for="visible" class="form-label">Visibile</label>
         <select class="form-select mb-3" id="visible" name="visible" aria-label="Default select" style="width: 90px">
-            <option value="true">Si</option>
-            <option value="false">No</option>
+            <option value="1">Si</option>
+            <option value="0">No</option>
         </select>
         </div>
 

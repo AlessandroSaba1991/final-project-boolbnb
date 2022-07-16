@@ -2,6 +2,7 @@
 @section('content')
 <div class="container">
     <h1 class="text-center">All Apartments</h1>
+    @include('partials.message')
     <table class="table table-striped table-inverse table-responsive">
         <thead class="thead-inverse">
             <tr>
