@@ -70,7 +70,11 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                    <button type="button" class="btn btn-danger">Delete</button>
+                                    <form action="{{route('admin.apartments.destroy', $apartment->id)}}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>

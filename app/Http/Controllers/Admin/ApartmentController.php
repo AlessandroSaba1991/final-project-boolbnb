@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Apartment;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ApartmentRequest;
-use Illuminate\Support\Facades\Storage;
+
 
 class ApartmentController extends Controller
 {
@@ -100,6 +100,8 @@ class ApartmentController extends Controller
      */
     public function destroy(Apartment $apartment)
     {
-        //
+        Storage::delete($apartment->cover_image);
+        $apartment->delete();
+        return redirect()->route('admin.apartments.index');
     }
 }
