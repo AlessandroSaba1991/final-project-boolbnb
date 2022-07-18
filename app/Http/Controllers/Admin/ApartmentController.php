@@ -8,7 +8,7 @@ use App\Http\Requests\ApartmentRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
-
+use App\Models\Service;
 
 class ApartmentController extends Controller
 {
@@ -30,7 +30,8 @@ class ApartmentController extends Controller
      */
     public function create()
     {
-        return view('admin.apartments.create');
+        $services = Service::all();
+        return view('admin.apartments.create', compact('services'));
     }
 
     /**
@@ -59,6 +60,7 @@ class ApartmentController extends Controller
 
 
         $new_apartment = Apartment::create($val_data);
+        $new_apartment->services()->attach($request->services);
 
         return redirect()->route('admin.apartments.index')->with('message', 'Apartment created');
     }
@@ -82,7 +84,8 @@ class ApartmentController extends Controller
      */
     public function edit(Apartment $apartment)
     {
-        return view('admin.apartments.edit',compact('apartment'));
+        $services = Service::all();
+        return view('admin.apartments.edit',compact('apartment','services'));
     }
 
     /**
@@ -110,7 +113,7 @@ class ApartmentController extends Controller
 
             //aggiorno i campi con i dati validati
             $apartment->update($validated_data);
-
+            $apartment->services()->sync($request->services);
             //reindirizzo la pagina
             return redirect()->route('admin.apartments.index')->with('message', 'Annuncio modificato correttamente');
           } else {

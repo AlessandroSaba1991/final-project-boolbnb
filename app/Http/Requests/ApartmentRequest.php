@@ -36,7 +36,7 @@ class ApartmentRequest extends FormRequest
             "cover_image"=>['nullable'],
             "description"=>['nullable'],
             "visible"=>['required'],
-
+            "services" => ['exists:services,id']
             
         ];
     }

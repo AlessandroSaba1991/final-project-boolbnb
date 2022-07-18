@@ -63,6 +63,15 @@
         </select>
     </div>
 
+    <div class="mb-3">
+        <label for="services" class="form-label">Servizi</label>
+        <select multiple class="form-select" name="services[]" id="services" aria-label="Service">
+            <option value="" disabled>Seleziona un servizio</option>
+            @foreach($services as $service)
+            <option value="{{$service->id}}" {{is_array(old('services')) && in_array($service->id, old('services')) ? 'selected' : '' }}>{{$service->name}}</option>
+            @endforeach
+        </select>
+    </div>
 
     <div class="mb-3">
         <label for="description">Descrivi l'immobile</label>
