@@ -6,6 +6,7 @@ use App\Models\Apartment;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ApartmentRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -45,20 +46,20 @@ class ApartmentController extends Controller
         $val_data['user_id'] = Auth::user()->id;
         //dd($val_data);
         if($request->hasfile('cover_image')){
-           
+
             $request->validate([
                 'cover_image' => 'nullable|image|max:3000|mimes:jpeg,png,jpg',
-            ]);  
+            ]);
 
             $path = Storage::put('apartment_images', $request->cover_image);
-           
+
             $val_data['cover_image']= $path;
 
         }
-         
+
 
         $new_apartment = Apartment::create($val_data);
-                       
+
         return redirect()->route('admin.apartments.index')->with('message', 'Apartment created');
     }
 
@@ -70,7 +71,7 @@ class ApartmentController extends Controller
      */
     public function show(Apartment $apartment)
     {
-        //
+        return Redirect::to('/apartment/' . $apartment->id);
     }
 
     /**
