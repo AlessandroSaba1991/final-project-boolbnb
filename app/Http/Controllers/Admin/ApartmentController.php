@@ -94,24 +94,28 @@ class ApartmentController extends Controller
      */
     public function update(ApartmentRequest $request, Apartment $apartment)
     {
-        //dd($request->all());
-        $validated_data = $request->validated();
+        if(auth()->user()->id == $apartment->user_id) {
+            //dd($request->all());
+            $validated_data = $request->validated();
 
-        //validazione, aggiunta path nuova immagine, e cancello la vecchia immagine
-        if($request->hasFile('cover_image')) {
-            $request->validate([
-                'cover_image' => 'nullable|image|max:3000|mimes:jpeg,png,jpg'
-            ]);
-            Storage::delete($apartment->cover_image);
-            $path_img = Storage::put('apartment_images', $request->cover_image);
-            $validated_data['cover_image'] = $path_img;
-        }
+            //validazione, aggiunta path nuova immagine, e cancello la vecchia immagine
+            if($request->hasFile('cover_image')) {
+                $request->validate([
+                    'cover_image' => 'nullable|image|max:3000|mimes:jpeg,png,jpg'
+                ]);
+                Storage::delete($apartment->cover_image);
+                $path_img = Storage::put('apartment_images', $request->cover_image);
+                $validated_data['cover_image'] = $path_img;
+            }
 
-        //aggiorno i campi con i dati validati
-        $apartment->update($validated_data);
+            //aggiorno i campi con i dati validati
+            $apartment->update($validated_data);
 
-        //reindirizzo la pagina
-        return redirect()->route('admin.apartments.index')->with('message', 'Annuncio modificato correttamente');
+            //reindirizzo la pagina
+            return redirect()->route('admin.apartments.index')->with('message', 'Annuncio modificato correttamente');
+          } else {
+               abort(403, 'Unauthorized action.');
+          }
     }
 
     /**
@@ -122,8 +126,12 @@ class ApartmentController extends Controller
      */
     public function destroy(Apartment $apartment)
     {
-        Storage::delete($apartment->cover_image);
-        $apartment->delete();
-        return redirect()->route('admin.apartments.index')->with('message', 'Annuncio eliminato correttamente');
+        if(auth()->user()->id == $apartment->user_id) {
+            Storage::delete($apartment->cover_image);
+            $apartment->delete();
+            return redirect()->route('admin.apartments.index')->with('message', 'Annuncio eliminato correttamente');
+        } else {
+            abort(403, 'Unauthorized action.');
+       }
     }
 }
