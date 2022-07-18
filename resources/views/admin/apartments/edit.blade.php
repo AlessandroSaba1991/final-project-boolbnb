@@ -53,24 +53,21 @@
                     id="address" aria-describedby="addresshelp" value="{{ old('address', $apartment->address) }}"
                     formnovalidate oninput="this.value = Math.abs(this.value)">
                 <div id="addresshelp" class="form-text">Inserire l'indirizzo</div>
+                <div hidden class="result"></div>
             </div>
             <!-- ./input address  -->
-            <div class="mb-3">
-                <label for="latitude" class="form-label">Latitudine</label>
-                <input type="number" min="-90" max="90" step="0.000001"
+
+                <input hidden type="number" min="-90" max="90" step="0.000001"
                     class="form-control @error('latitude') is-invalid @enderror" name="latitude" id="latitude"
                     aria-describedby="latitudehelp" value="{{ old('latitude', $apartment->latitude) }}" formnovalidate
                     oninput="this.value = Math.abs(this.value)">
-                <div id="latitudehelp" class="form-text">Inserire la latitudine</div>
-            </div>
+
             <!-- ./input latitude  -->
-            <div class="mb-3">
-                <label for="longitude" class="form-label">Longitudine</label>
-                <input type="number" min="-180" max="180" step=".000001"
+
+                <input hidden type="number" min="-180" max="180" step=".000001"
                     class="form-control @error('longitude') is-invalid @enderror" name="longitude" id="longitude"
                     aria-describedby="longitudehelp" value="{{ old('longitude', $apartment->longitude) }}">
-                <div id="longitudehelp" class="form-text">Inserire la longitudine</div>
-            </div>
+
             <!-- ./input longitude  -->
             <div class="d-flex align-items-center mb-3">
                 <div class="old_img me-3">
