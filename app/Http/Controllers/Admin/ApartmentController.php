@@ -47,7 +47,7 @@ class ApartmentController extends Controller
         if($request->hasfile('cover_image')){
            
             $request->validate([
-                'cover_image' => 'nullable|image|max:3000',
+                'cover_image' => 'nullable|image|max:3000|mimes:jpeg,png,jpg',
             ]);  
 
             $path = Storage::put('apartment_images', $request->cover_image);
@@ -99,7 +99,7 @@ class ApartmentController extends Controller
         //validazione, aggiunta path nuova immagine, e cancello la vecchia immagine
         if($request->hasFile('cover_image')) {
             $request->validate([
-                'cover_image' => 'nullable|image|mimes:jpeg,png,jpg'
+                'cover_image' => 'nullable|image|max:3000|mimes:jpeg,png,jpg'
             ]);
             Storage::delete($apartment->cover_image);
             $path_img = Storage::put('apartment_images', $request->cover_image);
@@ -123,6 +123,6 @@ class ApartmentController extends Controller
     {
         Storage::delete($apartment->cover_image);
         $apartment->delete();
-        return redirect()->route('admin.apartments.index');
+        return redirect()->route('admin.apartments.index')->with('message', 'Annuncio eliminato correttamente');
     }
 }
