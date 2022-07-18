@@ -36,21 +36,19 @@
 
     <div class="mb-3">
         <label for="address">Indirizzo</label>
-        <input type="text" onkeyup="autocomplete()" class="form-control @error('address') is-invalid @enderror" name="address" id="address" aria-describedby="addressHelper" value="{{ old('address') }}"  placeholder="inserisci l'indirizzo...">
+        <input type="text" onkeyup="callAddress()" class="form-control @error('address') is-invalid @enderror" name="address" id="address" aria-describedby="addressHelper" value="{{ old('address') }}"  placeholder="inserisci l'indirizzo...">
         <small id="addressHelper" class="text-muted">Inserisci l'indirizzo</small>
+        <div class="result" hidden></div>
     </div>
 
-    <div class="mb-3">
-        <label for="latitude">Latitudine</label>
-        <input type="number" min="-90" max="90" step="0.000001" class="form-control @error('latitude') is-invalid @enderror" name="latitude" id="latitude" aria-describedby="latitudeHelper" value="{{ old('latitude') }}" placeholder="inserisci la latitudine...">
-        <small id="latitudeHelper" class="text-muted">Inserisci la latitudine</small>
-    </div>
 
-    <div class="mb-3">
-        <label for="longitude">Longitudine</label>
-        <input type="number" min="-180" max="180" step=".000001" class="form-control @error('longitude') is-invalid @enderror" name="longitude" id="longitude" aria-describedby="longitudeHelper" value="{{ old('longitude') }}" placeholder="inserisci la longitudine...">
-        <small id="longitudeHelper" class="text-muted">Inserisci la longitudine</small>
-    </div>
+
+        <input hidden type="number" min="-90" max="90" step="0.000001" class="form-control @error('latitude') is-invalid @enderror" name="latitude" id="latitude" aria-describedby="latitudeHelper" value="{{ old('latitude') }}" placeholder="inserisci la latitudine...">
+
+
+
+        <input hidden type="number" min="-180" max="180" step=".000001" class="form-control @error('longitude') is-invalid @enderror" name="longitude" id="longitude" aria-describedby="longitudeHelper" value="{{ old('longitude') }}" placeholder="inserisci la longitudine...">
+
 
     <div class="mb-3">
         <label for="cover_image">Immagine</label>
