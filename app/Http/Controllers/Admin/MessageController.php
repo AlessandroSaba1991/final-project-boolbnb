@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Message;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Apartment;
 
 class MessageController extends Controller
 {
@@ -13,9 +14,9 @@ class MessageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Apartment $apartment)
     {
-        //
+        return view('admin.messages.index');
     }
 
     /**

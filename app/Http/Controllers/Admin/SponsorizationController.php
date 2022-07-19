@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Sponsorization;
 use Illuminate\Http\Request;
 USE App\Http\Controllers\Controller;
+use App\Models\Apartment;
 
 class SponsorizationController extends Controller
 {
@@ -13,9 +14,9 @@ class SponsorizationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Apartment $apartment)
     {
-        //
+        return view('admin.sponsorizations.index');
     }
 
     /**
