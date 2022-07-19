@@ -1,4 +1,8 @@
 @extends('layouts.admin')
+
+@section('script')
+<script src="{{asset('js/tom-tom-geolocate.js')}} " defer ></script>
+@endsection
 @section('content')
     <h1 class="text-center">Inserisci un nuovo annuncio</h1>
     @include('partials.error')
@@ -87,8 +91,6 @@
         <button type="submit" class="btn btn-primary">Aggiungi Annuncio</button>
     </form>
 @endsection
-
-
 
 
 
