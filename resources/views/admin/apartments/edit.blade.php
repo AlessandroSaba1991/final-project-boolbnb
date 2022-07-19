@@ -15,25 +15,25 @@
         <!-- ./input title  -->
         <div class="mb-3">
             <label for="rooms" class="form-label">Numero camere</label>
-            <input type="number" min="1" class="form-control @error('rooms') is-invalid @enderror" name="rooms" id="rooms" aria-describedby="roomshelp" value="{{ old('rooms', $apartment->rooms) }}" required pattern="1" oninput="this.value = Math.abs(this.value)">
+            <input type="number" min="1" class="form-control @error('rooms') is-invalid @enderror" name="rooms" id="rooms" aria-describedby="roomshelp" value="{{ old('rooms', $apartment->rooms) }}" required pattern="1" max="100" oninput="this.value = Math.abs(this.value)">
             <div id="roomshelp" class="form-text">Inserire il numero di camere</div>
         </div>
         <!-- ./input rooms  -->
         <div class="mb-3">
             <label for="beds" class="form-label">Posti letto</label>
-            <input type="number" min="1" class="form-control @error('beds') is-invalid @enderror" name="beds" id="beds" aria-describedby="bedshelp" value="{{ old('beds', $apartment->beds) }}" required pattern="1" oninput="this.value = Math.abs(this.value)">
+            <input type="number" min="1" class="form-control @error('beds') is-invalid @enderror" name="beds" id="beds" aria-describedby="bedshelp" value="{{ old('beds', $apartment->beds) }}" required pattern="1" max="100" oninput="this.value = Math.abs(this.value)">
             <div id="bedshelp" class="form-text">Inserire il numero di posti letto</div>
         </div>
         <!-- ./input beds  -->
         <div class="mb-3">
             <label for="bathrooms" class="form-label">Numero Bagni</label>
-            <input type="number" min="1" class="form-control @error('bathrooms') is-invalid @enderror" name="bathrooms" id="bathrooms" aria-describedby="bathroomshelp" value="{{ old('bathrooms', $apartment->bathrooms) }}" required pattern="1" oninput="this.value = Math.abs(this.value)">
+            <input type="number" min="1" class="form-control @error('bathrooms') is-invalid @enderror" name="bathrooms" id="bathrooms" aria-describedby="bathroomshelp" value="{{ old('bathrooms', $apartment->bathrooms) }}" required pattern="1" max="100" oninput="this.value = Math.abs(this.value)">
             <div id="bathroomshelp" class="form-text">Inserire il numero di bagni</div>
         </div>
         <!-- ./input bathrooms  -->
         <div class="mb-3">
             <label for="square_meters" class="form-label">Metri Quadri</label>
-            <input type="number" min="1" class="form-control @error('square_meters') is-invalid @enderror" name="square_meters" id="square_meters" aria-describedby="square_metershelp" value="{{ old('square_meters', $apartment->square_meters) }}" oninput="this.value = Math.abs(this.value)">
+            <input type="number" min="1" max="30000" class="form-control @error('square_meters') is-invalid @enderror" name="square_meters" id="square_meters" aria-describedby="square_metershelp" value="{{ old('square_meters', $apartment->square_meters) }}" oninput="this.value = Math.abs(this.value)">
             <div id="square_metershelp" class="form-text">Inserire il numero di metri quadri</div>
         </div>
         <!-- ./input square_meters  -->
