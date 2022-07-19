@@ -26,10 +26,10 @@ class ApartmentRequest extends FormRequest
     {
         return [
             "title"=>['required'],
-            "rooms"=>['nullable'],
-            "beds"=>['nullable'],
-            "bathrooms"=>['nullable'],
-            "square_meters"=>['nullable'],
+            "rooms"=>['required', 'numeric', 'min:1', 'max:100'],
+            "beds"=>['required', 'numeric', 'min:1', 'max:100'],
+            "bathrooms"=>['required', 'numeric', 'min:1', 'max:100'],
+            "square_meters"=>['required', 'numeric', 'min:1', 'max:30000'],
             "address"=>['required'],
             "latitude"=>['required'],
             "longitude"=>['required'],

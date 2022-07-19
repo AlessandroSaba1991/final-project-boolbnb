@@ -12,22 +12,22 @@
     </div>
     <div class="mb-3">
         <label for="rooms">Numero camere</label>
-        <input type="number" min="1" class="form-control @error('rooms') is-invalid @enderror" name="rooms" id="rooms" min="1" aria-describedby="roomsHelper" value="{{ old('rooms') }}" placeholder="inserisci il numero delle camere..." required pattern="1" oninput="this.value = Math.abs(this.value)">
+        <input type="number" min="1" class="form-control @error('rooms') is-invalid @enderror" name="rooms" id="rooms" min="1" aria-describedby="roomsHelper" value="{{ old('rooms') }}" placeholder="inserisci il numero delle camere..." required pattern="1" max="100" oninput="this.value = Math.abs(this.value)">
         <small id="roomsHelper" class="text-muted">Inserisci il numero di camere</small>
     </div>
     <div class="mb-3">
         <label for="beds">Posti letto</label>
-        <input type="number" class="form-control" name="beds" id="beds" min="1" aria-describedby="bedsHelper" value="{{ old('beds') }}" placeholder="inserisci il numero dei posti letto..." required pattern="1" oninput="this.value = Math.abs(this.value)">
+        <input type="number" class="form-control" name="beds" id="beds" min="1" aria-describedby="bedsHelper" value="{{ old('beds') }}" placeholder="inserisci il numero dei posti letto..." required pattern="1" max="100" oninput="this.value = Math.abs(this.value)">
         <small id="bedsHelper" class="text-muted">Inserisci il numero di posti letto</small>
     </div>
     <div class="mb-3">
         <label for="bathrooms">Numero bagni</label>
-        <input type="number" class="form-control @error('bathrooms') is-invalid @enderror" name="bathrooms" id="bathrooms" min="1" aria-describedby="bathroomsHelper" value="{{ old('bathrooms') }}" placeholder="numero di bagni..." required pattern="1" oninput="this.value = Math.abs(this.value)">
+        <input type="number" class="form-control @error('bathrooms') is-invalid @enderror" name="bathrooms" id="bathrooms" min="1" aria-describedby="bathroomsHelper" value="{{ old('bathrooms') }}" placeholder="numero di bagni..." required pattern="1" max="100" oninput="this.value = Math.abs(this.value)">
         <small id="bathroomsHelper" class="text-muted">Inserisci il numero di bagni</small>
     </div>
     <div class="mb-3">
         <label for="square_meters">Metri quadri</label>
-        <input type="number" class="form-control @error('square_meters') is-invalid @enderror" min="1" name="square_meters" id="square_meters" aria-describedby="square_metersHelper" value="{{ old('square_meters') }}" placeholder="inserisci la dimensione dell'immobile..." oninput="this.value = Math.abs(this.value)">
+        <input type="number" class="form-control @error('square_meters') is-invalid @enderror" min="1" max="30000" name="square_meters" id="square_meters" aria-describedby="square_metersHelper" value="{{ old('square_meters') }}" placeholder="inserisci la dimensione dell'immobile..." oninput="this.value = Math.abs(this.value)">
         <small id="square_metersHelper" class="text-muted">Inserisci i metri quadri</small>
     </div>
     <div class="mb-3">
