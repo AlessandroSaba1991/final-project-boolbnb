@@ -10226,3 +10226,24 @@ textarea.form-control-lg {
   background-clip: padding-box;
   border-bottom: 1px solid #ced4da;
 }
+
+.apartment {
+  position: relative;
+}
+.apartment span {
+  font-weight: bold;
+}
+.apartment .badge_ {
+  position: absolute;
+  top: 2%;
+  left: 1%;
+  padding: 0.5rem;
+  color: white;
+  border-radius: 0.25rem;
+}
+.apartment .red {
+  background-color: red;
+}
+.apartment .green {
+  background-color: green;
+}
