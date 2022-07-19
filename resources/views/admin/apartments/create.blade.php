@@ -7,7 +7,7 @@
     @csrf
     <div class="mb-3">
         <label for="title">Titolo</label>
-        <input type="text" class="form-control @error('title') is-invalid @enderror" name="title" id="title" aria-describedby="TitleHelper" value="{{ old('title') }}" placeholder="titolo...">
+        <input type="text" class="form-control @error('title') is-invalid @enderror" name="title" id="title" aria-describedby="TitleHelper" value="{{ old('title') }}" placeholder="titolo..." required minlength="5">
         <small id="titleHelper" class="text-muted">Inserisci un titolo</small>
     </div>
     <div class="mb-3">
@@ -32,15 +32,15 @@
     </div>
     <div class="mb-3">
         <label for="address">Indirizzo</label>
-        <input type="text" onkeyup="callAddress()" class="form-control @error('address') is-invalid @enderror" name="address" id="address" aria-describedby="addressHelper" value="{{ old('address') }}" placeholder="inserisci l'indirizzo..." formnovalidate>
+        <input type="text" onkeyup="callAddress()" class="form-control @error('address') is-invalid @enderror" name="address" id="address" aria-describedby="addressHelper" value="{{ old('address') }}" placeholder="inserisci l'indirizzo..." required>
         <small id="addressHelper" class="text-muted">Inserisci l'indirizzo</small>
         <div class="result" hidden></div>
     </div>
 
-    <input hidden type="number" min="-90" max="90" step="0.000001" class="form-control @error('latitude') is-invalid @enderror" name="latitude" id="latitude" aria-describedby="latitudeHelper" value="{{ old('latitude') }}" placeholder="inserisci la latitudine..." formnovalidate>
+    <input hidden type="number" min="-90" max="90" step="0.000001" class="form-control @error('latitude') is-invalid @enderror" name="latitude" id="latitude" aria-describedby="latitudeHelper" value="{{ old('latitude') }}" placeholder="inserisci la latitudine...">
 
 
-    <input hidden type="number" min="-180" max="180" step=".000001" class="form-control @error('longitude') is-invalid @enderror" name="longitude" id="longitude" aria-describedby="longitudeHelper" value="{{ old('longitude') }}" placeholder="inserisci la longitudine..." formnovalidate>
+    <input hidden type="number" min="-180" max="180" step=".000001" class="form-control @error('longitude') is-invalid @enderror" name="longitude" id="longitude" aria-describedby="longitudeHelper" value="{{ old('longitude') }}" placeholder="inserisci la longitudine...">
 
     <div class="mb-3">
         <label for="cover_image">Immagine</label>

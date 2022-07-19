@@ -8,12 +8,12 @@
                 <div class="card-body">
                     <span class="text-capitalize">* required field</span>
                     <hr>
-                    <form method="POST" action="{{ route('register') }}" novalidate>
+                    <form id="formRegistration" method="POST" action="{{ route('register') }}">
                         @csrf
                         <div class="mb-3 row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name *') }}</label>
                             <div class="col-md-6">
-                                <input id="name" type="text"  class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                <input id="name" type="text"  class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required pattern="[a-zA-Z]+" minlength="3" autocomplete="name" autofocus>
                                 @error('name')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -24,7 +24,7 @@
                         <div class="mb-3 row">
                             <label for="surname" class="col-md-4 col-form-label text-md-right">{{ __('Surname *') }}</label>
                             <div class="col-md-6">
-                                <input id="surname" type="text" class="form-control @error('surname') is-invalid @enderror" name="surname" value="{{ old('surname') }}" required autocomplete="surname" autofocus>
+                                <input id="surname" type="text" class="form-control @error('surname') is-invalid @enderror" name="surname" value="{{ old('surname') }}" required pattern="[a-zA-Z]+" minlength="3" autocomplete="surname" autofocus>
                                 @error('surname')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -35,7 +35,7 @@
                         <div class="mb-3 row">
                             <label for="date_of_birth" class="form-label col-md-4 col-form-label text-md-right">Date of Birth *</label>
                             <div class="col-md-6">
-                                <input type="date" class="form-control @error('date_of_birth') is-invalid @enderror" name="date_of_birth" id="date_of_birth" aria-describedby="helpId" value="{{ old('date_of_birth') }}">
+                                <input type="date" class="form-control @error('date_of_birth') is-invalid @enderror" name="date_of_birth" id="date_of_birth" aria-describedby="helpId" value="{{ old('date_of_birth') }}" max="{{date('Y-m-d',strtotime('-18 years -1 days'))}}">
                                 @error('date_of_birth')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -57,7 +57,7 @@
                         <div class="mb-3 row">
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password *') }}</label>
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required minlength="8" autocomplete="new-password">
                                 @error('password')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -68,12 +68,14 @@
                         <div class="mb-3 row">
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
                             <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required minlength="8" autocomplete="new-password" onkeyup="check()">
                             </div>
+                            <span id='message'></span> 
+                            <!-- check message  -->
                         </div>
                         <div class="mb-3 row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button id="submitBtn" type="submit" class="btn btn-primary">
                                     {{ __('Register') }}
                                 </button>
                             </div>

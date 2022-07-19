@@ -10227,6 +10227,7 @@ textarea.form-control-lg {
   border-bottom: 1px solid #ced4da;
 }
 
+
 .apartment {
   position: relative;
 }
@@ -10246,4 +10247,13 @@ textarea.form-control-lg {
 }
 .apartment .green {
   background-color: green;
+
 }
+input:focus:valid {
+  border: 2px solid green;
+  outline: none;
+}
+
+input:focus:invalid {
+  border: 2px solid red;
+  outline: none;

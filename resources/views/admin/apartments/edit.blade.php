@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 @section('content')
+
 <div class="container py-5">
     <h3>Stai modificando: {{ $apartment->title }}</h3>
     @include('partials.error')
@@ -8,7 +9,7 @@
         @method('PUT')
         <div class="mb-3">
             <label for="title" class="form-label">Titolo</label>
-            <input type="title" class="form-control @error('title') is-invalid @enderror" name="title" id="title" aria-describedby="titlehelp" value="{{ old('title', $apartment->title) }}" formnovalidate>
+            <input type="title" class="form-control @error('title') is-invalid @enderror" name="title" id="title" aria-describedby="titlehelp" value="{{ old('title', $apartment->title) }}" required>
             <div id="titlehelp" class="form-text">Inserire il titolo dell' annuncio</div>
         </div>
         <!-- ./input title  -->
@@ -46,14 +47,17 @@
 
         <input hidden type="number" min="-90" max="90" step="0.000001" class="form-control @error('latitude') is-invalid @enderror" name="latitude" id="latitude" aria-describedby="latitudehelp" value="{{ old('latitude', $apartment->latitude) }}">
 
+
         <!-- ./input latitude  -->
 
         <input hidden type="number" min="-180" max="180" step=".000001" class="form-control @error('longitude') is-invalid @enderror" name="longitude" id="longitude" aria-describedby="longitudehelp" value="{{ old('longitude', $apartment->longitude) }}">
+
 
         <!-- ./input longitude  -->
         <div class="d-flex align-items-center mb-3">
             <div class="old_img me-3">
                 <img width="120" src="{{ asset('storage/' . $apartment->cover_image) }}" alt="">
+
             </div>
             <div>
                 <label for="cover_image" class="form-label">Immagine</label>
