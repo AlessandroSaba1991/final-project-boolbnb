@@ -10212,3 +10212,11 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+#formRegistration input:focus:valid {
+  border: 2px solid green;
+  outline: none;
+}
+#formRegistration input:focus:invalid {
+  border: 2px solid red;
+  outline: none;
+}

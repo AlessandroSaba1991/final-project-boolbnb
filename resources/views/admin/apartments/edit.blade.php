@@ -9,7 +9,7 @@
             <div class="mb-3">
                 <label for="title" class="form-label">Titolo</label>
                 <input type="title" class="form-control @error('title') is-invalid @enderror" name="title" id="title"
-                    aria-describedby="titlehelp" value="{{ old('title', $apartment->title) }}" formnovalidate>
+                    aria-describedby="titlehelp" value="{{ old('title', $apartment->title) }}" required>
                 <div id="titlehelp" class="form-text">Inserire il titolo dell' annuncio</div>
             </div>
             <!-- ./input title  -->
@@ -51,7 +51,7 @@
                 <label for="address" class="form-label">Indirizzo</label>
                 <input type="address" class="form-control @error('address') is-invalid @enderror" name="address"
                     id="address" aria-describedby="addresshelp" value="{{ old('address', $apartment->address) }}"
-                    formnovalidate oninput="this.value = Math.abs(this.value)">
+                     oninput="this.value = Math.abs(this.value)">
                 <div id="addresshelp" class="form-text">Inserire l'indirizzo</div>
                 <div hidden class="result"></div>
             </div>
@@ -59,7 +59,7 @@
 
                 <input hidden type="number" min="-90" max="90" step="0.000001"
                     class="form-control @error('latitude') is-invalid @enderror" name="latitude" id="latitude"
-                    aria-describedby="latitudehelp" value="{{ old('latitude', $apartment->latitude) }}" formnovalidate
+                    aria-describedby="latitudehelp" value="{{ old('latitude', $apartment->latitude) }}" 
                     oninput="this.value = Math.abs(this.value)">
 
             <!-- ./input latitude  -->
@@ -76,7 +76,7 @@
                 <div>
                     <label for="cover_image" class="form-label">Immagine</label>
                     <input type="file" class="form-control" name="cover_image" id="cover_image"
-                        aria-describedby="cover_imagehelp" formnovalidate>
+                        aria-describedby="cover_imagehelp">
                     <div id="cover_imagehelp" class="form-text">Inserire Immagine dell'annuncio</div>
                 </div>
             </div>

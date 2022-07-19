@@ -10226,3 +10226,13 @@ textarea.form-control-lg {
   background-clip: padding-box;
   border-bottom: 1px solid #ced4da;
 }
+
+input:focus:valid {
+  border: 2px solid green;
+  outline: none;
+}
+
+input:focus:invalid {
+  border: 2px solid red;
+  outline: none;
+}
