@@ -9,7 +9,7 @@
         @method('PUT')
         <div class="mb-3">
             <label for="title" class="form-label">Titolo</label>
-            <input type="title" class="form-control @error('title') is-invalid @enderror" name="title" id="title" aria-describedby="titlehelp" value="{{ old('title', $apartment->title) }}" required>
+            <input type="title" class="form-control @error('title') is-invalid @enderror" name="title" id="title" aria-describedby="titlehelp" value="{{ old('title', $apartment->title) }}" required minlength="5">
             <div id="titlehelp" class="form-text">Inserire il titolo dell' annuncio</div>
         </div>
         <!-- ./input title  -->
