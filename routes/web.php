@@ -22,6 +22,9 @@ Route::middleware('auth')->prefix('admin')->namespace('Admin')->name('admin.')->
 {
     Route::get('/', 'HomeController@index')->name('home');
     Route::resource('apartments','ApartmentController');
+    Route::resource('messages','MessageController');
+    Route::resource('sponsorizations','SponsorizationController');
+
 });
 
 
