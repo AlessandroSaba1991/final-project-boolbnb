@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class ApartmentController extends Controller
 {
+    public function index()
+    {
+        return Apartment::with(['services'])->orderByDesc('id')->paginate(8);
+    }
     public function show($id)
     {
         $apartment = Apartment::where('id', $id)->first();
