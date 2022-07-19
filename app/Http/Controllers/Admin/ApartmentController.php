@@ -19,8 +19,8 @@ class ApartmentController extends Controller
      */
     public function index()
     {
-        $apartments=Apartment::all()->sortDesc()->where('user_id', auth()->user()->id);
-        return view('admin.apartments.index',compact('apartments'));
+        $apartments = Apartment::all()->sortDesc()->where('user_id', auth()->user()->id);
+        return view('admin.apartments.index', compact('apartments'));
     }
 
     /**
@@ -46,7 +46,7 @@ class ApartmentController extends Controller
         $val_data = $request->validated();
         $val_data['user_id'] = Auth::user()->id;
         //dd($val_data);
-        if($request->hasfile('cover_image')){
+        if ($request->hasfile('cover_image')) {
 
             $request->validate([
                 'cover_image' => 'nullable|image|max:3000|mimes:jpeg,png,jpg',
@@ -54,8 +54,7 @@ class ApartmentController extends Controller
 
             $path = Storage::put('apartment_images', $request->cover_image);
 
-            $val_data['cover_image']= $path;
-
+            $val_data['cover_image'] = $path;
         }
 
 
@@ -73,7 +72,11 @@ class ApartmentController extends Controller
      */
     public function show(Apartment $apartment)
     {
-        return Redirect::to('/apartment/' . $apartment->id);
+        if (auth()->user()->id == $apartment->user_id) {
+            return view('admin.apartments.show', compact('apartment'));
+        } else {
+            abort(403, 'Unauthorized action.');
+        }
     }
 
     /**
@@ -84,8 +87,12 @@ class ApartmentController extends Controller
      */
     public function edit(Apartment $apartment)
     {
-        $services = Service::all();
-        return view('admin.apartments.edit',compact('apartment','services'));
+        if (auth()->user()->id == $apartment->user_id) {
+            $services = Service::all();
+            return view('admin.apartments.edit', compact('apartment', 'services'));
+        } else {
+            abort(403, 'Unauthorized action.');
+        }
     }
 
     /**
@@ -97,12 +104,12 @@ class ApartmentController extends Controller
      */
     public function update(ApartmentRequest $request, Apartment $apartment)
     {
-        if(auth()->user()->id == $apartment->user_id) {
+        if (auth()->user()->id == $apartment->user_id) {
             //dd($request->all());
             $validated_data = $request->validated();
 
             //validazione, aggiunta path nuova immagine, e cancello la vecchia immagine
-            if($request->hasFile('cover_image')) {
+            if ($request->hasFile('cover_image')) {
                 $request->validate([
                     'cover_image' => 'nullable|image|max:3000|mimes:jpeg,png,jpg'
                 ]);
@@ -116,9 +123,9 @@ class ApartmentController extends Controller
             $apartment->services()->sync($request->services);
             //reindirizzo la pagina
             return redirect()->route('admin.apartments.index')->with('message', 'Annuncio modificato correttamente');
-          } else {
-               abort(403, 'Unauthorized action.');
-          }
+        } else {
+            abort(403, 'Unauthorized action.');
+        }
     }
 
     /**
@@ -129,12 +136,12 @@ class ApartmentController extends Controller
      */
     public function destroy(Apartment $apartment)
     {
-        if(auth()->user()->id == $apartment->user_id) {
+        if (auth()->user()->id == $apartment->user_id) {
             Storage::delete($apartment->cover_image);
             $apartment->delete();
             return redirect()->route('admin.apartments.index')->with('message', 'Annuncio eliminato correttamente');
         } else {
             abort(403, 'Unauthorized action.');
-       }
+        }
     }
 }
