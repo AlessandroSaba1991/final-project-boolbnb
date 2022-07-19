@@ -61,7 +61,7 @@
             </div>
             <div>
                 <label for="cover_image" class="form-label">Immagine</label>
-                <input type="file" class="form-control" name="cover_image" id="cover_image" aria-describedby="cover_imagehelp" formnovalidate>
+                <input type="file" class="form-control" name="cover_image" id="cover_image" aria-describedby="cover_imagehelp">
                 <div id="cover_imagehelp" class="form-text">Inserire Immagine dell'annuncio</div>
             </div>
         </div>
