@@ -179,7 +179,13 @@ export default {
   methods: {
     getApartment() {
       axios
-        .get("/api/apartments/" + this.$route.params.id)
+        .get("/api/apartments", {
+          params: {
+            lat: 44.78993000,
+            lon: 11.57065000,
+            radius: 20000
+          },
+        })
         .then((response) => {
           console.log(response.data);
           if (response.data.status_code === 404) {

@@ -5129,7 +5129,13 @@ __webpack_require__.r(__webpack_exports__);
     getApartment: function getApartment() {
       var _this = this;
 
-      axios.get("/api/apartments/" + this.$route.params.id).then(function (response) {
+      axios.get("/api/apartments", {
+        params: {
+          lat: 44.78993000,
+          lon: 11.57065000,
+          radius: 20000
+        }
+      }).then(function (response) {
         console.log(response.data);
 
         if (response.data.status_code === 404) {
@@ -5258,42 +5264,162 @@ var render = function render() {
   }, [!_vm.loading ? _c("div", {
     staticClass: "wrapper h-100"
   }, [_c("div", {
-    staticClass: "p-5 hero_image",
-    style: {
-      backgroundImage: "url(/storage/" + _vm.apartment.cover_image + ")"
-    }
-  }), _vm._v(" "), _c("div", {
     staticClass: "container"
   }, [_c("div", {
-    staticClass: "card p-3"
+    staticClass: "apartment_image mb-5"
+  }, [_c("img", {
+    staticClass: "apt-img",
+    attrs: {
+      src: "/storage/" + _vm.apartment.cover_image,
+      alt: ""
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "apartment_title mb-2"
+  }, [_c("h1", [_vm._v(_vm._s(_vm.apartment.title))])]), _vm._v(" "), _c("div", {
+    staticClass: "apartment_address mb-5"
+  }, [_c("h5", [_vm._v(_vm._s(_vm.apartment.address))])]), _vm._v(" "), _c("div", {
+    staticClass: "apartment_description mb-5"
+  }, [_c("h2", [_vm._v("Descrizione")]), _vm._v(" "), _c("p", [_vm._v(_vm._s(_vm.apartment.description))])]), _vm._v(" "), _c("div", {
+    staticClass: "apartment_details mb-5"
+  }, [_c("h2", {
+    staticClass: "mb-3"
+  }, [_vm._v("Dettagli")]), _vm._v(" "), _c("div", {
+    staticClass: "details-list d-flex justify-content-around align-items-center mb-5"
   }, [_c("div", {
-    staticClass: "row row-cols-4"
-  }, [_c("div", {
-    staticClass: "col"
-  }, [_c("span", [_vm._v("Rooms: ")]), _vm._v(_vm._s(_vm.apartment.rooms) + "\n              ")]), _vm._v(" "), _c("div", {
-    staticClass: "col"
-  }, [_c("span", [_vm._v("Beds: ")]), _vm._v(_vm._s(_vm.apartment.beds) + "\n              ")]), _vm._v(" "), _c("div", {
-    staticClass: "col"
-  }, [_c("span", [_vm._v("Bathrooms: ")]), _vm._v(_vm._s(_vm.apartment.bathrooms) + "\n              ")]), _vm._v(" "), _c("div", {
-    staticClass: "col"
-  }, [_c("span", [_vm._v("Square_meters: ")]), _vm._v(_vm._s(_vm.apartment.square_meters) + "\n              ")]), _vm._v(" "), _c("div", {
-    staticClass: "col"
-  }, [_c("span", [_vm._v("Address: ")]), _vm._v(_vm._s(_vm.apartment.address) + "\n              ")]), _vm._v(" "), _c("div", {
-    staticClass: "col"
-  }, [_c("span", [_vm._v("Latitude: ")]), _vm._v(_vm._s(_vm.apartment.latitude) + "\n              ")]), _vm._v(" "), _c("div", {
-    staticClass: "col"
-  }, [_c("span", [_vm._v("Longitude: ")]), _vm._v(_vm._s(_vm.apartment.longitude) + "\n              ")]), _vm._v(" "), _c("div", {
-    staticClass: "col"
-  }, [_c("span", [_vm._v("Visible: ")]), _vm._v(" "), _vm.apartment.visible ? _c("span", [_vm._v("Visibile")]) : _c("span", [_vm._v("Non Visibile")])])]), _vm._v(" "), _c("h1", {
-    staticClass: "display-3"
-  }, [_vm._v(_vm._s(_vm.apartment.title))]), _vm._v(" "), _c("p", {
-    staticClass: "lead"
-  }, [_vm._v(_vm._s(_vm.apartment.description))])])])]) : _c("div", {
-    staticClass: "loading bg-dark text-center text-white"
-  }, [_vm._v("⏲️ Loading")])]);
+    staticClass: "detail-element"
+  }, [_c("svg", {
+    staticClass: "bi bi-trash-fill",
+    attrs: {
+      xmlns: "http://www.w3.org/2000/svg",
+      width: "30",
+      height: "30",
+      fill: "fillcolor",
+      viewBox: "0 0 640 512"
+    }
+  }, [_c("path", {
+    attrs: {
+      d: "M176 288C220.1 288 256 252.1 256 208S220.1 128 176 128S96 163.9 96 208S131.9 288 176 288zM544 128H304C295.2 128 288 135.2 288 144V320H64V48C64 39.16 56.84 32 48 32h-32C7.163 32 0 39.16 0 48v416C0 472.8 7.163 480 16 480h32C56.84 480 64 472.8 64 464V416h512v48c0 8.837 7.163 16 16 16h32c8.837 0 16-7.163 16-16V224C640 170.1 597 128 544 128z"
+    }
+  })]), _vm._v(" "), _c("span", {
+    staticClass: "fw-bold"
+  }, [_vm._v(_vm._s(_vm.apartment.beds))])]), _vm._v(" "), _c("div", {
+    staticClass: "detail-element"
+  }, [_c("img", {
+    attrs: {
+      src: __webpack_require__(/*! ../../img/bathroom.png */ "./resources/img/bathroom.png"),
+      width: "30",
+      height: "30"
+    }
+  }), _vm._v(" "), _c("span", {
+    staticClass: "fw-bold"
+  }, [_vm._v(_vm._s(_vm.apartment.bathrooms))])]), _vm._v(" "), _c("div", {
+    staticClass: "detail-element"
+  }, [_vm._v("\n            Numero camere:\n            "), _c("span", {
+    staticClass: "fw-bold"
+  }, [_vm._v(" " + _vm._s(_vm.apartment.rooms))])]), _vm._v(" "), _c("div", {
+    staticClass: "detail-element"
+  }, [_vm._v("\n            metri quadri:\n            "), _c("span", {
+    staticClass: "fw-bold"
+  }, [_vm._v(_vm._s(_vm.apartment.square_meters))])])])]), _vm._v(" "), _vm.apartment.services.length > 0 ? _c("div", {
+    staticClass: "apartment_services"
+  }, [_c("h2", [_vm._v("Servizi")]), _vm._v(" "), _c("ul", {
+    staticClass: "list"
+  }, _vm._l(_vm.apartment.services, function (service) {
+    return _c("li", {
+      key: service.id,
+      staticClass: "services-elements"
+    }, [_vm._v("\n            " + _vm._s(service.name) + "\n          ")]);
+  }), 0)]) : _vm._e(), _vm._v(" "), _vm._m(0), _vm._v(" "), _vm._m(1)])]) : _vm._e()]);
 };
 
-var staticRenderFns = [];
+var staticRenderFns = [function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("div", {
+    staticClass: "maps py-5 mb-5"
+  }, [_c("h2", [_vm._v("Posizione sulla mappa")]), _vm._v(" "), _c("div", {
+    staticClass: "map-container"
+  }, [_c("div", {
+    staticClass: "mapouter"
+  }, [_c("div", {
+    staticClass: "gmap_canvas"
+  }, [_c("iframe", {
+    attrs: {
+      width: "100%",
+      height: "500",
+      id: "gmap_canvas",
+      src: "https://maps.google.com/maps?q=2880%20Broadway,%20New%20York&t=&z=13&ie=UTF8&iwloc=&output=embed",
+      frameborder: "0",
+      scrolling: "no",
+      marginheight: "0",
+      marginwidth: "0"
+    }
+  }), _vm._v(" "), _c("a", {
+    attrs: {
+      href: "https://fmovies-online.net"
+    }
+  }), _vm._v(" "), _c("br"), _vm._v(" "), _c("a", {
+    attrs: {
+      href: "https://www.embedgooglemap.net"
+    }
+  }, [_vm._v("google maps create map")])])])])]);
+}, function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("div", {
+    staticClass: "message-form message-style"
+  }, [_c("h2", {
+    staticClass: "text-white text-uppercase fw-bold"
+  }, [_vm._v("\n          Invia un messaggio all' Host\n        ")]), _vm._v(" "), _c("div", {
+    staticClass: "mb-3"
+  }, [_c("label", {
+    staticClass: "form-label fw-bold text-white",
+    attrs: {
+      "for": "exampleFormControlInput1"
+    }
+  }, [_vm._v("Nome Completo")]), _vm._v(" "), _c("input", {
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      id: "exampleFormControlInput1",
+      placeholder: "Mario Rossi"
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "mb-3"
+  }, [_c("label", {
+    staticClass: "form-label fw-bold text-white",
+    attrs: {
+      "for": "exampleFormControlInput1"
+    }
+  }, [_vm._v("Indirizzo mail")]), _vm._v(" "), _c("input", {
+    staticClass: "form-control",
+    attrs: {
+      type: "email",
+      id: "exampleFormControlInput1",
+      placeholder: "name@example.com"
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "mb-3"
+  }, [_c("label", {
+    staticClass: "form-label fw-bold text-white",
+    attrs: {
+      "for": "exampleFormControlTextarea1"
+    }
+  }, [_vm._v("Il tuo messaggio")]), _vm._v(" "), _c("textarea", {
+    staticClass: "form-control",
+    attrs: {
+      id: "exampleFormControlTextarea1",
+      rows: "3"
+    }
+  })]), _vm._v(" "), _c("button", {
+    staticClass: "message_button btn btn-primary text-white text-uppercase fw-bold mt-5",
+    attrs: {
+      type: "submit"
+    }
+  }, [_vm._v("\n          Invia\n        ")])]);
+}];
 render._withStripped = true;
 
 
@@ -10485,7 +10611,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".hero_image[data-v-2ed98ed9] {\n  height: 500px;\n  background-position: center;\n  background-size: cover;\n  background-repeat: no-repeat;\n}", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n.apt-img[data-v-2ed98ed9] {\n  width: 100%;\n}\n.apartment_address[data-v-2ed98ed9],\n.apartment_details[data-v-2ed98ed9],\n.apartment_services[data-v-2ed98ed9],\n.apartment_description[data-v-2ed98ed9],\n.maps[data-v-2ed98ed9] {\n  border-bottom: 1px dotted lightgrey;\n}\n.list[data-v-2ed98ed9] {\n  -moz-column-count: 4;\n       column-count: 4;\n  -moz-column-gap: 20px;\n       column-gap: 20px;\n  list-style: none;\n}\n.list li[data-v-2ed98ed9]:before {\n  content: \"\\2713\";\n  color: #faad58;\n  font-weight: bold;\n  display: inline-block;\n  width: 1em;\n  margin-left: -1em;\n}\n.mapouter[data-v-2ed98ed9] {\n  position: relative;\n  text-align: right;\n  height: 500px;\n  width: 100%;\n}\n.gmap_canvas[data-v-2ed98ed9] {\n  overflow: hidden;\n  background: none !important;\n  height: 500px;\n  width: 100%;\n}\n.message-style[data-v-2ed98ed9] {\n  background-color: #faad58;\n  padding: 50px;\n}\n@media screen and (max-width: 600px) {\n.details-list[data-v-2ed98ed9],\n.list[data-v-2ed98ed9] {\n    flex-direction: column;\n    justify-content: space-between;\n    -moz-column-count: 1;\n         column-count: 1;\n}\n.services-elements[data-v-2ed98ed9] {\n    font-size: 20px;\n}\n.detail-element[data-v-2ed98ed9] {\n    margin-bottom: 20px;\n    font-size: 20px;\n}\n.message-form[data-v-2ed98ed9] {\n    display: flex;\n    flex-direction: column;\n}\n.message_button[data-v-2ed98ed9] {\n    padding: 16px 32px;\n    font-size: large;\n    align-items: center;\n}\n}", ""]);
 
 // exports
 
@@ -57412,6 +57538,17 @@ module.exports = function(module) {
 	return module;
 };
 
+
+/***/ }),
+
+/***/ "./resources/img/bathroom.png":
+/*!************************************!*\
+  !*** ./resources/img/bathroom.png ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/bathroom.png?c9355005b15c8a265f78c16253ebd3fd";
 
 /***/ }),
 

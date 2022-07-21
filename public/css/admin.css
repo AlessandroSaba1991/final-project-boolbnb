@@ -10252,7 +10252,6 @@ textarea.form-control-lg {
 .apartment .green {
   background-color: green;
 }
-
 .apartment .sponsor {
   background-color: gold;
   padding: 0.5rem;
@@ -10261,8 +10260,6 @@ textarea.form-control-lg {
   width: -moz-fit-content;
   width: fit-content;
 }
-
-
 
 input:focus:valid {
   border: 2px solid green;
