@@ -22,10 +22,12 @@ Route::middleware('auth')->prefix('admin')->namespace('Admin')->name('admin.')->
 {
     Route::get('/', 'HomeController@index')->name('home');
     Route::resource('apartments','ApartmentController');
-    Route::resource('messages','MessageController');
+
+    Route::get('apartments/{apartment}/messages','MessageController@index')->name('messages.index');
     Route::get('apartments/{apartment}/sponsorizations','SponsorizationController@index')->name('sponsorizations.index');
     Route::get('apartments/{apartment}/sponsorizations/{sponsorization}','SponsorizationController@show')->name('sponsorizations.show');
     Route::post('apartments/{apartment}/sponsorizations/{sponsorization}/checkout','SponsorizationController@checkout')->name('sponsorizations.checkout');
+
 
 
 });
