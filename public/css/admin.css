@@ -10235,11 +10235,16 @@ textarea.form-control-lg {
 }
 .apartment .badge_ {
   position: absolute;
-  top: 2%;
-  left: 1%;
-  padding: 0.5rem;
+  top: 1%;
+  left: -1%;
   color: white;
+}
+.apartment .visible {
+  padding: 0.5rem;
   border-radius: 0.25rem;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
 }
 .apartment .red {
   background-color: red;
@@ -10247,6 +10252,17 @@ textarea.form-control-lg {
 .apartment .green {
   background-color: green;
 }
+
+.apartment .sponsor {
+  background-color: gold;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+
 
 input:focus:valid {
   border: 2px solid green;
