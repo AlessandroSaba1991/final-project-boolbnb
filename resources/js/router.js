@@ -33,12 +33,14 @@ const routes = [
   {
     path: '/apartments',
     name: 'apartments',
-    component: Apartments
+    component: Apartments,
+    props: true
   },
   {
     path: '/apartment/:id',
     name: 'apartment',
-    component: Apartment
+    component: Apartment,
+    props: true
   },
   {
     path: '/*',

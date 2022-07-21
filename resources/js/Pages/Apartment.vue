@@ -179,7 +179,7 @@ export default {
   methods: {
     getApartment() {
       axios
-        .get("/api/apartments", {
+        .get("/api/apartment/" + this.$route.params.id, {
           params: {
             lat: 44.78993000,
             lon: 11.57065000,
@@ -187,7 +187,7 @@ export default {
           },
         })
         .then((response) => {
-          console.log(response.data);
+          console.log(response);
           if (response.data.status_code === 404) {
             this.loading = false;
             this.$router.push({ name: "not-found" });

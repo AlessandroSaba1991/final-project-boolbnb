@@ -5129,14 +5129,8 @@ __webpack_require__.r(__webpack_exports__);
     getApartment: function getApartment() {
       var _this = this;
 
-      axios.get("/api/apartments", {
-        params: {
-          lat: 44.78993000,
-          lon: 11.57065000,
-          radius: 20000
-        }
-      }).then(function (response) {
-        console.log(response.data);
+      axios.get("/api/apartment/" + this.$route.params.id).then(function (response) {
+        console.log(response);
 
         if (response.data.status_code === 404) {
           _this.loading = false;
@@ -58042,11 +58036,13 @@ var routes = [{
 }, {
   path: '/apartments',
   name: 'apartments',
-  component: _Pages_Apartments__WEBPACK_IMPORTED_MODULE_4__["default"]
+  component: _Pages_Apartments__WEBPACK_IMPORTED_MODULE_4__["default"],
+  props: true
 }, {
   path: '/apartment/:id',
   name: 'apartment',
-  component: _Pages_Apartment__WEBPACK_IMPORTED_MODULE_5__["default"]
+  component: _Pages_Apartment__WEBPACK_IMPORTED_MODULE_5__["default"],
+  props: true
 }, {
   path: '/*',
   name: 'not-found',
