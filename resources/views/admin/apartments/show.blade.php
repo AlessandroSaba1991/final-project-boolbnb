@@ -1,16 +1,50 @@
 @extends('layouts.admin')
 @section('content')
+@if (session('message'))
+<div class="alert alert-success">
+    {{ session('message') }}
+</div>
+@endif
 <div class="container">
     <div class="card apartment my-5">
-        @if($apartment->visible)
-        <div class="badge_ green">
-            <span>Visibile</span>
+        <div class="badge_">
+            @if($apartment->visible)
+            <div class="visible green">
+                <span>Visibile</span>
+            </div>
+            @else
+            <div class="visible red">
+                <span>Non Visibile</span>
+            </div>
+            @endif
+
+            @if (count($apartment->sponsorizations) > 0)
+
+            @foreach($apartment->sponsorizations as $sponsorization)
+            @if($loop->first)
+            @php
+            $data = $sponsorization->sponsor->end_sponsorization;
+            @endphp
+            @endif
+            @php
+            if($sponsorization->sponsor->end_sponsorization>$data){
+            $data = $sponsorization->sponsor->end_sponsorization;
+            };
+            @endphp
+            @endforeach
+            @php
+            $diff=date_diff(date_create($data),date_create(date("Y-m-d H:i:s")));
+            @endphp
+
+            <div class="sponsor mt-2">
+                @if($diff->d > 0)
+                <span>{{$diff->format("Scadenza Sponsorizzazione: %d Giorni %H Ore")}}</span>
+                @else
+                <span>{{$diff->format("Scadenza Sponsorizzazione: %H Ore")}}</span>
+                @endif
+            </div>
+            @endif
         </div>
-        @else
-        <div class="badge_ red">
-            <span>Non Visibile</span>
-        </div>
-        @endif
         <div class="row g-0">
             <div class="col-6">
                 <img class="h-100 w-100" src="{{asset('storage/' . $apartment->cover_image)}}" alt="{{$apartment->title}}">

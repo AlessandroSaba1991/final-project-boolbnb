@@ -10227,7 +10227,6 @@ textarea.form-control-lg {
   border-bottom: 1px solid #ced4da;
 }
 
-
 .apartment {
   position: relative;
 }
@@ -10236,19 +10235,32 @@ textarea.form-control-lg {
 }
 .apartment .badge_ {
   position: absolute;
-  top: 2%;
-  left: 1%;
-  padding: 0.5rem;
+  top: 1%;
+  left: -1%;
   color: white;
+}
+.apartment .visible {
+  padding: 0.5rem;
   border-radius: 0.25rem;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
 }
 .apartment .red {
   background-color: red;
 }
 .apartment .green {
   background-color: green;
-
 }
+.apartment .sponsor {
+  background-color: gold;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
 input:focus:valid {
   border: 2px solid green;
   outline: none;
@@ -10257,3 +10269,4 @@ input:focus:valid {
 input:focus:invalid {
   border: 2px solid red;
   outline: none;
+}

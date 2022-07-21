@@ -24,30 +24,42 @@
 
 .apartment {
     position: relative;
-    span{
+    span {
         font-weight: bold;
     }
     .badge_ {
         position: absolute;
-        top: 2%;
-        left: 1%;
-        padding: 0.5rem;
+        top: 1%;
+        left: -1%;
         color: white;
+    }
+    .visible{
+        padding: 0.5rem;
         border-radius: 0.25rem;
+        width: fit-content;
     }
     .red {
         background-color: red;
+
     }
     .green {
         background-color: green;
+
+    }
+    .sponsor{
+        background-color: gold;
+        padding: 0.5rem;
+        border-radius: 0.25rem;
+        width: fit-content;
     }
 }
 input:focus:valid {
     border: 2px solid green;
     outline: none;
-    }
-    
-    input:focus:invalid {
+}
+
+input:focus:invalid {
     border: 2px solid red;
     outline: none;
-    }
+}
+
