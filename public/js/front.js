@@ -5107,27 +5107,57 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       search: "",
-      beds: "",
-      rooms: "",
-      range: "",
+      latitude: "",
+      longitude: "",
+      beds: 1,
+      rooms: 1,
+      radius: 20000,
       serviceSelect: [],
-      services: []
+      AllServices: []
     };
   },
   methods: {
-    /* getServices() {
-      axios
-        .get("api/services")
-        .then((response) => {
-          this.services = response.data;
-        })
-        .catch((e) => {
-          console.error(e);
-        });
-    }, */
+    getApartment: function getApartment() {
+      var _this = this;
+
+      axios.get("/api/apartments", {
+        params: {
+          lat: this.latitude,
+          lon: this.longitude,
+          radius: this.radius,
+          beds: this.beds,
+          rooms: this.rooms,
+          service: this.serviceSelect
+        }
+      }).then(function (response) {
+        console.log(response);
+
+        if (response.data.status_code === 404) {
+          _this.loading = false;
+
+          _this.$router.push({
+            name: "not-found"
+          });
+        } else {
+          _this.apartment = response.data;
+          _this.loading = false;
+        }
+      })["catch"](function (e) {
+        console.error(e);
+      });
+    },
+    getServices: function getServices() {
+      var _this2 = this;
+
+      axios.get("api/services").then(function (response) {
+        _this2.AllServices = response.data;
+      })["catch"](function (e) {
+        console.error(e);
+      });
+    }
   },
   mounted: function mounted() {
-    /* this.getServices(); */
+    this.getServices();
   }
 });
 
@@ -5268,7 +5298,12 @@ var render = function render() {
     staticClass: "col-12"
   }, [_c("div", {
     staticClass: "mb-3"
-  }, [_c("label", {
+  }, [_c("form", {
+    attrs: {
+      method: "post",
+      action: "/"
+    }
+  }), _vm._v(" "), _c("label", {
     staticClass: "form-label",
     attrs: {
       "for": "address"
@@ -5298,35 +5333,35 @@ var render = function render() {
   }), _vm._v(" "), _c("div", {
     staticClass: "common_form d-flex justify-content-lg-between flex-wrap"
   }, [_c("div", {
-    staticClass: "p-0 mt-3 col-lg-2 pr-lg-3 pl-lg-0 mt-lg-3 col-md-6 pr-md-2 pl-md-0 mt-md-3 col-sm-12 mt-sm-3"
+    staticClass: "p-0 mt-3 col-lg-2 pr-lg-3 pl-lg-0 mt-lg-3 col-md-6 pr-md-2 pl-md-0 mt-md-3 col-sm-12 t-sm-3"
   }, [_c("label", {
     staticClass: "form-label",
     attrs: {
-      "for": "address"
+      "for": "radius"
     }
-  }, [_vm._v("Distanza max dal luogo")]), _vm._v(" "), _c("input", {
+  }, [_vm._v("\n                Distanza max dal luogo\n              ")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.range,
-      expression: "range"
+      value: _vm.radius,
+      expression: "radius"
     }],
     staticClass: "form-control rounded-0",
     attrs: {
-      id: "range",
+      id: "radius",
       type: "number",
       min: "0",
-      name: "range",
+      name: "radius",
       value: "",
       placeholder: "KM"
     },
     domProps: {
-      value: _vm.range
+      value: _vm.radius
     },
     on: {
       input: function input($event) {
         if ($event.target.composing) return;
-        _vm.range = $event.target.value;
+        _vm.radius = $event.target.value;
       }
     }
   })]), _vm._v(" "), _c("div", {
@@ -5429,23 +5464,14 @@ var render = function render() {
     attrs: {
       disabled: ""
     }
-  }, [_vm._v("seleziona dal menù")]), _vm._v(" "), _c("option", {
-    attrs: {
-      value: "1"
-    }
-  }, [_vm._v("Wi-fi")]), _vm._v(" "), _c("option", {
-    attrs: {
-      value: "2"
-    }
-  }, [_vm._v("Portineria")]), _vm._v(" "), _c("option", {
-    attrs: {
-      value: "3"
-    }
-  }, [_vm._v("Posto Auto")]), _vm._v(" "), _c("option", {
-    attrs: {
-      value: "4"
-    }
-  }, [_vm._v("Piscina")])])])])])])])])]);
+  }, [_vm._v("seleziona dal menù")]), _vm._v(" "), _vm._l(_vm.AllServices, function (service) {
+    return _c("option", {
+      key: service.id,
+      domProps: {
+        value: service.id
+      }
+    }, [_vm._v("\n                  " + _vm._s(service.name) + "\n                ")]);
+  })], 2)])])])])])])]);
 };
 
 var staticRenderFns = [function () {

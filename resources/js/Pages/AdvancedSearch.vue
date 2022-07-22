@@ -7,6 +7,7 @@
       <div class="row">
         <div class="col-12">
           <div class="mb-3">
+            <form method="post" action="/"></form>
             <label for="address" class="form-label">Destinazione</label>
             <input
               type="text"
@@ -31,21 +32,21 @@
                   pl-md-0
                   mt-md-3
                   col-sm-12
-                  mt-sm-3
+                  t-sm-3
                 "
               >
-                <label for="address" class="form-label"
-                  >Distanza max dal luogo</label
-                >
+                <label for="radius" class="form-label">
+                  Distanza max dal luogo
+                </label>
                 <input
                   class="form-control rounded-0"
-                  id="range"
+                  id="radius"
                   type="number"
                   min="0"
-                  name="range"
+                  name="radius"
                   value=""
                   placeholder="KM"
-                  v-model="range"
+                  v-model="radius"
                 />
               </div>
               <div
@@ -134,10 +135,13 @@
                   v-model="serviceSelect"
                 >
                   <option disabled>seleziona dal menù</option>
-                  <option value="1">Wi-fi</option>
-                  <option value="2">Portineria</option>
-                  <option value="3">Posto Auto</option>
-                  <option value="4">Piscina</option>
+                  <option
+                    v-for="service in AllServices"
+                    :key="service.id"
+                    :value="service.id"
+                  >
+                    {{ service.name }}
+                  </option>
                 </select>
               </div>
             </div>
@@ -154,27 +158,55 @@ export default {
   data() {
     return {
       search: "",
-      beds: "",
-      rooms: "",
-      range: "",
+      latitude: "",
+      longitude: "",
+      beds: 1,
+      rooms: 1,
+      radius: 20000,
       serviceSelect: [],
-      services: [],
+      AllServices: [],
     };
   },
   methods: {
-    /* getServices() {
+    getApartment() {
       axios
-        .get("api/services")
+        .get("/api/apartments", {
+          params: {
+            lat: this.latitude,
+            lon: this.longitude,
+            radius: this.radius,
+            beds: this.beds,
+            rooms: this.rooms,
+            service: this.serviceSelect,
+          },
+        })
         .then((response) => {
-          this.services = response.data;
+          console.log(response);
+          if (response.data.status_code === 404) {
+            this.loading = false;
+            this.$router.push({ name: "not-found" });
+          } else {
+            this.apartment = response.data;
+            this.loading = false;
+          }
         })
         .catch((e) => {
           console.error(e);
         });
-    }, */
+    },
+    getServices() {
+      axios
+        .get("api/services")
+        .then((response) => {
+          this.AllServices = response.data;
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+    },
   },
   mounted() {
-    /* this.getServices(); */
+    this.getServices();
   },
 };
 </script>

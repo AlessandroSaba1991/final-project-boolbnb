@@ -11,6 +11,9 @@ class ApartmentController extends Controller
 {
     public function index(Request $request)
     {
+        $beds=$request->query('beds');
+        $rooms=$request->query('rooms');
+        $services=$request->query('services');
         $lat = $request->query('lat');
         $lon = $request->query('lon');
         $radius = $request->query('radius');
