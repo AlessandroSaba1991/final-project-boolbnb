@@ -5103,7 +5103,32 @@ module.exports = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'AdvancedSearch'
+  name: "AdvancedSearch",
+  data: function data() {
+    return {
+      search: "",
+      beds: "",
+      rooms: "",
+      range: "",
+      serviceSelect: [],
+      services: []
+    };
+  },
+  methods: {
+    /* getServices() {
+      axios
+        .get("api/services")
+        .then((response) => {
+          this.services = response.data;
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+    }, */
+  },
+  mounted: function mounted() {
+    /* this.getServices(); */
+  }
 });
 
 /***/ }),
@@ -5129,7 +5154,13 @@ __webpack_require__.r(__webpack_exports__);
     getApartment: function getApartment() {
       var _this = this;
 
-      axios.get("/api/apartment/" + this.$route.params.id).then(function (response) {
+      axios.get("/api/apartment/" + this.$route.params.id, {
+        params: {
+          lat: 44.78993000,
+          lon: 11.57065000,
+          radius: 20000
+        }
+      }).then(function (response) {
         console.log(response);
 
         if (response.data.status_code === 404) {
@@ -5229,10 +5260,202 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("h1", [_vm._v("Search")]);
+  return _c("div", [_vm._m(0), _vm._v(" "), _c("div", {
+    staticClass: "container"
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-12"
+  }, [_c("div", {
+    staticClass: "mb-3"
+  }, [_c("label", {
+    staticClass: "form-label",
+    attrs: {
+      "for": "address"
+    }
+  }, [_vm._v("Destinazione")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.search,
+      expression: "search"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      id: "address",
+      placeholder: "inserisci una destinazione o una via"
+    },
+    domProps: {
+      value: _vm.search
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.search = $event.target.value;
+      }
+    }
+  }), _vm._v(" "), _c("div", {
+    staticClass: "common_form d-flex justify-content-lg-between flex-wrap"
+  }, [_c("div", {
+    staticClass: "p-0 mt-3 col-lg-2 pr-lg-3 pl-lg-0 mt-lg-3 col-md-6 pr-md-2 pl-md-0 mt-md-3 col-sm-12 mt-sm-3"
+  }, [_c("label", {
+    staticClass: "form-label",
+    attrs: {
+      "for": "address"
+    }
+  }, [_vm._v("Distanza max dal luogo")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.range,
+      expression: "range"
+    }],
+    staticClass: "form-control rounded-0",
+    attrs: {
+      id: "range",
+      type: "number",
+      min: "0",
+      name: "range",
+      value: "",
+      placeholder: "KM"
+    },
+    domProps: {
+      value: _vm.range
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.range = $event.target.value;
+      }
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "p-0 mt-3 col-lg-2 pl-lg-0 pr-lg-3 mt-lg-3 col-md-6 pl-md-2 pr-md-0 mt-md-3 col-sm-12 mt-sm-3"
+  }, [_c("label", {
+    staticClass: "form-label",
+    attrs: {
+      "for": "address"
+    }
+  }, [_vm._v("Numero di stanze")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.rooms,
+      expression: "rooms"
+    }],
+    staticClass: "form-control rounded-0",
+    attrs: {
+      id: "rooms",
+      type: "number",
+      min: "1",
+      name: "rooms",
+      value: "",
+      placeholder: "Rooms"
+    },
+    domProps: {
+      value: _vm.rooms
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.rooms = $event.target.value;
+      }
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "p-0 mt-3 col-lg-2 pl-lg-0 pr-lg-3 mt-lg-3 col-md-6 pl-md-0 pr-md-2 mt-md-3 col-sm-12 p-sm-0 mt-sm-3"
+  }, [_c("label", {
+    staticClass: "form-label",
+    attrs: {
+      "for": "address"
+    }
+  }, [_vm._v("Numero di posti letto")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.beds,
+      expression: "beds"
+    }],
+    staticClass: "form-control rounded-0",
+    attrs: {
+      id: "beds",
+      min: "1",
+      type: "number",
+      name: "beds",
+      value: "",
+      placeholder: "Beds"
+    },
+    domProps: {
+      value: _vm.beds
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.beds = $event.target.value;
+      }
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "p-0 mt-3 col-lg-2 pl-lg-0 pr-lg-3 mt-lg-3 col-md-6 pl-md-0 pr-md-2 mt-md-3 col-sm-12 p-sm-0 mt-sm-3"
+  }, [_c("label", {
+    staticClass: "form-label",
+    attrs: {
+      "for": "services"
+    }
+  }, [_vm._v("Servizi")]), _vm._v(" "), _c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.serviceSelect,
+      expression: "serviceSelect"
+    }],
+    staticClass: "form-select",
+    attrs: {
+      name: "services",
+      id: "services",
+      multiple: "",
+      "aria-label": "Default select example"
+    },
+    on: {
+      change: function change($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+        _vm.serviceSelect = $event.target.multiple ? $$selectedVal : $$selectedVal[0];
+      }
+    }
+  }, [_c("option", {
+    attrs: {
+      disabled: ""
+    }
+  }, [_vm._v("seleziona dal menù")]), _vm._v(" "), _c("option", {
+    attrs: {
+      value: "1"
+    }
+  }, [_vm._v("Wi-fi")]), _vm._v(" "), _c("option", {
+    attrs: {
+      value: "2"
+    }
+  }, [_vm._v("Portineria")]), _vm._v(" "), _c("option", {
+    attrs: {
+      value: "3"
+    }
+  }, [_vm._v("Posto Auto")]), _vm._v(" "), _c("option", {
+    attrs: {
+      value: "4"
+    }
+  }, [_vm._v("Piscina")])])])])])])])])]);
 };
 
-var staticRenderFns = [];
+var staticRenderFns = [function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("div", {
+    staticClass: "title text-center"
+  }, [_c("h1", [_vm._v("Cerca la struttura perfetta per te")])]);
+}];
 render._withStripped = true;
 
 
