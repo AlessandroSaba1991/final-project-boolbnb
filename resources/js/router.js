@@ -23,12 +23,14 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: Home
+    component: Home,
+    props: true
   },
   {
     path: '/advancedsearch',
     name: 'advancedsearch',
-    component: AdvancedSearch
+    component: AdvancedSearch,
+    props: true
   },
   {
     path: '/apartments',

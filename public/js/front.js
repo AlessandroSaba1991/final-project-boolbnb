@@ -5120,6 +5120,20 @@ __webpack_require__.r(__webpack_exports__);
       loading: true
     };
   },
+  props: {
+    searchAddress: {
+      type: String,
+      required: true
+    },
+    searchLatitude: {
+      type: Number,
+      required: true
+    },
+    searchLongitude: {
+      type: Number,
+      required: true
+    }
+  },
   methods: {
     getApartment: function getApartment() {
       var _this = this;
@@ -5203,6 +5217,10 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
+    this.search = this.searchAddress;
+    this.latitude = this.searchLatitude;
+    this.longitude = this.searchLongitude;
+    this.getApartment();
     this.getServices();
   }
 });
@@ -5286,7 +5304,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'Home',
+  name: "Home",
   data: function data() {
     return {
       photos: [{
@@ -5294,7 +5312,10 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         image: "https://www.quiq.re/wp-content/uploads/2014/12/bg-1.jpg"
       }],
-      activeItem: 0
+      activeItem: 0,
+      searchLatitude: "",
+      searchLongitude: "",
+      searchAddress: ""
     };
   },
   methods: {
@@ -5313,6 +5334,42 @@ __webpack_require__.r(__webpack_exports__);
     },
     startInterval: function startInterval() {
       this.interval = setInterval(this.goDown, 5000);
+    },
+    callAddress: function callAddress() {
+      var _this = this;
+
+      window.axios.defaults.headers.common = {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      };
+      var address = document.getElementById("search").value;
+      var resultElement = document.querySelector(".result");
+      resultElement.innerHTML = "";
+      var link = "https://kr-api.tomtom.com/search/2/geocode/".concat(address, ".json?key=MtC8XS7dGHVqDy6SPK1zWiLfRmG28cBF&typeahead=true");
+
+      if (address.length > 2) {
+        axios.get(link).then(function (response) {
+          var attempts = response.data.results.slice(0, 3);
+          _this.searchLatitude = attempts[0].position.lat;
+          _this.searchLongitude = attempts[0].position.lon;
+          attempts.forEach(function (item) {
+            var divElement = document.createElement("div");
+            divElement.classList.add("list-result");
+            var markup = "<span>".concat(item.address.freeformAddress, "</span>");
+            divElement.insertAdjacentHTML("beforeend", markup);
+            divElement.addEventListener("click", function () {
+              document.getElementById("search").value = item.address.freeformAddress;
+              _this.searchAddress = item.address.freeformAddress;
+              _this.searchLatitude = item.position.lat;
+              _this.searchLongitude = item.position.lon;
+              resultElement.innerHTML = "";
+              resultElement.setAttribute("hidden", "true");
+            });
+            resultElement.append(divElement);
+            resultElement.removeAttribute("hidden");
+          });
+        });
+      }
     }
   },
   mounted: function mounted() {
@@ -5831,7 +5888,57 @@ var render = function render() {
 
   return _c("div", {
     staticClass: "container-fluid p-0"
-  }, [_vm._m(0), _vm._v(" "), _vm._m(1), _vm._v(" "), _c("div", {
+  }, [_c("div", {
+    staticClass: "row g-0 backimg"
+  }, [_vm._m(0), _vm._v(" "), _c("div", {
+    staticClass: "d-flex justify-content-center"
+  }, [_c("div", {
+    staticClass: "mb-3 w-50 me-2"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.searchAddress,
+      expression: "searchAddress"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "search",
+      id: "search",
+      placeholder: "Cerca L'Appartamento Più Vicino",
+      "aria-label": "Search",
+      "aria-describedby": "search-addon"
+    },
+    domProps: {
+      value: _vm.searchAddress
+    },
+    on: {
+      keyup: function keyup($event) {
+        return _vm.callAddress();
+      },
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.searchAddress = $event.target.value;
+      }
+    }
+  }), _vm._v(" "), _c("div", {
+    staticClass: "result",
+    attrs: {
+      hidden: ""
+    }
+  })]), _vm._v(" "), _c("div", [_c("router-link", {
+    staticClass: "btn btn_orange text-uppercase text-white font_monserrat",
+    attrs: {
+      to: {
+        name: "advancedsearch",
+        params: {
+          searchAddress: _vm.searchAddress,
+          searchLatitude: _vm.searchLatitude,
+          searchLongitude: _vm.searchLongitude
+        }
+      }
+    }
+  }, [_vm._v("Cerca")])], 1)])]), _vm._v(" "), _vm._m(1), _vm._v(" "), _c("div", {
     staticClass: "d-flex justify-content-center pt-5"
   }, [_c("div", {
     staticClass: "row g-0 w-100"
@@ -5862,9 +5969,9 @@ var render = function render() {
     staticClass: "col-4"
   }, [_c("h5", {
     staticClass: "pt-4 text-white text-uppercase font_monserrat"
-  }, [_vm._v("get socials")]), _vm._v(" "), _c("p", {
+  }, [_vm._v("\n            get socials\n          ")]), _vm._v(" "), _c("p", {
     staticClass: "pt-3 text-white font_monserrat"
-  }, [_vm._v("Link with us via social networks")]), _vm._v(" "), _c("span", {
+  }, [_vm._v("\n            Link with us via social networks\n          ")]), _vm._v(" "), _c("span", {
     staticClass: "instagram"
   }, [_c("svg", {
     attrs: {
@@ -5911,31 +6018,10 @@ var staticRenderFns = [function () {
       _c = _vm._self._c;
 
   return _c("div", {
-    staticClass: "row g-0 backimg"
-  }, [_c("div", {
     staticClass: "col-lg-12 col-md-12 col-sm-12 d-flex justify-content-center align-items-center flex-wrap"
   }, [_c("div", {
     staticClass: "text-uppercase text-white p-5 title"
-  }, [_vm._v("team 7 boolbnb")])]), _vm._v(" "), _c("div", {
-    staticClass: "search d-flex justify-content-center"
-  }, [_c("div", {
-    staticClass: "searchbox col-lg-6 col-md-6 col-sm-5 col-5"
-  }, [_c("div", {
-    staticClass: "input-group w-100 d-flex"
-  }, [_c("input", {
-    staticClass: "form-control",
-    attrs: {
-      type: "search",
-      placeholder: "Cerca L'Appartamento Più Vicino",
-      "aria-label": "Search",
-      "aria-describedby": "search-addon"
-    }
-  }), _vm._v(" "), _c("button", {
-    staticClass: "btn btn_orange text-uppercase text-white font_monserrat",
-    attrs: {
-      type: "button"
-    }
-  }, [_vm._v("start searching")])])])])]);
+  }, [_vm._v("team 7 boolbnb")])]);
 }, function () {
   var _vm = this,
       _c = _vm._self._c;
@@ -5964,11 +6050,11 @@ var staticRenderFns = [function () {
     staticClass: "card-body"
   }, [_c("p", {
     staticClass: "card-text text-center font_monserrat"
-  }, [_vm._v("Villa Molto Graziosa")]), _vm._v(" "), _c("p", {
+  }, [_vm._v("\n                Villa Molto Graziosa\n              ")]), _vm._v(" "), _c("p", {
     staticClass: "price font_monserrat"
   }, [_vm._v("300$/notte")]), _vm._v(" "), _c("button", {
     staticClass: "btn btn_orange text-uppercase text-white font_monserrat"
-  }, [_vm._v("Check it")])])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                Check it\n              ")])])])]), _vm._v(" "), _c("div", {
     staticClass: "col py-4 px-3"
   }, [_c("div", {
     staticClass: "card"
@@ -5982,11 +6068,11 @@ var staticRenderFns = [function () {
     staticClass: "card-body"
   }, [_c("p", {
     staticClass: "card-text text-center font_monserrat"
-  }, [_vm._v("Villa Molto Graziosa")]), _vm._v(" "), _c("p", {
+  }, [_vm._v("\n                Villa Molto Graziosa\n              ")]), _vm._v(" "), _c("p", {
     staticClass: "price font_monserrat"
   }, [_vm._v("300$/notte")]), _vm._v(" "), _c("button", {
     staticClass: "btn btn_orange text-uppercase text-white font_monserrat"
-  }, [_vm._v("Check it")])])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                Check it\n              ")])])])]), _vm._v(" "), _c("div", {
     staticClass: "col py-4 px-3"
   }, [_c("div", {
     staticClass: "card"
@@ -6000,11 +6086,11 @@ var staticRenderFns = [function () {
     staticClass: "card-body"
   }, [_c("p", {
     staticClass: "card-text text-center font_monserrat"
-  }, [_vm._v("Villa Molto Graziosa")]), _vm._v(" "), _c("p", {
+  }, [_vm._v("\n                Villa Molto Graziosa\n              ")]), _vm._v(" "), _c("p", {
     staticClass: "price font_monserrat"
   }, [_vm._v("300$ / notte")]), _vm._v(" "), _c("button", {
     staticClass: "btn btn_orange text-uppercase text-white font_monserrat"
-  }, [_vm._v("Check it")])])])])])])]);
+  }, [_vm._v("\n                Check it\n              ")])])])])])])]);
 }, function () {
   var _vm = this,
       _c = _vm._self._c;
@@ -6015,9 +6101,9 @@ var staticRenderFns = [function () {
     staticClass: "pt_7 mb-5"
   }, [_c("h1", {
     staticClass: "text-uppercase text-white font_satisy"
-  }, [_vm._v("why us ? ")]), _vm._v(" "), _c("p", {
+  }, [_vm._v("why us ?")]), _vm._v(" "), _c("p", {
     staticClass: "text-capitalize mt-5 text-white font_monserrat"
-  }, [_vm._v("Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente dignissimos molestias adipisci fuga, cum ipsa dolores possimus animi ab velit! Numquam voluptates, totam ipsa deleniti quae deserunt rerum? Doloremque, rerum.")])])]);
+  }, [_vm._v("\n            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente\n            dignissimos molestias adipisci fuga, cum ipsa dolores possimus\n            animi ab velit! Numquam voluptates, totam ipsa deleniti quae\n            deserunt rerum? Doloremque, rerum.\n          ")])])]);
 }, function () {
   var _vm = this,
       _c = _vm._self._c;
@@ -6026,9 +6112,9 @@ var staticRenderFns = [function () {
     staticClass: "col-4"
   }, [_c("h5", {
     staticClass: "pt-4 text-white text-uppercase font_monserrat"
-  }, [_vm._v("We're here for you")]), _vm._v(" "), _c("p", {
+  }, [_vm._v("\n            We're here for you\n          ")]), _vm._v(" "), _c("p", {
     staticClass: "pt-3 text-white font_monserrat"
-  }, [_vm._v("8500, Lorem Street, Chicago, IL, 55030 Phone  (123)456-78-90 Phone  (123)456-78-90 sales@example.com")])]);
+  }, [_vm._v("\n            8500, Lorem Street, Chicago, IL, 55030 Phone (123)456-78-90 Phone\n            (123)456-78-90 sales@example.com\n          ")])]);
 }, function () {
   var _vm = this,
       _c = _vm._self._c;
@@ -6037,11 +6123,11 @@ var staticRenderFns = [function () {
     staticClass: "col-4"
   }, [_c("h5", {
     staticClass: "pt-4 text-white text-uppercase font_monserrat"
-  }, [_vm._v("contact us")]), _vm._v(" "), _c("p", {
+  }, [_vm._v("\n            contact us\n          ")]), _vm._v(" "), _c("p", {
     staticClass: "pt-3 text-white font_monserrat"
-  }, [_vm._v("we love yoyr feedback and are constantly looking")]), _vm._v(" "), _c("p", {
+  }, [_vm._v("\n            we love yoyr feedback and are constantly looking\n          ")]), _vm._v(" "), _c("p", {
     staticClass: "pt-3 orange text-uppercase font_monserrat"
-  }, [_vm._v("send us a message ")])]);
+  }, [_vm._v("\n            send us a message\n          ")])]);
 }];
 render._withStripped = true;
 
@@ -11225,7 +11311,7 @@ exports.push([module.i, "@import url(https://fonts.googleapis.com/css2?family=Mo
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css2?family=Satisfy&display=swap);", ""]);
 
 // module
-exports.push([module.i, "\n.backimg{\n    background-image: url(\"https://www.myistria.com/UserDocsImages/app/objekti/795/slika_hd/19082020034916_Villas-near-Rovinj-Villa-Prestige-2.jpg\");\n    height: 400px;\n    background-size: cover;\n    background-position: center;\n}\n.title{\n    font-size: 32px ;\n}\n.radius{\n    border-radius: 50%;\n}\n.btn_orange{\n   background: linear-gradient(to right,#edc156 0%,#fea759 0%,#fea759 50%,#edc156 100%) no-repeat scroll right bottom/210% 100% #fea759;\n}\n.price{\n    text-align: center;\n    text-transform: capitalize;\n}\n\n/* .bg_blue{\n    background-color: aqua;\n    height: 200px;\n    width: 300px;\n} */\n.img1{\n    height: 500px;\n    width: 900px;\n}\n.pt_7{\n    padding-top: 9rem;\n}\n.bg_img2{\n    background-image: url(https://wallpaperaccess.com/full/1126760.jpg);\n    width:100%;\n    height: 500px;\n    background-size: cover;\n    background-repeat: no-repeat;\n}\n.bg_orange{\n   background: linear-gradient(to right,#edc156 0%,#fea759 0%,#fea759 50%,#edc156 100%) no-repeat scroll right bottom/210% 100% #fea759;\n}\n.border-black{\n    border: 1px solid black;\n    border-radius:50%;\n    padding: 10px;\n}\n.active_img{\n    display: none;\n}\n.footer{\n    background-color: rgb(30, 29, 29);\n    height: auto;\n}\n.borderimg{\n    border: 1px solid black;\n    border-radius:50%;\n}\n.orange{\n    color: orange;\n    transition: 2s;\n}\n.orange:hover{\n    cursor: pointer;\n    color: orangered;\n}\n.imgfit{\n    aspect-ratio: 2/1;\n}\n.credit{\n    background-color: orange;\n}\n.w-10{\n    width: 10%;\n}\n.w26rem{\n    width: 26rem;\n}\n.instagram,\n.linkedin,\n.facebook:hover{\n    cursor: pointer;\n}\n.font_satisy{\n    font-size: 42px;\n    font-family: 'Satisfy', cursive;\n}\n.font_monserrat{\n    font-family: 'Montserrat', sans-serif;\n}\n@media screen and(max-width:576px) {\n.margin-3{\n        margin: 0 0 0   0;\n}\n}\n\n\n\n\n", ""]);
+exports.push([module.i, "\n.backimg {\n  background-image: url(\"https://www.myistria.com/UserDocsImages/app/objekti/795/slika_hd/19082020034916_Villas-near-Rovinj-Villa-Prestige-2.jpg\");\n  height: 400px;\n  background-size: cover;\n  background-position: center;\n}\n.title {\n  font-size: 32px;\n}\n.radius {\n  border-radius: 50%;\n}\n.btn_orange {\n  background: linear-gradient(\n      to right,\n      #edc156 0%,\n      #fea759 0%,\n      #fea759 50%,\n      #edc156 100%\n    )\n    no-repeat scroll right bottom/210% 100% #fea759;\n}\n.price {\n  text-align: center;\n  text-transform: capitalize;\n}\n\n/* .bg_blue{\n        background-color: aqua;\n        height: 200px;\n        width: 300px;\n    } */\n.img1 {\n  height: 500px;\n  width: 900px;\n}\n.pt_7 {\n  padding-top: 9rem;\n}\n.bg_img2 {\n  background-image: url(https://wallpaperaccess.com/full/1126760.jpg);\n  width: 100%;\n  height: 500px;\n  background-size: cover;\n  background-repeat: no-repeat;\n}\n.bg_orange {\n  background: linear-gradient(\n      to right,\n      #edc156 0%,\n      #fea759 0%,\n      #fea759 50%,\n      #edc156 100%\n    )\n    no-repeat scroll right bottom/210% 100% #fea759;\n}\n.border-black {\n  border: 1px solid black;\n  border-radius: 50%;\n  padding: 10px;\n}\n.active_img {\n  display: none;\n}\n.footer {\n  background-color: rgb(30, 29, 29);\n  height: auto;\n}\n.borderimg {\n  border: 1px solid black;\n  border-radius: 50%;\n}\n.orange {\n  color: orange;\n  transition: 2s;\n}\n.orange:hover {\n  cursor: pointer;\n  color: orangered;\n}\n.imgfit {\n  aspect-ratio: 2/1;\n}\n.credit {\n  background-color: orange;\n}\n.w-10 {\n  width: 10%;\n}\n.w26rem {\n  width: 26rem;\n}\n.instagram,\n.linkedin,\n.facebook:hover {\n  cursor: pointer;\n}\n.font_satisy {\n  font-size: 42px;\n  font-family: \"Satisfy\", cursive;\n}\n.font_monserrat {\n  font-family: \"Montserrat\", sans-serif;\n}\n@media screen and(max-width:576px) {\n.margin-3 {\n    margin: 0 0 0 0;\n}\n}\n", ""]);
 
 // exports
 
@@ -58677,11 +58763,13 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 var routes = [{
   path: '/',
   name: 'home',
-  component: _Pages_Home__WEBPACK_IMPORTED_MODULE_2__["default"]
+  component: _Pages_Home__WEBPACK_IMPORTED_MODULE_2__["default"],
+  props: true
 }, {
   path: '/advancedsearch',
   name: 'advancedsearch',
-  component: _Pages_AdvancedSearch__WEBPACK_IMPORTED_MODULE_3__["default"]
+  component: _Pages_AdvancedSearch__WEBPACK_IMPORTED_MODULE_3__["default"],
+  props: true
 }, {
   path: '/apartments',
   name: 'apartments',

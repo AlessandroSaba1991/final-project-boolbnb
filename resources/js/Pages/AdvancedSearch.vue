@@ -204,6 +204,20 @@ export default {
       loading: true,
     };
   },
+  props:{
+    searchAddress: {
+        type: String,
+        required: true
+    },
+    searchLatitude: {
+        type: Number,
+        required: true
+    },
+    searchLongitude: {
+        type: Number,
+        required: true
+    }
+  },
   methods: {
     getApartment() {
       axios
@@ -280,6 +294,10 @@ export default {
     },
   },
   mounted() {
+    this.search = this.searchAddress
+    this.latitude = this.searchLatitude
+    this.longitude = this.searchLongitude
+    this.getApartment()
     this.getServices();
   },
 };
