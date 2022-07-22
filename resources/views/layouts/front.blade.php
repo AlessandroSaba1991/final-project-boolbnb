@@ -26,7 +26,7 @@
         <nav class="navbar backend navbar-light bg-white shadow-sm">
             <div class="container position-relative">
 
-                <ul class="navbar-nav ms-auto laravel_button d-flex flex-row">
+                <ul class="navbar-nav laravel_button d-flex flex-row">
                     <!-- Authentication Links -->
                     @guest
                     <li class="nav-item me-3">

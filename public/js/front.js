@@ -5102,18 +5102,22 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _views_App_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../views/App.vue */ "./resources/js/views/App.vue");
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AdvancedSearch",
   data: function data() {
     return {
       search: "",
-      latitude: "",
-      longitude: "",
-      beds: 1,
-      rooms: 1,
+      latitude: 36.74969053,
+      longitude: 14.75327845,
+      beds: "1",
+      rooms: "1",
       radius: 20000,
       serviceSelect: [],
-      AllServices: []
+      AllServices: [],
+      apartments: "",
+      loading: true
     };
   },
   methods: {
@@ -5127,10 +5131,10 @@ __webpack_require__.r(__webpack_exports__);
           radius: this.radius,
           beds: this.beds,
           rooms: this.rooms,
-          service: this.serviceSelect
+          services: this.serviceSelect
         }
       }).then(function (response) {
-        console.log(response);
+        console.log(response.data);
 
         if (response.data.status_code === 404) {
           _this.loading = false;
@@ -5139,7 +5143,7 @@ __webpack_require__.r(__webpack_exports__);
             name: "not-found"
           });
         } else {
-          _this.apartment = response.data;
+          _this.apartments = response.data;
           _this.loading = false;
         }
       })["catch"](function (e) {
@@ -5154,6 +5158,48 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (e) {
         console.error(e);
       });
+    },
+    callAddress: function callAddress() {
+      var _this3 = this;
+
+      window.axios.defaults.headers.common = {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      };
+      var address = document.getElementById("address").value;
+      var resultElement = document.querySelector(".result");
+      resultElement.innerHTML = "";
+      var link = "https://kr-api.tomtom.com/search/2/geocode/".concat(address, ".json?key=MtC8XS7dGHVqDy6SPK1zWiLfRmG28cBF&typeahead=true");
+
+      if (address.length > 2) {
+        axios.get(link).then(function (response) {
+          var attempts = response.data.results.slice(0, 3);
+          _this3.latitude = attempts[0].position.lat;
+          _this3.longitude = attempts[0].position.lon;
+          console.log(attempts[0]);
+
+          _this3.getApartment();
+
+          attempts.forEach(function (item) {
+            var divElement = document.createElement("div");
+            divElement.classList.add("list-result");
+            var markup = "<span>".concat(item.address.freeformAddress, "</span>");
+            divElement.insertAdjacentHTML("beforeend", markup);
+            divElement.addEventListener("click", function () {
+              document.getElementById("address").value = item.address.freeformAddress;
+              _this3.search = item.address.freeformAddress;
+              _this3.latitude = item.position.lat;
+              _this3.longitude = item.position.lon;
+              resultElement.innerHTML = "";
+              resultElement.setAttribute("hidden", "true");
+
+              _this3.getApartment();
+            });
+            resultElement.append(divElement);
+            resultElement.removeAttribute("hidden");
+          });
+        });
+      }
     }
   },
   mounted: function mounted() {
@@ -5329,12 +5375,7 @@ var render = function render() {
     staticClass: "col-12"
   }, [_c("div", {
     staticClass: "mb-3"
-  }, [_c("form", {
-    attrs: {
-      method: "post",
-      action: "/"
-    }
-  }), _vm._v(" "), _c("label", {
+  }, [_c("label", {
     staticClass: "form-label",
     attrs: {
       "for": "address"
@@ -5356,10 +5397,18 @@ var render = function render() {
       value: _vm.search
     },
     on: {
+      keyup: function keyup($event) {
+        return _vm.callAddress();
+      },
       input: function input($event) {
         if ($event.target.composing) return;
         _vm.search = $event.target.value;
       }
+    }
+  }), _vm._v(" "), _c("div", {
+    staticClass: "result",
+    attrs: {
+      hidden: ""
     }
   }), _vm._v(" "), _c("div", {
     staticClass: "common_form d-flex justify-content-lg-between flex-wrap"
@@ -5381,15 +5430,19 @@ var render = function render() {
     attrs: {
       id: "radius",
       type: "number",
-      min: "0",
+      min: "1",
       name: "radius",
       value: "",
-      placeholder: "KM"
+      placeholder: "KM",
+      oninput: "this.value = Math.abs(this.value)"
     },
     domProps: {
       value: _vm.radius
     },
     on: {
+      keyup: function keyup($event) {
+        return _vm.getApartment();
+      },
       input: function input($event) {
         if ($event.target.composing) return;
         _vm.radius = $event.target.value;
@@ -5400,7 +5453,7 @@ var render = function render() {
   }, [_c("label", {
     staticClass: "form-label",
     attrs: {
-      "for": "address"
+      "for": "rooms"
     }
   }, [_vm._v("Numero di stanze")]), _vm._v(" "), _c("input", {
     directives: [{
@@ -5414,14 +5467,19 @@ var render = function render() {
       id: "rooms",
       type: "number",
       min: "1",
+      max: "100",
       name: "rooms",
       value: "",
-      placeholder: "Rooms"
+      placeholder: "Rooms",
+      oninput: "this.value = Math.abs(this.value)"
     },
     domProps: {
       value: _vm.rooms
     },
     on: {
+      keyup: function keyup($event) {
+        return _vm.getApartment();
+      },
       input: function input($event) {
         if ($event.target.composing) return;
         _vm.rooms = $event.target.value;
@@ -5432,7 +5490,7 @@ var render = function render() {
   }, [_c("label", {
     staticClass: "form-label",
     attrs: {
-      "for": "address"
+      "for": "beds"
     }
   }, [_vm._v("Numero di posti letto")]), _vm._v(" "), _c("input", {
     directives: [{
@@ -5445,15 +5503,20 @@ var render = function render() {
     attrs: {
       id: "beds",
       min: "1",
+      max: "100",
       type: "number",
       name: "beds",
       value: "",
-      placeholder: "Beds"
+      placeholder: "Beds",
+      oninput: "this.value = Math.abs(this.value)"
     },
     domProps: {
       value: _vm.beds
     },
     on: {
+      keyup: function keyup($event) {
+        return _vm.getApartment();
+      },
       input: function input($event) {
         if ($event.target.composing) return;
         _vm.beds = $event.target.value;
@@ -5500,9 +5563,37 @@ var render = function render() {
       key: service.id,
       domProps: {
         value: service.id
+      },
+      on: {
+        click: function click($event) {
+          return _vm.getApartment();
+        }
       }
     }, [_vm._v("\n                  " + _vm._s(service.name) + "\n                ")]);
-  })], 2)])])])])])])]);
+  })], 2)])])])])]), _vm._v(" "), _c("div", {
+    staticClass: "row row-cols-2"
+  }, _vm._l(_vm.apartments, function (apartment) {
+    return _c("div", {
+      key: apartment.id,
+      staticClass: "col"
+    }, [_c("div", {
+      staticClass: "card h-100"
+    }, [_c("img", {
+      staticClass: "card-img-top",
+      attrs: {
+        src: "/storage/" + apartment.cover_image,
+        alt: ""
+      }
+    }), _vm._v(" "), _c("div", {
+      staticClass: "card-body"
+    }, [_c("p", {
+      staticClass: "card-text text-center font_monserrat"
+    }, [_vm._v("\n              " + _vm._s(apartment.title) + "\n            ")]), _vm._v(" "), _c("p", {
+      staticClass: "price font_monserrat"
+    }, [_vm._v(_vm._s(apartment.description))]), _vm._v(" "), _c("button", {
+      staticClass: "btn btn_orange text-uppercase text-white font_monserrat"
+    }, [_vm._v("\n              Check it\n            ")])])])]);
+  }), 0)])]);
 };
 
 var staticRenderFns = [function () {

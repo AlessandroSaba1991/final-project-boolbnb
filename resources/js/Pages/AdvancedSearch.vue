@@ -7,7 +7,6 @@
       <div class="row">
         <div class="col-12">
           <div class="mb-3">
-            <form method="post" action="/"></form>
             <label for="address" class="form-label">Destinazione</label>
             <input
               type="text"
@@ -15,7 +14,11 @@
               id="address"
               placeholder="inserisci una destinazione o una via"
               v-model="search"
+              @keyup="callAddress()"
+
             />
+            <div class="result" hidden></div>
+
             <div
               class="common_form d-flex justify-content-lg-between flex-wrap"
             >
@@ -42,11 +45,13 @@
                   class="form-control rounded-0"
                   id="radius"
                   type="number"
-                  min="0"
+                  min="1"
                   name="radius"
                   value=""
                   placeholder="KM"
                   v-model="radius"
+                  oninput="this.value = Math.abs(this.value)"
+                  @keyup="getApartment()"
                 />
               </div>
               <div
@@ -65,16 +70,19 @@
                   mt-sm-3
                 "
               >
-                <label for="address" class="form-label">Numero di stanze</label>
+                <label for="rooms" class="form-label">Numero di stanze</label>
                 <input
                   class="form-control rounded-0"
                   id="rooms"
                   type="number"
                   min="1"
+                  max="100"
                   name="rooms"
                   value=""
                   placeholder="Rooms"
                   v-model="rooms"
+                  oninput="this.value = Math.abs(this.value)"
+                  @keyup="getApartment()"
                 />
               </div>
               <div
@@ -94,18 +102,21 @@
                   mt-sm-3
                 "
               >
-                <label for="address" class="form-label"
+                <label for="beds" class="form-label"
                   >Numero di posti letto</label
                 >
                 <input
                   class="form-control rounded-0"
                   id="beds"
                   min="1"
+                  max="100"
                   type="number"
                   name="beds"
                   value=""
                   placeholder="Beds"
                   v-model="beds"
+                  oninput="this.value = Math.abs(this.value)"
+                  @keyup="getApartment()"
                 />
               </div>
               <div
@@ -139,6 +150,7 @@
                     v-for="service in AllServices"
                     :key="service.id"
                     :value="service.id"
+                    @click="getApartment()"
                   >
                     {{ service.name }}
                   </option>
@@ -148,23 +160,48 @@
           </div>
         </div>
       </div>
+      <div class="row row-cols-2">
+        <div class="col" v-for="apartment in apartments" :key="apartment.id">
+          <div class="card h-100">
+            <img
+              :src="'/storage/' + apartment.cover_image"
+              alt=""
+              class="card-img-top"
+            />
+            <div class="card-body">
+              <p class="card-text text-center font_monserrat">
+                {{ apartment.title }}
+              </p>
+              <p class="price font_monserrat">{{ apartment.description }}</p>
+              <button
+                class="btn btn_orange text-uppercase text-white font_monserrat"
+              >
+                Check it
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import AppVue from "../views/App.vue";
 export default {
   name: "AdvancedSearch",
   data() {
     return {
       search: "",
-      latitude: "",
-      longitude: "",
-      beds: 1,
-      rooms: 1,
+      latitude: 36.74969053,
+      longitude: 14.75327845,
+      beds: "1",
+      rooms: "1",
       radius: 20000,
       serviceSelect: [],
       AllServices: [],
+      apartments: "",
+      loading: true,
     };
   },
   methods: {
@@ -177,16 +214,16 @@ export default {
             radius: this.radius,
             beds: this.beds,
             rooms: this.rooms,
-            service: this.serviceSelect,
+            services: this.serviceSelect,
           },
         })
         .then((response) => {
-          console.log(response);
+          console.log(response.data);
           if (response.data.status_code === 404) {
             this.loading = false;
             this.$router.push({ name: "not-found" });
           } else {
-            this.apartment = response.data;
+            this.apartments = response.data;
             this.loading = false;
           }
         })
@@ -203,6 +240,43 @@ export default {
         .catch((e) => {
           console.error(e);
         });
+    },
+    callAddress() {
+      window.axios.defaults.headers.common = {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      };
+      const address = document.getElementById("address").value;
+      const resultElement = document.querySelector(".result");
+      resultElement.innerHTML = "";
+      const link = `https://kr-api.tomtom.com/search/2/geocode/${address}.json?key=MtC8XS7dGHVqDy6SPK1zWiLfRmG28cBF&typeahead=true`;
+      if (address.length > 2) {
+        axios.get(link).then((response) => {
+          const attempts = response.data.results.slice(0,3);
+          this.latitude = attempts[0].position.lat;
+          this.longitude = attempts[0].position.lon;
+          console.log(attempts[0]);
+          this.getApartment();
+          attempts.forEach((item) => {
+            const divElement = document.createElement("div");
+            divElement.classList.add("list-result");
+            const markup = `<span>${item.address.freeformAddress}</span>`;
+            divElement.insertAdjacentHTML("beforeend", markup);
+            divElement.addEventListener("click", () => {
+              document.getElementById("address").value =
+                item.address.freeformAddress;
+              this.search = item.address.freeformAddress;
+              this.latitude = item.position.lat;
+              this.longitude = item.position.lon;
+              resultElement.innerHTML = "";
+              resultElement.setAttribute("hidden", "true");
+              this.getApartment();
+            });
+            resultElement.append(divElement);
+            resultElement.removeAttribute("hidden");
+          });
+        });
+      }
     },
   },
   mounted() {

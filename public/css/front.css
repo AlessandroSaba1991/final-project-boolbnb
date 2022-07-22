@@ -10215,14 +10215,36 @@ textarea.form-control-lg {
 .laravel_button {
   position: absolute;
   top: 0;
-  right: 0;
+  right: 50%;
+  transform: translate(50%, 0);
   padding: 0.5rem;
   z-index: 1;
 }
 
+@media screen and (min-width: 576px) {
+  .laravel_button {
+    right: 0;
+    transform: translate(0, 0);
+  }
+}
 .navbar.backend {
   padding: 0;
 }
 .navbar.backend .navbar-nav .dropdown-menu {
   position: absolute;
+}
+
+.result {
+  background-color: #f8fafc;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+}
+.result .list-result {
+  padding: 0.375rem 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #212529;
+  background-clip: padding-box;
+  border-bottom: 1px solid #ced4da;
 }

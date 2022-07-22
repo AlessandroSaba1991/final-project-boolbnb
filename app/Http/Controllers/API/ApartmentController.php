@@ -11,9 +11,12 @@ class ApartmentController extends Controller
 {
     public function index(Request $request)
     {
-        $beds=$request->query('beds');
-        $rooms=$request->query('rooms');
-        $services=$request->query('services');
+        $beds = $request->query('beds');
+        $rooms = $request->query('rooms');
+        $servicesSelect = $request->query('services');
+        if($servicesSelect==null){
+            $servicesSelect=[];
+        }
         $lat = $request->query('lat');
         $lon = $request->query('lon');
         $radius = $request->query('radius');
@@ -26,7 +29,10 @@ class ApartmentController extends Controller
         ];
         $geometry_json = json_encode($geometry);
         $poi_list = [];
-        $apartments = Apartment::all();
+        $apartments = Apartment::with('services')->whereHas("services", function ($query) use ($servicesSelect) {
+            $query->whereIn("id", $servicesSelect);
+        }, "=", count($servicesSelect))->where('beds', '>=', $beds)->where('rooms', '>=', $rooms)->get();
+
         foreach ($apartments as $apartment) {
             $single_poi = [
                 'id' => $apartment->id,
@@ -40,18 +46,16 @@ class ApartmentController extends Controller
         $poi_list_json = json_encode($poi_list);
         $response = Http::get("https://api.tomtom.com/search/2/geometryFilter.json?key=MtC8XS7dGHVqDy6SPK1zWiLfRmG28cBF&geometryList=$geometry_json&poiList=$poi_list_json");
         $results = $response->object()->results;
-        $complete=[];
+        $complete = [];
         foreach ($apartments as $apart) {
             foreach ($results as $item) {
                 if ($item->id == $apart->id) {
-                    array_push($complete,$apart);
+                    array_push($complete, $apart);
                 }
             }
         };
 
         return $complete;
-
-        //return Apartment::with(['services'])->orderByDesc('id')->paginate(8);
     }
     public function show($id)
     {
