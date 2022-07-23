@@ -10213,6 +10213,9 @@ textarea.form-control-lg {
   }
 }
 .result {
+  position: absolute;
+  top: 74%;
+  left: 0;
   background-color: #f8fafc;
   border: 1px solid #ced4da;
   border-radius: 0.25rem;
