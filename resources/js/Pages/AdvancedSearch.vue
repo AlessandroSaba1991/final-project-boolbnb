@@ -6,7 +6,7 @@
           <h1 class="text-center text-uppercase">
             Cerca la struttura perfetta per te
           </h1>
-          <div class="mb-5 destination shadow">
+          <div class="mb-5 destination shadow position-relative">
             <label for="address" class="form-label">Destinazione</label>
             <input
               type="text"
@@ -16,7 +16,9 @@
               v-model="search"
               @keyup="callAddress()"
             />
-            <div class="result" hidden></div>
+            <div class="wrapper container">
+              <div class="result_" hidden></div>
+            </div>
             <div class="accordion" id="accordionExample">
               <div class="accordion-item border-0">
                 <h2 class="accordion-header" id="headingOne">
@@ -349,7 +351,7 @@ export default {
         "Content-Type": "application/json",
       };
       const address = document.getElementById("address").value;
-      const resultElement = document.querySelector(".result");
+      const resultElement = document.querySelector(".result_");
       resultElement.innerHTML = "";
       const link = `https://kr-api.tomtom.com/search/2/geocode/${address}.json?key=MtC8XS7dGHVqDy6SPK1zWiLfRmG28cBF&typeahead=true`;
       if (address.length > 2) {
@@ -361,7 +363,7 @@ export default {
           this.getApartment();
           attempts.forEach((item) => {
             const divElement = document.createElement("div");
-            divElement.classList.add("list-result");
+            divElement.classList.add("list-result_");
             const markup = `<span>${item.address.freeformAddress}</span>`;
             divElement.insertAdjacentHTML("beforeend", markup);
             divElement.addEventListener("click", () => {
@@ -419,10 +421,10 @@ export default {
     aspect-ratio: 2/1;
   }
 
-  .show_results {
+  /* .show_results {
     overflow-y: auto;
     height: 520px;
-  }
+  } */
 
   .acc_btn {
     background-color: orange;
@@ -434,16 +436,20 @@ export default {
     background-color: orange;
   }
 
-  @media (min-width: 746px) {
+  @media (min-width: 768px) {
     .accordion {
       display: none;
     }
   }
 
-  @media (max-width: 745px) {
+  @media (max-width: 768px) {
     .left_bar {
       display: none;
     }
+    .wrapper{
+        top: 53%;
+    }
   }
 }
+
 </style>

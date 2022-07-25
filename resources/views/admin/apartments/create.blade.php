@@ -30,7 +30,7 @@
         <input type="number" class="form-control @error('square_meters') is-invalid @enderror" min="1" max="30000" name="square_meters" id="square_meters" aria-describedby="square_metersHelper" value="{{ old('square_meters') }}" placeholder="p. es. 120" oninput="this.value = Math.abs(this.value)" required>
         <small id="square_metersHelper" class="text-muted">Inserisci i metri quadri</small>
     </div>
-    <div class="mb-3">
+    <div class="mb-3 position-relative">
         <label for="address">Indirizzo*</label>
         <input type="text" onkeyup="callAddress()" class="form-control @error('address') is-invalid @enderror" name="address" id="address" aria-describedby="addressHelper" value="{{ old('address') }}" placeholder="p. es. corso Vittorio Emanuele, 335, 93012 Gela CL " required>
         <small id="addressHelper" class="text-muted">Inserisci l'indirizzo</small>

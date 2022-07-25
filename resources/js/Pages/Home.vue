@@ -13,7 +13,7 @@
         <div class="text-uppercase text-white p-5 title">team 7 boolbnb</div>
       </div>
       <div class="d-flex justify-content-center">
-        <div class="mb-3 w-50 me-2">
+        <div class="mb-3 w-50 me-2 position-relative">
           <input
             type="search"
             id="search"
@@ -24,7 +24,7 @@
             v-model="searchAddress"
             @keyup="callAddress()"
           />
-          <div class="result" hidden></div>
+          <div class="result w-100" hidden></div>
         </div>
         <div>
         <router-link
