@@ -5214,12 +5214,9 @@ __webpack_require__.r(__webpack_exports__);
           });
         });
       }
-    }
-  },
-  filters: {
-    truncate: function truncate(data, num) {
-      var reqdString = data.split("").slice(0, num).join("");
-      return reqdString;
+    },
+    splitText: function splitText(data, num) {
+      return data.slice(0, num);
     }
   },
   mounted: function mounted() {
@@ -5839,9 +5836,9 @@ var render = function render() {
       staticClass: "card-body d-flex flex-column justify-content-between"
     }, [_c("h5", {
       staticClass: "card-title"
-    }, [_vm._v(_vm._s(apartment.title))]), _vm._v(" "), _c("p", {
+    }, [_vm._v(_vm._s(apartment.title))]), _vm._v(" "), apartment.description != null ? _c("p", {
       staticClass: "card-text"
-    }, [_vm._v("\n                      " + _vm._s(_vm._f("truncate")(apartment.description, 99)) + "...\n                    ")]), _vm._v(" "), _c("router-link", {
+    }, [_vm._v("\n                      " + _vm._s(_vm.splitText(apartment.description, 99)) + "...\n                    ")]) : _vm._e(), _vm._v(" "), _c("router-link", {
       staticClass: "btn btn_orange text-uppercase text-white",
       attrs: {
         to: {

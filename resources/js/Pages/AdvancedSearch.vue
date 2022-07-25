@@ -252,8 +252,8 @@
                       "
                     >
                       <h5 class="card-title">{{ apartment.title }}</h5>
-                      <p class="card-text">
-                        {{ apartment.description | truncate(99) }}...
+                      <p class="card-text" v-if="apartment.description != null">
+                        {{ splitText(apartment.description,99)}}...
                       </p>
                       <router-link
                         class="btn btn_orange text-uppercase text-white"
@@ -382,12 +382,8 @@ export default {
         });
       }
     },
-  },
-
-  filters: {
-    truncate: function (data, num) {
-      const reqdString = data.split("").slice(0, num).join("");
-      return reqdString;
+    splitText(data,num) {
+      return data.slice(0, num);
     },
   },
 
@@ -446,10 +442,9 @@ export default {
     .left_bar {
       display: none;
     }
-    .wrapper{
-        top: 53%;
+    .wrapper {
+      top: 53%;
     }
   }
 }
-
 </style>

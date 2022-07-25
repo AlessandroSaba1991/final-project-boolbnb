@@ -45,7 +45,6 @@ class ApartmentController extends Controller
         //$request->all();
         $val_data = $request->validated();
         $val_data['user_id'] = Auth::user()->id;
-        dd($val_data);
         if ($request->hasfile('cover_image')) {
 
             $request->validate([
@@ -107,7 +106,6 @@ class ApartmentController extends Controller
         if (auth()->user()->id == $apartment->user_id) {
             //dd($request->all());
             $validated_data = $request->validated();
-            dd($validated_data);
             //validazione, aggiunta path nuova immagine, e cancello la vecchia immagine
             if ($request->hasFile('cover_image')) {
                 $request->validate([
