@@ -5910,7 +5910,7 @@ var render = function render() {
   return _c("div", {
     staticClass: "single_page h-100"
   }, [!_vm.loading ? _c("div", {
-    staticClass: "wrapper h-100"
+    staticClass: "h-100"
   }, [_c("div", {
     staticClass: "container"
   }, [_c("div", {

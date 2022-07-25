@@ -1,6 +1,6 @@
 <template>
   <div class="single_page h-100">
-    <div class="wrapper h-100" v-if="!loading">
+    <div class="h-100" v-if="!loading">
       <div class="container">
         <div class="apartment_image mb-5">
           <img
