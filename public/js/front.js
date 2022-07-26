@@ -5245,10 +5245,46 @@ __webpack_require__.r(__webpack_exports__);
     return {
       apartment: "",
       loading: true,
-      yourIP: ''
+      yourIP: '',
+      guestFullName: '',
+      guestEmail: '',
+      guestMessage: '',
+      messageSend: false
     };
   },
   methods: {
+    getAuthUser: function getAuthUser() {
+      this.guestEmail = window.user_email;
+      this.guestFullName = window.user_name;
+    },
+    saveMessage: function saveMessage() {
+      var _this = this;
+
+      axios.get("/api/apartment/message", {
+        params: {
+          apartment_id: this.$route.params.id,
+          fullname: this.guestFullName,
+          email: this.guestEmail,
+          content: this.guestMessage
+        }
+      }).then(function (response) {
+        //console.log(response);
+        if (response.data.status_code === 404) {
+          _this.$router.push({
+            name: "not-found"
+          });
+        } else {
+          console.log(response);
+          _this.guestMessage = '';
+          _this.messageSend = true;
+          setTimeout(function () {
+            _this.messageSend = false;
+          }, 2000);
+        }
+      })["catch"](function (e) {
+        console.error(e);
+      });
+    },
     postView: function postView() {
       axios.get("/api/visualization/", {
         params: {
@@ -5260,19 +5296,19 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     showYourIP: function showYourIP() {
-      var _this = this;
+      var _this2 = this;
 
       fetch("https://api.ipify.org?format=json").then(function (x) {
         return x.json();
       }).then(function (_ref) {
         var ip = _ref.ip;
-        _this.yourIP = ip;
+        _this2.yourIP = ip;
 
-        _this.postView();
+        _this2.postView();
       });
     },
     getApartment: function getApartment() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.get("/api/apartment/" + this.$route.params.id, {
         params: {
@@ -5283,14 +5319,14 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         //console.log(response);
         if (response.data.status_code === 404) {
-          _this2.loading = false;
+          _this3.loading = false;
 
-          _this2.$router.push({
+          _this3.$router.push({
             name: "not-found"
           });
         } else {
-          _this2.apartment = response.data;
-          _this2.loading = false;
+          _this3.apartment = response.data;
+          _this3.loading = false;
         }
       })["catch"](function (e) {
         console.error(e);
@@ -5300,6 +5336,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     this.getApartment();
     this.showYourIP();
+    this.getAuthUser();
   }
 });
 
@@ -5928,7 +5965,7 @@ var render = function render() {
       _c = _vm._self._c;
 
   return _c("div", {
-    staticClass: "single_page h-100"
+    staticClass: "single_page h-100 py-5"
   }, [!_vm.loading ? _c("div", {
     staticClass: "h-100"
   }, [_c("div", {
@@ -5997,7 +6034,116 @@ var render = function render() {
       key: service.id,
       staticClass: "services-elements"
     }, [_vm._v("\n            " + _vm._s(service.name) + "\n          ")]);
-  }), 0)]) : _vm._e(), _vm._v(" "), _vm._m(0), _vm._v(" "), _vm._m(1)])]) : _vm._e()]);
+  }), 0)]) : _vm._e(), _vm._v(" "), _vm._m(0), _vm._v(" "), _c("div", {
+    staticClass: "message-form message-style p-4 text-white"
+  }, [_c("h2", {
+    staticClass: "text-white text-uppercase fw-bold"
+  }, [_vm._v("\n          Invia un messaggio all' Host\n        ")]), _vm._v(" "), _c("div", {
+    staticClass: "mb-3"
+  }, [_c("label", {
+    staticClass: "form-label",
+    attrs: {
+      "for": "name"
+    }
+  }, [_vm._v("Nome:")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.guestFullName,
+      expression: "guestFullName"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      name: "name",
+      id: "name",
+      "aria-describedby": "namehelpId",
+      placeholder: "Mario Rossi"
+    },
+    domProps: {
+      value: _vm.guestFullName
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.guestFullName = $event.target.value;
+      }
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "mb-3"
+  }, [_c("label", {
+    staticClass: "form-label",
+    attrs: {
+      "for": "email"
+    }
+  }, [_vm._v("Email:")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.guestEmail,
+      expression: "guestEmail"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "email",
+      name: "email",
+      id: "email",
+      "aria-describedby": "emailHelpId",
+      placeholder: "mariorossi@example.com"
+    },
+    domProps: {
+      value: _vm.guestEmail
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.guestEmail = $event.target.value;
+      }
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "mb-3"
+  }, [_c("label", {
+    staticClass: "form-label",
+    attrs: {
+      "for": "message"
+    }
+  }, [_vm._v("Messaggio:")]), _vm._v(" "), _c("textarea", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.guestMessage,
+      expression: "guestMessage"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      name: "message",
+      id: "message",
+      rows: "3"
+    },
+    domProps: {
+      value: _vm.guestMessage
+    },
+    on: {
+      keyup: function keyup($event) {
+        if (!$event.type.indexOf("key") && _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")) return null;
+        return _vm.saveMessage();
+      },
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.guestMessage = $event.target.value;
+      }
+    }
+  })]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-primary",
+    on: {
+      click: function click($event) {
+        return _vm.saveMessage();
+      }
+    }
+  }, [_vm._v("Invia")]), _vm._v(" "), _c("div", {
+    staticClass: "message_send rounded p-1 mb-2 bg-primary text-white fs-3 d-inline-block",
+    "class": _vm.messageSend ? "position-absolute" : "d-none"
+  }, [_vm._v("\n          Messaggio inviato!\n          ")])])])]) : _vm._e()]);
 };
 
 var staticRenderFns = [function () {
@@ -6032,61 +6178,6 @@ var staticRenderFns = [function () {
       href: "https://www.embedgooglemap.net"
     }
   }, [_vm._v("google maps create map")])])])])]);
-}, function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("div", {
-    staticClass: "message-form message-style"
-  }, [_c("h2", {
-    staticClass: "text-white text-uppercase fw-bold"
-  }, [_vm._v("\n          Invia un messaggio all' Host\n        ")]), _vm._v(" "), _c("div", {
-    staticClass: "mb-3"
-  }, [_c("label", {
-    staticClass: "form-label fw-bold text-white",
-    attrs: {
-      "for": "exampleFormControlInput1"
-    }
-  }, [_vm._v("Nome Completo")]), _vm._v(" "), _c("input", {
-    staticClass: "form-control",
-    attrs: {
-      type: "text",
-      id: "exampleFormControlInput1",
-      placeholder: "Mario Rossi"
-    }
-  })]), _vm._v(" "), _c("div", {
-    staticClass: "mb-3"
-  }, [_c("label", {
-    staticClass: "form-label fw-bold text-white",
-    attrs: {
-      "for": "exampleFormControlInput1"
-    }
-  }, [_vm._v("Indirizzo mail")]), _vm._v(" "), _c("input", {
-    staticClass: "form-control",
-    attrs: {
-      type: "email",
-      id: "exampleFormControlInput1",
-      placeholder: "name@example.com"
-    }
-  })]), _vm._v(" "), _c("div", {
-    staticClass: "mb-3"
-  }, [_c("label", {
-    staticClass: "form-label fw-bold text-white",
-    attrs: {
-      "for": "exampleFormControlTextarea1"
-    }
-  }, [_vm._v("Il tuo messaggio")]), _vm._v(" "), _c("textarea", {
-    staticClass: "form-control",
-    attrs: {
-      id: "exampleFormControlTextarea1",
-      rows: "3"
-    }
-  })]), _vm._v(" "), _c("button", {
-    staticClass: "message_button btn btn-primary text-white text-uppercase fw-bold mt-5",
-    attrs: {
-      type: "submit"
-    }
-  }, [_vm._v("\n          Invia\n        ")])]);
 }];
 render._withStripped = true;
 
@@ -11537,7 +11628,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n.apt-img[data-v-2ed98ed9] {\n  width: 100%;\n}\n.apartment_address[data-v-2ed98ed9],\n.apartment_details[data-v-2ed98ed9],\n.apartment_services[data-v-2ed98ed9],\n.apartment_description[data-v-2ed98ed9],\n.maps[data-v-2ed98ed9] {\n  border-bottom: 1px dotted lightgrey;\n}\n.list[data-v-2ed98ed9] {\n  -moz-column-count: 4;\n       column-count: 4;\n  -moz-column-gap: 20px;\n       column-gap: 20px;\n  list-style: none;\n}\n.list li[data-v-2ed98ed9]:before {\n  content: \"\\2713\";\n  color: #faad58;\n  font-weight: bold;\n  display: inline-block;\n  width: 1em;\n  margin-left: -1em;\n}\n.mapouter[data-v-2ed98ed9] {\n  position: relative;\n  text-align: right;\n  height: 500px;\n  width: 100%;\n}\n.gmap_canvas[data-v-2ed98ed9] {\n  overflow: hidden;\n  background: none !important;\n  height: 500px;\n  width: 100%;\n}\n.message-style[data-v-2ed98ed9] {\n  background-color: #faad58;\n  padding: 50px;\n}\n@media screen and (max-width: 600px) {\n.details-list[data-v-2ed98ed9],\n.list[data-v-2ed98ed9] {\n    flex-direction: column;\n    justify-content: space-between;\n    -moz-column-count: 1;\n         column-count: 1;\n}\n.services-elements[data-v-2ed98ed9] {\n    font-size: 20px;\n}\n.detail-element[data-v-2ed98ed9] {\n    margin-bottom: 20px;\n    font-size: 20px;\n}\n.message-form[data-v-2ed98ed9] {\n    display: flex;\n    flex-direction: column;\n}\n.message_button[data-v-2ed98ed9] {\n    padding: 16px 32px;\n    font-size: large;\n    align-items: center;\n}\n}", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n.apt-img[data-v-2ed98ed9] {\n  width: 100%;\n}\n.apartment_address[data-v-2ed98ed9],\n.apartment_details[data-v-2ed98ed9],\n.apartment_services[data-v-2ed98ed9],\n.apartment_description[data-v-2ed98ed9],\n.maps[data-v-2ed98ed9] {\n  border-bottom: 1px dotted lightgrey;\n}\n.list[data-v-2ed98ed9] {\n  -moz-column-count: 4;\n       column-count: 4;\n  -moz-column-gap: 20px;\n       column-gap: 20px;\n  list-style: none;\n}\n.list li[data-v-2ed98ed9]:before {\n  content: \"\\2713\";\n  color: #faad58;\n  font-weight: bold;\n  display: inline-block;\n  width: 1em;\n  margin-left: -1em;\n}\n.mapouter[data-v-2ed98ed9] {\n  position: relative;\n  text-align: right;\n  height: 500px;\n  width: 100%;\n}\n.gmap_canvas[data-v-2ed98ed9] {\n  overflow: hidden;\n  background: none !important;\n  height: 500px;\n  width: 100%;\n}\n.message-style[data-v-2ed98ed9] {\n  background-color: #faad58;\n  position: relative;\n}\n.message_send[data-v-2ed98ed9] {\n  position: absolute;\n  bottom: 0;\n  left: 50%;\n  transform: translate(-50%, 0);\n  transition: all 1s;\n}\n@media screen and (max-width: 600px) {\n.details-list[data-v-2ed98ed9],\n.list[data-v-2ed98ed9] {\n    flex-direction: column;\n    justify-content: space-between;\n    -moz-column-count: 1;\n         column-count: 1;\n}\n.services-elements[data-v-2ed98ed9] {\n    font-size: 20px;\n}\n.detail-element[data-v-2ed98ed9] {\n    margin-bottom: 20px;\n    font-size: 20px;\n}\n.message-form[data-v-2ed98ed9] {\n    display: flex;\n    flex-direction: column;\n}\n.message_button[data-v-2ed98ed9] {\n    padding: 16px 32px;\n    font-size: large;\n    align-items: center;\n}\n}", ""]);
 
 // exports
 
