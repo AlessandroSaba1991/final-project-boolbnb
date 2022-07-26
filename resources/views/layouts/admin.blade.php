@@ -81,11 +81,14 @@
             @yield('content')
         </main>
     </div>
+    
+    @yield('views_stats')
+
 
     @stack('tom-tom')
     @stack('payment')
     @stack('check')
-
+    @stack('views')
 
 </body>
 

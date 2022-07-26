@@ -174,9 +174,30 @@ export default {
     return {
       apartment: "",
       loading: true,
+      yourIP: '',
     };
   },
   methods: {
+    postView(){
+      axios
+        .get("/api/visualization/" , {
+          params: {
+            ip: this.yourIP,
+            apartment_id: this.$route.params.id,
+          },
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+    },
+    showYourIP() {
+            fetch("https://api.ipify.org?format=json")
+                .then((x) => x.json())
+                .then(({ ip }) => {
+                    this.yourIP = ip;
+                    this.postView();
+                });
+        },
     getApartment() {
       axios
         .get("/api/apartment/" + this.$route.params.id, {
@@ -187,7 +208,7 @@ export default {
           },
         })
         .then((response) => {
-          console.log(response);
+          //console.log(response);
           if (response.data.status_code === 404) {
             this.loading = false;
             this.$router.push({ name: "not-found" });
@@ -203,6 +224,7 @@ export default {
   },
   mounted() {
     this.getApartment();
+    this.showYourIP();
   },
 };
 </script>

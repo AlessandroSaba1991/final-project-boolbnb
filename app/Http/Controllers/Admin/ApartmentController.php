@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Service;
+use App\Models\Visualization;
 
 class ApartmentController extends Controller
 {
@@ -71,8 +72,10 @@ class ApartmentController extends Controller
      */
     public function show(Apartment $apartment)
     {
+        $visualizations = Visualization::where('apartment_id', $apartment->id)->get();
+        
         if (auth()->user()->id == $apartment->user_id) {
-            return view('admin.apartments.show', compact('apartment'));
+            return view('admin.apartments.show', compact('apartment', 'visualizations'));
         } else {
             abort(403, 'Unauthorized action.');
         }

@@ -5244,12 +5244,35 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       apartment: "",
-      loading: true
+      loading: true,
+      yourIP: ''
     };
   },
   methods: {
-    getApartment: function getApartment() {
+    postView: function postView() {
+      axios.get("/api/visualization/", {
+        params: {
+          ip: this.yourIP,
+          apartment_id: this.$route.params.id
+        }
+      })["catch"](function (e) {
+        console.error(e);
+      });
+    },
+    showYourIP: function showYourIP() {
       var _this = this;
+
+      fetch("https://api.ipify.org?format=json").then(function (x) {
+        return x.json();
+      }).then(function (_ref) {
+        var ip = _ref.ip;
+        _this.yourIP = ip;
+
+        _this.postView();
+      });
+    },
+    getApartment: function getApartment() {
+      var _this2 = this;
 
       axios.get("/api/apartment/" + this.$route.params.id, {
         params: {
@@ -5258,17 +5281,16 @@ __webpack_require__.r(__webpack_exports__);
           radius: 20000
         }
       }).then(function (response) {
-        console.log(response);
-
+        //console.log(response);
         if (response.data.status_code === 404) {
-          _this.loading = false;
+          _this2.loading = false;
 
-          _this.$router.push({
+          _this2.$router.push({
             name: "not-found"
           });
         } else {
-          _this.apartment = response.data;
-          _this.loading = false;
+          _this2.apartment = response.data;
+          _this2.loading = false;
         }
       })["catch"](function (e) {
         console.error(e);
@@ -5277,6 +5299,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.getApartment();
+    this.showYourIP();
   }
 });
 
@@ -5435,7 +5458,7 @@ var render = function render() {
     staticClass: "page_title"
   }, [_c("h1", {
     staticClass: "text-center text-uppercase"
-  }, [_vm._v("\n          Cerca la struttura perfetta per te\n        ")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                    Cerca la struttura perfetta per te\n                ")]), _vm._v(" "), _c("div", {
     staticClass: "mb-5 destination shadow position-relative"
   }, [_c("label", {
     staticClass: "form-label",
@@ -5490,7 +5513,7 @@ var render = function render() {
     attrs: {
       "for": "radius"
     }
-  }, [_vm._v("\n                      Distanza max dal luogo\n                    ")]), _vm._v(" "), _c("input", {
+  }, [_vm._v("\n                                            Distanza max dal luogo\n                                        ")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -5629,7 +5652,7 @@ var render = function render() {
     attrs: {
       disabled: ""
     }
-  }, [_vm._v("seleziona dal menù")]), _vm._v(" "), _vm._l(_vm.AllServices, function (service) {
+  }, [_vm._v("\n                                                seleziona dal menù\n                                            ")]), _vm._v(" "), _vm._l(_vm.AllServices, function (service) {
     return _c("option", {
       key: service.id,
       staticClass: "fw-bold",
@@ -5641,7 +5664,7 @@ var render = function render() {
           return _vm.getApartment();
         }
       }
-    }, [_vm._v("\n                        " + _vm._s(service.name) + "\n                      ")]);
+    }, [_vm._v("\n                                                " + _vm._s(service.name) + "\n                                            ")]);
   })], 2)])])])])])])])]), _vm._v(" "), _c("main", [_c("div", [_c("div", {
     staticClass: "row m-0 mb-5",
     staticStyle: {
@@ -5658,7 +5681,7 @@ var render = function render() {
     attrs: {
       "for": "radius"
     }
-  }, [_vm._v("\n                  Distanza max dal luogo\n                ")]), _vm._v(" "), _c("input", {
+  }, [_vm._v("\n                                    Distanza max dal luogo\n                                ")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -5797,7 +5820,7 @@ var render = function render() {
     attrs: {
       disabled: ""
     }
-  }, [_vm._v("seleziona dal menù")]), _vm._v(" "), _vm._l(_vm.AllServices, function (service) {
+  }, [_vm._v("\n                                        seleziona dal menù\n                                    ")]), _vm._v(" "), _vm._l(_vm.AllServices, function (service) {
     return _c("option", {
       key: service.id,
       staticClass: "fw-bold",
@@ -5809,7 +5832,7 @@ var render = function render() {
           return _vm.getApartment();
         }
       }
-    }, [_vm._v("\n                    " + _vm._s(service.name) + "\n                  ")]);
+    }, [_vm._v("\n                                        " + _vm._s(service.name) + "\n                                    ")]);
   })], 2)])])]), _vm._v(" "), _c("div", {
     staticClass: "col"
   }, [_c("div", {
@@ -5836,9 +5859,9 @@ var render = function render() {
       staticClass: "card-body d-flex flex-column justify-content-between"
     }, [_c("h5", {
       staticClass: "card-title"
-    }, [_vm._v(_vm._s(apartment.title))]), _vm._v(" "), apartment.description != null ? _c("p", {
+    }, [_vm._v("\n                                            " + _vm._s(apartment.title) + "\n                                        ")]), _vm._v(" "), apartment.description != null ? _c("p", {
       staticClass: "card-text"
-    }, [_vm._v("\n                      " + _vm._s(_vm.splitText(apartment.description, 99)) + "...\n                    ")]) : _vm._e(), _vm._v(" "), _c("router-link", {
+    }, [_vm._v("\n                                            " + _vm._s(_vm.splitText(apartment.description, 99)) + "...\n                                        ")]) : _vm._e(), _vm._v(" "), _c("router-link", {
       staticClass: "btn btn_orange text-uppercase text-white",
       attrs: {
         to: {
@@ -5848,7 +5871,7 @@ var render = function render() {
           }
         }
       }
-    }, [_vm._v("\n                      Visualizza dettagli\n                    ")])], 1)])]);
+    }, [_vm._v("\n                                            Visualizza dettagli\n                                        ")])], 1)])]);
   }), 0)])])])])])]);
 };
 
@@ -5882,7 +5905,7 @@ var staticRenderFns = [function () {
       "aria-expanded": "true",
       "aria-controls": "collapseOne"
     }
-  }, [_vm._v("\n                  Affina la tua ricerca\n                ")])]);
+  }, [_vm._v("\n                                    Affina la tua ricerca\n                                ")])]);
 }];
 render._withStripped = true;
 
@@ -6192,9 +6215,9 @@ var render = function render() {
     staticClass: "col-4"
   }, [_c("h5", {
     staticClass: "pt-4 text-white text-uppercase font_monserrat"
-  }, [_vm._v("\n            get socials\n          ")]), _vm._v(" "), _c("p", {
+  }, [_vm._v("\n                        get socials\n                    ")]), _vm._v(" "), _c("p", {
     staticClass: "pt-3 text-white font_monserrat"
-  }, [_vm._v("\n            Link with us via social networks\n          ")]), _vm._v(" "), _c("span", {
+  }, [_vm._v("\n                        Link with us via social networks\n                    ")]), _vm._v(" "), _c("span", {
     staticClass: "instagram"
   }, [_c("svg", {
     attrs: {
@@ -6244,7 +6267,7 @@ var staticRenderFns = [function () {
     staticClass: "col-lg-12 col-md-12 col-sm-12 d-flex justify-content-center align-items-center flex-wrap"
   }, [_c("div", {
     staticClass: "text-uppercase text-white p-5 title"
-  }, [_vm._v("team 7 boolbnb")])]);
+  }, [_vm._v("\n                team 7 boolbnb\n            ")])]);
 }, function () {
   var _vm = this,
       _c = _vm._self._c;
@@ -6273,11 +6296,11 @@ var staticRenderFns = [function () {
     staticClass: "card-body"
   }, [_c("p", {
     staticClass: "card-text text-center font_monserrat"
-  }, [_vm._v("\n                Villa Molto Graziosa\n              ")]), _vm._v(" "), _c("p", {
+  }, [_vm._v("\n                                Villa Molto Graziosa\n                            ")]), _vm._v(" "), _c("p", {
     staticClass: "price font_monserrat"
   }, [_vm._v("300$/notte")]), _vm._v(" "), _c("button", {
     staticClass: "btn btn_orange text-uppercase text-white font_monserrat"
-  }, [_vm._v("\n                Check it\n              ")])])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                                Check it\n                            ")])])])]), _vm._v(" "), _c("div", {
     staticClass: "col py-4 px-3"
   }, [_c("div", {
     staticClass: "card"
@@ -6291,11 +6314,11 @@ var staticRenderFns = [function () {
     staticClass: "card-body"
   }, [_c("p", {
     staticClass: "card-text text-center font_monserrat"
-  }, [_vm._v("\n                Villa Molto Graziosa\n              ")]), _vm._v(" "), _c("p", {
+  }, [_vm._v("\n                                Villa Molto Graziosa\n                            ")]), _vm._v(" "), _c("p", {
     staticClass: "price font_monserrat"
   }, [_vm._v("300$/notte")]), _vm._v(" "), _c("button", {
     staticClass: "btn btn_orange text-uppercase text-white font_monserrat"
-  }, [_vm._v("\n                Check it\n              ")])])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                                Check it\n                            ")])])])]), _vm._v(" "), _c("div", {
     staticClass: "col py-4 px-3"
   }, [_c("div", {
     staticClass: "card"
@@ -6309,11 +6332,11 @@ var staticRenderFns = [function () {
     staticClass: "card-body"
   }, [_c("p", {
     staticClass: "card-text text-center font_monserrat"
-  }, [_vm._v("\n                Villa Molto Graziosa\n              ")]), _vm._v(" "), _c("p", {
+  }, [_vm._v("\n                                Villa Molto Graziosa\n                            ")]), _vm._v(" "), _c("p", {
     staticClass: "price font_monserrat"
   }, [_vm._v("300$ / notte")]), _vm._v(" "), _c("button", {
     staticClass: "btn btn_orange text-uppercase text-white font_monserrat"
-  }, [_vm._v("\n                Check it\n              ")])])])])])])]);
+  }, [_vm._v("\n                                Check it\n                            ")])])])])])])]);
 }, function () {
   var _vm = this,
       _c = _vm._self._c;
@@ -6324,9 +6347,9 @@ var staticRenderFns = [function () {
     staticClass: "pt_7 mb-5"
   }, [_c("h1", {
     staticClass: "text-uppercase text-white font_satisy"
-  }, [_vm._v("why us ?")]), _vm._v(" "), _c("p", {
+  }, [_vm._v("\n                        why us ?\n                    ")]), _vm._v(" "), _c("p", {
     staticClass: "text-capitalize mt-5 text-white font_monserrat"
-  }, [_vm._v("\n            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente\n            dignissimos molestias adipisci fuga, cum ipsa dolores possimus\n            animi ab velit! Numquam voluptates, totam ipsa deleniti quae\n            deserunt rerum? Doloremque, rerum.\n          ")])])]);
+  }, [_vm._v("\n                        Lorem ipsum dolor, sit amet consectetur adipisicing\n                        elit. Sapiente dignissimos molestias adipisci fuga,\n                        cum ipsa dolores possimus animi ab velit! Numquam\n                        voluptates, totam ipsa deleniti quae deserunt rerum?\n                        Doloremque, rerum.\n                    ")])])]);
 }, function () {
   var _vm = this,
       _c = _vm._self._c;
@@ -6335,9 +6358,9 @@ var staticRenderFns = [function () {
     staticClass: "col-4"
   }, [_c("h5", {
     staticClass: "pt-4 text-white text-uppercase font_monserrat"
-  }, [_vm._v("\n            We're here for you\n          ")]), _vm._v(" "), _c("p", {
+  }, [_vm._v("\n                        We're here for you\n                    ")]), _vm._v(" "), _c("p", {
     staticClass: "pt-3 text-white font_monserrat"
-  }, [_vm._v("\n            8500, Lorem Street, Chicago, IL, 55030 Phone (123)456-78-90 Phone\n            (123)456-78-90 sales@example.com\n          ")])]);
+  }, [_vm._v("\n                        8500, Lorem Street, Chicago, IL, 55030 Phone\n                        (123)456-78-90 Phone (123)456-78-90\n                        sales@example.com\n                    ")])]);
 }, function () {
   var _vm = this,
       _c = _vm._self._c;
@@ -6346,11 +6369,11 @@ var staticRenderFns = [function () {
     staticClass: "col-4"
   }, [_c("h5", {
     staticClass: "pt-4 text-white text-uppercase font_monserrat"
-  }, [_vm._v("\n            contact us\n          ")]), _vm._v(" "), _c("p", {
+  }, [_vm._v("\n                        contact us\n                    ")]), _vm._v(" "), _c("p", {
     staticClass: "pt-3 text-white font_monserrat"
-  }, [_vm._v("\n            we love yoyr feedback and are constantly looking\n          ")]), _vm._v(" "), _c("p", {
+  }, [_vm._v("\n                        we love yoyr feedback and are constantly looking\n                    ")]), _vm._v(" "), _c("p", {
     staticClass: "pt-3 orange text-uppercase font_monserrat"
-  }, [_vm._v("\n            send us a message\n          ")])]);
+  }, [_vm._v("\n                        send us a message\n                    ")])]);
 }];
 render._withStripped = true;
 
@@ -11553,7 +11576,7 @@ exports.push([module.i, "@import url(https://fonts.googleapis.com/css2?family=Mo
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css2?family=Satisfy&display=swap);", ""]);
 
 // module
-exports.push([module.i, "\n.backimg {\n  background-image: url(\"https://www.myistria.com/UserDocsImages/app/objekti/795/slika_hd/19082020034916_Villas-near-Rovinj-Villa-Prestige-2.jpg\");\n  height: 400px;\n  background-size: cover;\n  background-position: center;\n}\n.title {\n  font-size: 32px;\n}\n.radius {\n  border-radius: 50%;\n}\n.btn_orange {\n  background: linear-gradient(\n      to right,\n      #edc156 0%,\n      #fea759 0%,\n      #fea759 50%,\n      #edc156 100%\n    )\n    no-repeat scroll right bottom/210% 100% #fea759;\n}\n.price {\n  text-align: center;\n  text-transform: capitalize;\n}\n\n/* .bg_blue{\n        background-color: aqua;\n        height: 200px;\n        width: 300px;\n    } */\n.img1 {\n  height: 500px;\n  width: 900px;\n}\n.pt_7 {\n  padding-top: 9rem;\n}\n.bg_img2 {\n  background-image: url(https://wallpaperaccess.com/full/1126760.jpg);\n  width: 100%;\n  height: 500px;\n  background-size: cover;\n  background-repeat: no-repeat;\n}\n.bg_orange {\n  background: linear-gradient(\n      to right,\n      #edc156 0%,\n      #fea759 0%,\n      #fea759 50%,\n      #edc156 100%\n    )\n    no-repeat scroll right bottom/210% 100% #fea759;\n}\n.border-black {\n  border: 1px solid black;\n  border-radius: 50%;\n  padding: 10px;\n}\n.active_img {\n  display: none;\n}\n.footer {\n  background-color: rgb(30, 29, 29);\n  height: auto;\n}\n.borderimg {\n  border: 1px solid black;\n  border-radius: 50%;\n}\n.orange {\n  color: orange;\n  transition: 2s;\n}\n.orange:hover {\n  cursor: pointer;\n  color: orangered;\n}\n.imgfit {\n  aspect-ratio: 2/1;\n}\n.credit {\n  background-color: orange;\n}\n.w-10 {\n  width: 10%;\n}\n.w26rem {\n  width: 26rem;\n}\n.instagram,\n.linkedin,\n.facebook:hover {\n  cursor: pointer;\n}\n.font_satisy {\n  font-size: 42px;\n  font-family: \"Satisfy\", cursive;\n}\n.font_monserrat {\n  font-family: \"Montserrat\", sans-serif;\n}\n@media screen and(max-width:576px) {\n.margin-3 {\n    margin: 0 0 0 0;\n}\n}\n", ""]);
+exports.push([module.i, "\n.backimg {\n    background-image: url(\"https://www.myistria.com/UserDocsImages/app/objekti/795/slika_hd/19082020034916_Villas-near-Rovinj-Villa-Prestige-2.jpg\");\n    height: 400px;\n    background-size: cover;\n    background-position: center;\n}\n.title {\n    font-size: 32px;\n}\n.radius {\n    border-radius: 50%;\n}\n.btn_orange {\n    background: linear-gradient(\n            to right,\n            #edc156 0%,\n            #fea759 0%,\n            #fea759 50%,\n            #edc156 100%\n        )\n        no-repeat scroll right bottom/210% 100% #fea759;\n}\n.price {\n    text-align: center;\n    text-transform: capitalize;\n}\n\n/* .bg_blue{\n        background-color: aqua;\n        height: 200px;\n        width: 300px;\n    } */\n.img1 {\n    height: 500px;\n    width: 900px;\n}\n.pt_7 {\n    padding-top: 9rem;\n}\n.bg_img2 {\n    background-image: url(https://wallpaperaccess.com/full/1126760.jpg);\n    width: 100%;\n    height: 500px;\n    background-size: cover;\n    background-repeat: no-repeat;\n}\n.bg_orange {\n    background: linear-gradient(\n            to right,\n            #edc156 0%,\n            #fea759 0%,\n            #fea759 50%,\n            #edc156 100%\n        )\n        no-repeat scroll right bottom/210% 100% #fea759;\n}\n.border-black {\n    border: 1px solid black;\n    border-radius: 50%;\n    padding: 10px;\n}\n.active_img {\n    display: none;\n}\n.footer {\n    background-color: rgb(30, 29, 29);\n    height: auto;\n}\n.borderimg {\n    border: 1px solid black;\n    border-radius: 50%;\n}\n.orange {\n    color: orange;\n    transition: 2s;\n}\n.orange:hover {\n    cursor: pointer;\n    color: orangered;\n}\n.imgfit {\n    aspect-ratio: 2/1;\n}\n.credit {\n    background-color: orange;\n}\n.w-10 {\n    width: 10%;\n}\n.w26rem {\n    width: 26rem;\n}\n.instagram,\n.linkedin,\n.facebook:hover {\n    cursor: pointer;\n}\n.font_satisy {\n    font-size: 42px;\n    font-family: \"Satisfy\", cursive;\n}\n.font_monserrat {\n    font-family: \"Montserrat\", sans-serif;\n}\n@media screen and(max-width:576px) {\n.margin-3 {\n        margin: 0 0 0 0;\n}\n}\n", ""]);
 
 // exports
 
@@ -59184,7 +59207,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\saba_\OneDrive\Desktop\Progetto-finale\final-project-boolbnb\resources\js\front.js */"./resources/js/front.js");
+module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/LARAVEL/final-project-boolbnb/resources/js/front.js */"./resources/js/front.js");
 
 
 /***/ })

@@ -24,3 +24,4 @@ Route::get('apartment/{apartment:id}','API\ApartmentController@show');
 
 Route::get('services','API\ServiceController@index');
 
+Route::get('visualization', 'API\VisualizationController@store');
