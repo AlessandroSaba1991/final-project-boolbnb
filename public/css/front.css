@@ -10286,6 +10286,7 @@ textarea.form-control-lg {
   background-color: #f8fafc;
   border: 1px solid #ced4da;
   border-radius: 0.25rem;
+  z-index: 1;
 }
 .result .list-result {
   padding: 0.375rem 0.75rem;
@@ -10302,7 +10303,7 @@ textarea.form-control-lg {
   position: absolute;
   top: 81%;
   left: 0;
-  z-index: 1;
+  z-index: 3;
 }
 .wrapper .result_ {
   background-color: #f8fafc;
