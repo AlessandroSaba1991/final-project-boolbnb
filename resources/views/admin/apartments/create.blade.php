@@ -61,7 +61,7 @@
         <div class="row">
             @foreach ($services as $service)
             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <input type="checkbox" id="service-{{$service->id}}" name="services[]" onclick="selectChecked()" required value="{{ $service->id }}" {{ is_array(old('services')) && in_array($service->id, old('services')) ? 'checked' : '' }}>
+                <input type="checkbox" oninvalid="this.setCustomValidity('Scegli almeno un servizio')" onchange="this.setCustomValidity('')" id="service-{{$service->id}}" name="services[]" onclick="selectChecked()" required value="{{ $service->id }}" {{ is_array(old('services')) && in_array($service->id, old('services')) ? 'checked' : '' }}>
                 {{ $service->name }}</input>
             </div>
             @endforeach
@@ -97,10 +97,12 @@
         if (array.length > 0) {
             document.querySelectorAll('input[type=checkbox]').forEach(item => {
                 item.removeAttribute('required')
+                item.setAttribute('oninvalid', "setCustomValidity('')")
             })
         } else {
             document.querySelectorAll('input[type=checkbox]').forEach(item => {
                 item.setAttribute('required', 'required')
+                item.setAttribute('oninvalid', "setCustomValidity('Scegli almeno un servizio')")
             })
         }
     }
