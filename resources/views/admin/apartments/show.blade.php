@@ -425,8 +425,8 @@ for($i = 0; $i < $interval_one_month; $i++) {
                 },
                 },
 
-            pointBackgroundColor: "blue",
-            pointBorderColor: "blue",
+            pointBackgroundColor: "#0d6efd",
+            pointBorderColor: "#0d6efd",
             pointBorderWidth: 10,
 
                 }
@@ -436,7 +436,7 @@ for($i = 0; $i < $interval_one_month; $i++) {
                 labels: <?php echo json_encode($labels_one_month) ?>,
                 datasets: [{
                 label: 'Statistiche dell\' Appartmento',
-                backgroundColor: 'blue',
+                backgroundColor: '#0d6efd',
                 borderColor: 'orange',
                 data: <?php echo json_encode($views_one_month) ?>,
                 }]
@@ -457,8 +457,8 @@ for($i = 0; $i < $interval_one_month; $i++) {
                 },
                 },
 
-            pointBackgroundColor: "blue",
-            pointBorderColor: "blue",
+            pointBackgroundColor: "#0d6efd",
+            pointBorderColor: "#0d6efd",
             pointBorderWidth: 10,
 
                 }
@@ -468,7 +468,7 @@ for($i = 0; $i < $interval_one_month; $i++) {
                 labels: <?php echo json_encode($labels_six_months) ?>,
                 datasets: [{
                 label: 'Visite all\' Annuncio',
-                backgroundColor: 'blue',
+                backgroundColor: '#0d6efd',
                 borderColor: 'orange',
                 data: <?php echo json_encode($views_six_months) ?>,
                 }]
@@ -489,8 +489,8 @@ for($i = 0; $i < $interval_one_month; $i++) {
                 },
                 },
 
-            pointBackgroundColor: "blue",
-            pointBorderColor: "blue",
+            pointBackgroundColor: "#0d6efd",
+            pointBorderColor: "#0d6efd",
             pointBorderWidth: 10,
 
                 }
@@ -500,7 +500,7 @@ for($i = 0; $i < $interval_one_month; $i++) {
                 labels: <?php echo json_encode($labels_one_year) ?>,
                 datasets: [{
                 label: 'Visite all\' Annuncio',
-                backgroundColor: 'blue',
+                backgroundColor: '#0d6efd',
                 borderColor: 'orange',
                 data: <?php echo json_encode($views_one_year) ?>,
                 }]
@@ -521,8 +521,8 @@ for($i = 0; $i < $interval_one_month; $i++) {
                 },
                 },
 
-            pointBackgroundColor: "blue",
-            pointBorderColor: "blue",
+            pointBackgroundColor: "#0d6efd",
+            pointBorderColor: "#0d6efd",
             pointBorderWidth: 10,
 
                 }
