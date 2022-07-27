@@ -404,7 +404,7 @@ for($i = 0; $i < $interval_one_month; $i++) {
                 labels: <?php echo json_encode($labels_week) ?>,
                 datasets: [{
                 label: 'Visite all\' Annuncio',
-                backgroundColor: 'blue',
+                backgroundColor: '#0d6efd',
                 borderColor: 'orange',
                 data: <?php echo json_encode($views_week) ?>,
                 }]

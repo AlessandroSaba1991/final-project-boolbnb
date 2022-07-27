@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Apartment;
 
 class HomeController extends Controller
 {
@@ -24,6 +25,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('admin.home');
+        $apartments = Apartment::all()->sortDesc()->where('user_id', auth()->user()->id);
+        return view('admin.apartments.index', compact('apartments'));
     }
 }
