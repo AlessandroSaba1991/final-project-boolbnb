@@ -115,17 +115,15 @@ class SponsorizationController extends Controller
                     if ($item->sponsor->end_sponsorization > $data) {
                         $data = $item->sponsor->end_sponsorization;
                     }
-                    //array_push($data,$sponsorization->sponsor->end_sponsorization);
                 }
-                //rsort($data);
                 $today = date_create($data);
                 $start = date_create($data);
                 $stop = date_add($today, date_interval_create_from_date_string("$sponsorization->duration Hours"));
                 $apartment->sponsorizations()->attach($sponsorization->id, ['start_sponsorization' => $start, 'end_sponsorization' => $stop]);
             }
         } else {
-            return redirect()->back()->with('error', $status->message);
+            return redirect()->back()->with('error', "Purtroppo la vostra carta non e' valida. Vi preghiamo di provarne un'altra");
         }
-        return redirect()->route('admin.apartments.show', compact('apartment'))->with('message', 'Il pagamento e andato a buon fine. Il tuo annuncio verra sponsorizzato per ' . $sponsorization->duration . ' ore');
+        return redirect()->route('admin.apartments.show', compact('apartment'))->with('message', "Il pagamento e andato a buon fine. Il tuo annuncio verra sponsorizzato per $sponsorization->duration ore");
     }
 }

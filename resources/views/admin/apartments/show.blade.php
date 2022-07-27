@@ -2,7 +2,7 @@
 
 @section('content')
 @if (session('message'))
-<div class="alert alert-success">
+<div class="alert alert-success my-3 pop_up_message">
     {{ session('message') }}
 </div>
 @endif
@@ -223,8 +223,8 @@ for($i = 0; $i < $interval_one_year; $i++) {
 
 for($i = 0; $i < $interval_one_year; $i++) { //ciclo per ogni mese dell'interval_one_yearlo
     foreach($db_data_one_year as $db_item) { // per ogni mese ciclo nel db
-        if(date('m', strtotime($db_item['date'])) == date('m', strtotime($dates_interval_one_year[$i]))){ // se la data dell'elemento del db coincide con la data in posizione 'i' dell'itervallo di date 
-            $views_one_year[$i] = $db_item['appartment_views']; // prendo la posizione 'i' dell'array delle views del grafico e ci salvo le views dell'appartamento in quel giorno 
+        if(date('m', strtotime($db_item['date'])) == date('m', strtotime($dates_interval_one_year[$i]))){ // se la data dell'elemento del db coincide con la data in posizione 'i' dell'itervallo di date
+            $views_one_year[$i] = $db_item['appartment_views']; // prendo la posizione 'i' dell'array delle views del grafico e ci salvo le views dell'appartamento in quel giorno
         }
     }
 }
@@ -251,8 +251,8 @@ for($i = 0; $i < $interval_six_months; $i++) {
 
 for($i = 0; $i < $interval_six_months; $i++) { //ciclo per ogni mese dell'interval_six_monthslo
     foreach($db_data_six_months as $db_item) { // per ogni mese ciclo nel db
-        if(date('m', strtotime($db_item['date'])) == date('m', strtotime($dates_interval_six_months[$i]))){ // se la data dell'elemento del db coincide con la data in posizione 'i' dell'itervallo di date 
-            $views_six_months[$i] = $db_item['appartment_views']; // prendo la posizione 'i' dell'array delle views del grafico e ci salvo le views dell'appartamento in quel giorno 
+        if(date('m', strtotime($db_item['date'])) == date('m', strtotime($dates_interval_six_months[$i]))){ // se la data dell'elemento del db coincide con la data in posizione 'i' dell'itervallo di date
+            $views_six_months[$i] = $db_item['appartment_views']; // prendo la posizione 'i' dell'array delle views del grafico e ci salvo le views dell'appartamento in quel giorno
         }
     }
 }
@@ -278,8 +278,8 @@ for($i = 0; $i < $interval_week; $i++) {
 
 for($i = 0; $i < $interval_week; $i++) { //ciclo per ogni giorno dell'interval_weeklo
     foreach($db_data_week as $db_item) { // per ogni giorno ciclo nel db
-        if($db_item['date'] == $dates_interval_week[$i]){ // se la data dell'elemento del db coincide con la data in posizione 'i' dell'itervallo di date 
-            $views_week[$i] = $db_item['appartment_views']; // prendo la posizione 'i' dell'array delle views del grafico e ci salvo le views dell'appartamento in quel giorno 
+        if($db_item['date'] == $dates_interval_week[$i]){ // se la data dell'elemento del db coincide con la data in posizione 'i' dell'itervallo di date
+            $views_week[$i] = $db_item['appartment_views']; // prendo la posizione 'i' dell'array delle views del grafico e ci salvo le views dell'appartamento in quel giorno
         }
     }
 }
@@ -305,8 +305,8 @@ for($i = 0; $i < $interval_one_month; $i++) {
 
 for($i = 0; $i < $interval_one_month; $i++) { //ciclo per ogni giorno dell'interval_one_monthlo
     foreach($db_data_one_month as $db_item) { // per ogni giorno ciclo nel db
-        if($db_item['date'] == $dates_interval_one_month[$i]){ // se la data dell'elemento del db coincide con la data in posizione 'i' dell'itervallo di date 
-            $views_one_month[$i] = $db_item['appartment_views']; // prendo la posizione 'i' dell'array delle views del grafico e ci salvo le views dell'appartamento in quel giorno 
+        if($db_item['date'] == $dates_interval_one_month[$i]){ // se la data dell'elemento del db coincide con la data in posizione 'i' dell'itervallo di date
+            $views_one_month[$i] = $db_item['appartment_views']; // prendo la posizione 'i' dell'array delle views del grafico e ci salvo le views dell'appartamento in quel giorno
         }
     }
 }
@@ -413,7 +413,7 @@ for($i = 0; $i < $interval_one_month; $i++) {
                 type: 'line',
                 data: data_week,
                 options: {
-                
+
                     scales: {
                 y: {
                     beginAtZero: true,
@@ -424,11 +424,11 @@ for($i = 0; $i < $interval_one_month; $i++) {
                     suggestedMax: 5
                 },
                 },
-                
+
             pointBackgroundColor: "blue",
             pointBorderColor: "blue",
             pointBorderWidth: 10,
-                
+
                 }
             };
 
@@ -445,7 +445,7 @@ for($i = 0; $i < $interval_one_month; $i++) {
                 type: 'line',
                 data: data_month,
                 options: {
-                
+
                     scales: {
                 y: {
                     beginAtZero: true,
@@ -456,11 +456,11 @@ for($i = 0; $i < $interval_one_month; $i++) {
                     suggestedMax: 5
                 },
                 },
-                
+
             pointBackgroundColor: "blue",
             pointBorderColor: "blue",
             pointBorderWidth: 10,
-                
+
                 }
             };
 
@@ -477,7 +477,7 @@ for($i = 0; $i < $interval_one_month; $i++) {
                 type: 'line',
                 data: data_six_months,
                 options: {
-                
+
                     scales: {
                 y: {
                     beginAtZero: true,
@@ -488,11 +488,11 @@ for($i = 0; $i < $interval_one_month; $i++) {
                     suggestedMax: 5
                 },
                 },
-                
+
             pointBackgroundColor: "blue",
             pointBorderColor: "blue",
             pointBorderWidth: 10,
-                
+
                 }
             };
 
@@ -509,7 +509,7 @@ for($i = 0; $i < $interval_one_month; $i++) {
                 type: 'line',
                 data: data_one_year,
                 options: {
-                
+
                     scales: {
                 y: {
                     beginAtZero: true,
@@ -520,11 +520,11 @@ for($i = 0; $i < $interval_one_month; $i++) {
                     suggestedMax: 5
                 },
                 },
-                
+
             pointBackgroundColor: "blue",
             pointBorderColor: "blue",
             pointBorderWidth: 10,
-                
+
                 }
             };
 
@@ -533,9 +533,9 @@ for($i = 0; $i < $interval_one_month; $i++) {
                 document.getElementById('myChart'),
                 config_week,
             );
-    
-    selectInput.addEventListener('change', function(){
-        
+
+    selectInput.addEventListener('change', function(event){
+        event.preventDefault()
             if(this.value == 7) {
                 myChart.destroy();
                 myChart = new Chart(
@@ -561,7 +561,7 @@ for($i = 0; $i < $interval_one_month; $i++) {
                     config_one_year,
                 );
             }
-            
+
     });
 </script>
 
