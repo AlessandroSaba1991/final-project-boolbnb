@@ -12,6 +12,8 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/front.js') }}" defer></script>
+    <script src="{{ asset('js/mobile-or-tablet.js') }}" defer></script>
+    <script src="{{ asset('js/formatter.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -44,11 +46,11 @@
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ route('admin.apartments.index') }}">{{ __('Dashboard') }}</a>
                             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
                             </a>
-                            <a class="dropdown-item" href="{{ route('admin.home') }}">{{ __('Dashboard') }}</a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf
                             </form>
@@ -63,12 +65,11 @@
             @yield('content')
         </main>
     </div>
-    @guest 
+    @guest
     @else
-    <script> 
+    <script>
         window.user_email = "{{ Auth::user()->email }}"
         window.user_name = "{{ Auth::user()->name . ' ' . Auth::user()->surname }}"
-
     </script>
     @endguest
 </body>

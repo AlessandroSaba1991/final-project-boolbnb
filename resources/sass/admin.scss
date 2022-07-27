@@ -6,6 +6,17 @@
 
 // Bootstrap
 @import "~bootstrap/scss/bootstrap";
+.pop_up_message{
+    width: fit-content;
+    margin: 0 auto;
+}
+.bg_orange{
+    color: white;
+    background: linear-gradient(to top left, #ffa500 0%, rgb(255, 140, 0) 100%);
+}
+.filter_text{
+    filter: drop-shadow(2px 4px 6px black);
+}
 
 .result {
     position: absolute;

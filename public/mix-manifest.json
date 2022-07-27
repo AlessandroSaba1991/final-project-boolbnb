@@ -6,5 +6,6 @@
     "/css/front.css": "/css/front.css",
     "/css/payment.css": "/css/payment.css",
     "/css/admin_cards.css": "/css/admin_cards.css",
-    "/js/front.js": "/js/front.js"
+    "/js/front.js": "/js/front.js",
+    "/js/mobile-or-tablet.js": "/js/mobile-or-tablet.js"
 }

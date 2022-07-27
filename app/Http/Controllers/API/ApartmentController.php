@@ -6,12 +6,27 @@ use App\Http\Controllers\Controller;
 use App\Models\Apartment;
 use App\Models\Message;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
 class ApartmentController extends Controller
 {
     public function index(Request $request)
     {
+        function getDistanceBetweenPointsNew($latitude1, $longitude1, $latitude2, $longitude2, $unit = 'kilometers') {
+            $theta = $longitude1 - $longitude2;
+            $distance = (sin(deg2rad($latitude1)) * sin(deg2rad($latitude2))) + (cos(deg2rad($latitude1)) * cos(deg2rad($latitude2)) * cos(deg2rad($theta)));
+            $distance = acos($distance);
+            $distance = rad2deg($distance);
+            $distance = $distance * 60 * 1.1515;
+            switch($unit) {
+              case 'miles':
+                break;
+              case 'kilometers' :
+                $distance = $distance * 1.609344;
+            }
+            return (round($distance,2));
+          };
         $beds = $request->query('beds');
         $rooms = $request->query('rooms');
         $servicesSelect = $request->query('services');
@@ -47,16 +62,25 @@ class ApartmentController extends Controller
         $poi_list_json = json_encode($poi_list);
         $response = Http::get("https://api.tomtom.com/search/2/geometryFilter.json?key=MtC8XS7dGHVqDy6SPK1zWiLfRmG28cBF&geometryList=$geometry_json&poiList=$poi_list_json");
         $results = $response->object()->results;
-        $complete = [];
-        foreach ($apartments as $apart) {
-            foreach ($results as $item) {
-                if ($item->id == $apart->id) {
-                    array_push($complete, $apart);
-                }
-            }
+        $idOrderDistance = [];
+        foreach($results as $record){
+            $distance = getDistanceBetweenPointsNew($lat, $lon, $record->position->lat, $record->position->lon);
+            $data= [
+                'id'=> $record->id,
+                'distance'=> $distance,
+            ];
+            array_push($idOrderDistance,$data);
+        }
+        $sortby= array_column($idOrderDistance,'distance');
+        array_multisort($sortby,SORT_ASC,$idOrderDistance);
+        $idOrder=[];
+        foreach ($idOrderDistance as $item) {
+            array_push($idOrder,$item['id']);
         };
 
-        return $complete;
+        $implodedIds = implode(',', $idOrder);
+        //return $complete;
+        return Apartment::with('services', 'sponsorizations')->whereIn('id', $idOrder)->orderByRaw(DB::raw("FIELD(id, $implodedIds)"))->paginate(6);
     }
     public function show($id)
     {
@@ -78,7 +102,7 @@ class ApartmentController extends Controller
         $fullname = $request->query('fullname');
         $email = $request->query('email');
         $content = $request->query('content');
-      
+
        $newMessage = new Message;
 
        $newMessage->apartment_id = $apartment_id;
@@ -86,6 +110,6 @@ class ApartmentController extends Controller
        $newMessage->email = $email;
        $newMessage->content = $content;
         $newMessage->save();
-        return 'Messaggio inviato correttamente'; 
+        return 'Messaggio inviato correttamente';
     }
 }
