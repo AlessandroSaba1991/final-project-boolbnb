@@ -1,5 +1,20 @@
 <template>
-  <div class="single_page h-100 py-5">
+  <div class="single_page h-100">
+    <div class="jumbo_container position-relative">
+      <div class="jumbotron"></div>
+      <div
+        class="
+          apt_title
+          d-flex
+          justify-content-center
+          align-items-center
+          text-white
+        "
+      >
+        <h1 class="font_satisfy">{{ apartment.title }}</h1>
+      </div>
+    </div>
+
     <div class="h-100" v-if="!loading">
       <div class="container">
         <div class="apartment_image mb-5">
@@ -9,22 +24,28 @@
             alt=""
           />
         </div>
-
-        <div class="apartment_title mb-2">
-          <h1>{{ apartment.title }}</h1>
-        </div>
-
-        <div class="apartment_address mb-5">
-          <h5>{{ apartment.address }}</h5>
+        <div class="first_info">
+          <div class="section_title">
+            <h2 class="bg_label">{{ apartment.title }}</h2>
+          </div>
+          <div class="apartment_address mb-5">
+            <h5>{{ apartment.address }}</h5>
+          </div>
         </div>
 
         <div class="apartment_description mb-5">
-          <h2>Descrizione</h2>
+          <div class="section_title">
+            <h2 class="bg_label">Descrizione</h2>
+          </div>
+
           <p>{{ apartment.description }}</p>
         </div>
 
         <div class="apartment_details mb-5">
-          <h2 class="mb-3">Dettagli</h2>
+          <div class="section_title">
+            <h2 class="mb-3 bg_label">Dettagli</h2>
+          </div>
+
           <div
             class="
               details-list
@@ -67,8 +88,14 @@
           </div>
         </div>
 
-        <div class="apartment_services" v-if="apartment.services.length > 0">
-          <h2>Servizi</h2>
+        <div
+          class="apartment_services mb-5"
+          v-if="apartment.services.length > 0"
+        >
+          <div class="section_title">
+            <h2 class="bg_label">Servizi</h2>
+          </div>
+
           <ul class="list">
             <li
               class="services-elements"
@@ -80,8 +107,11 @@
           </ul>
         </div>
 
-        <div class="maps py-5 mb-5">
-          <h2>Posizione sulla mappa</h2>
+        <div class="maps pb-5 mb-5">
+          <div class="section_title">
+            <h2 class="bg_label">Posizione sulla mappa</h2>
+          </div>
+
           <div class="map-container">
             <div class="mapouter">
               <div class="gmap_canvas">
@@ -104,35 +134,76 @@
             </div>
           </div>
         </div>
+        <div id="contact">
+          <div class="message-form message-style p-4 text-white mb-5">
+            <h2 class="text-white text-uppercase fw-bold">
+              Invia un messaggio all' Host
+            </h2>
+            <label for="checkcontact" class="contactbutton mb-3">
+              <div class="button_form"></div>
+            </label>
 
-        <div class="message-form message-style p-4 text-white">
-          <h2 class="text-white text-uppercase fw-bold">
-            Invia un messaggio all' Host
-          </h2>
+            <input id="checkcontact" type="checkbox" />
+            <div class="contactform mb-3">
+              <div class="input_wrapper">
+                <label for="name" class="form-label">Nome:</label>
+                <input
+                  v-model="guestFullName"
+                  type="text"
+                  class="form-control"
+                  name="name"
+                  id="name"
+                  aria-describedby="namehelpId"
+                  placeholder="Mario Rossi"
+                />
+              </div>
 
-          <div class="mb-3">
-            <label for="name" class="form-label">Nome:</label>
-            <input v-model="guestFullName" type="text" class="form-control" name="name" id="name" aria-describedby="namehelpId" placeholder="Mario Rossi">
-          </div>
+              <div class="input_wrapper mb-3">
+                <label for="email" class="form-label">Email:</label>
+                <input
+                  v-model="guestEmail"
+                  type="email"
+                  class="form-control"
+                  name="email"
+                  id="email"
+                  aria-describedby="emailHelpId"
+                  placeholder="mariorossi@example.com"
+                />
+              </div>
 
-         <div class="mb-3">
-           <label for="email" class="form-label">Email:</label>
-           <input v-model="guestEmail" type="email" class="form-control" name="email" id="email" aria-describedby="emailHelpId" placeholder="mariorossi@example.com">
-         </div>
-
-          <div class="mb-3">
-            <label for="message" class="form-label">Messaggio:</label>
-            <textarea @keyup.enter="saveMessage()" v-model="guestMessage" class="form-control" name="message" id="message" rows="3"></textarea>
-          </div>
-          
-          <button class="btn btn-primary" @click="saveMessage()">Invia</button>
-
-            <div :class="messageSend ? 'position-absolute' : 'd-none'" class="message_send rounded p-1 mb-2 bg-primary text-white fs-3 d-inline-block">
-            Messaggio inviato!
+              <div class="textarea_wrapper mb-3">
+                <label for="message" class="form-label">Messaggio:</label>
+                <textarea
+                  @keyup.enter="saveMessage()"
+                  v-model="guestMessage"
+                  class="form-control"
+                  name="message"
+                  id="message"
+                  rows="3"
+                ></textarea>
+              </div>
             </div>
-        </div>
+            <div class="submit_wrapper">
+              <input type="submit" value="INVIA" @click="saveMessage()" />
+            </div>
 
-       
+            <div
+              :class="messageSend ? 'position-absolute' : 'd-none'"
+              class="
+                message_send
+                rounded
+                p-1
+                mb-2
+                bg-primary
+                text-white
+                fs-3
+                d-inline-block
+              "
+            >
+              Messaggio inviato!
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -145,21 +216,21 @@ export default {
     return {
       apartment: "",
       loading: true,
-      yourIP: '',
-      guestFullName: '',
-      guestEmail: '',
-      guestMessage: '',
+      yourIP: "",
+      guestFullName: "",
+      guestEmail: "",
+      guestMessage: "",
       messageSend: false,
     };
   },
   methods: {
     getAuthUser() {
-      this.guestEmail = window.user_email
-      this.guestFullName = window.user_name
+      this.guestEmail = window.user_email;
+      this.guestFullName = window.user_name;
     },
-    saveMessage(){
+    saveMessage() {
       axios
-        .get("/api/apartment/message" , {
+        .get("/api/apartment/message", {
           params: {
             apartment_id: this.$route.params.id,
             fullname: this.guestFullName,
@@ -173,20 +244,20 @@ export default {
             this.$router.push({ name: "not-found" });
           } else {
             console.log(response);
-            this.guestMessage = '';
+            this.guestMessage = "";
             this.messageSend = true;
             setTimeout(() => {
-                this.messageSend = false;
-            }, 2000)
+              this.messageSend = false;
+            }, 2000);
           }
         })
         .catch((e) => {
           console.error(e);
         });
     },
-    postView(){
+    postView() {
       axios
-        .get("/api/visualization/" , {
+        .get("/api/visualization/", {
           params: {
             ip: this.yourIP,
             apartment_id: this.$route.params.id,
@@ -197,20 +268,20 @@ export default {
         });
     },
     showYourIP() {
-            fetch("https://api.ipify.org?format=json")
-                .then((x) => x.json())
-                .then(({ ip }) => {
-                    this.yourIP = ip;
-                    this.postView();
-                });
-        },
+      fetch("https://api.ipify.org?format=json")
+        .then((x) => x.json())
+        .then(({ ip }) => {
+          this.yourIP = ip;
+          this.postView();
+        });
+    },
     getApartment() {
       axios
         .get("/api/apartment/" + this.$route.params.id, {
           params: {
-            lat: 44.78993000,
-            lon: 11.57065000,
-            radius: 20000
+            lat: 44.78993,
+            lon: 11.57065,
+            radius: 20000,
           },
         })
         .then((response) => {
@@ -237,85 +308,154 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.apt-img {
-  width: 100%;
-}
+@import "../../sass/message.scss";
+.single_page {
+  .jumbo_container {
+    margin-bottom: 156px;
+  }
 
-.apartment_address,
-.apartment_details,
-.apartment_services,
-.apartment_description,
-.maps {
-  border-bottom: 1px dotted lightgrey;
-}
+  .jumbotron {
+    height: 500px;
+    background-image: url("../../img/1126773.jpg");
+    background-position: center;
+    overflow-x: hidden;
+    filter: brightness(50%);
+  }
 
-.list {
-  column-count: 4;
-  column-gap: 20px;
-  //list-style-image: url("../../img/check-solid.svg");
-  list-style: none;
-}
+  .apt_title {
+    height: 500px;
+    width: 100%;
+    position: absolute;
+    top: 0;
+  }
 
-.list li:before {
-  content: "\2713";
-  color: #faad58;
-  font-weight: bold;
-  display: inline-block;
-  width: 1em;
-  margin-left: -1em;
-}
+  .font_satisfy {
+    font-size: 62px;
+    font-family: "Satisfy", cursive;
+  }
+  .apt-img {
+    width: 100%;
+  }
 
-.mapouter {
-  position: relative;
-  text-align: right;
-  height: 500px;
-  width: 100%;
-}
-.gmap_canvas {
-  overflow: hidden;
-  background: none !important;
-  height: 500px;
-  width: 100%;
-}
+  .bg_label {
+    display: inline;
+    background: linear-gradient(
+      to right,
+      #edc156 0%,
+      #fea759 0%,
+      #fea759 50%,
+      #edc156 100%
+    );
+    color: white;
+    padding: 5px 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  }
 
-.message-style {
-  background-color: #faad58;
-  position: relative;
-}
+  .section_title,
+  .apartment_description {
+    padding-bottom: 50px;
+  }
 
-.message_send {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translate(-50%,0);
-  transition: all 1s;
-}
+  .apartment_address,
+  .apartment_details,
+  .apartment_services,
+  .apartment_description,
+  .maps {
+    border-bottom: 1px dotted lightgrey;
+  }
 
-@media screen and (max-width: 600px) {
-  .details-list,
   .list {
-    flex-direction: column;
-    justify-content: space-between;
-    column-count: 1;
+    column-count: 4;
+    column-gap: 20px;
+    //list-style-image: url("../../img/check-solid.svg");
+    list-style: none;
   }
 
-  .services-elements {
-    font-size: 20px;
+  .list li:before {
+    content: "\2713";
+    color: #faad58;
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
   }
 
-  .detail-element {
-    margin-bottom: 20px;
-    font-size: 20px;
+  .mapouter {
+    position: relative;
+    text-align: right;
+    height: 500px;
+    width: 100%;
+  }
+  .gmap_canvas {
+    overflow: hidden;
+    background: none !important;
+    height: 500px;
+    width: 100%;
   }
 
-  .message-form {
-    display: flex;
-    flex-direction: column;
+  .message-style {
+    background-color: #faad58;
+    position: relative;
   }
-  .message_button {
-    padding: 16px 32px;
-    font-size: large;
-    align-items: center;
+
+  .message_send {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+    transition: all 1s;
   }
+
+  @media screen and (max-width: 600px) {
+    .details-list,
+    .list {
+      flex-direction: column;
+      justify-content: space-between;
+      column-count: 1;
+    }
+
+    .services-elements {
+      font-size: 20px;
+    }
+
+    .detail-element {
+      margin-bottom: 20px;
+      font-size: 20px;
+    }
+
+    .message-form {
+      display: flex;
+      flex-direction: column;
+    }
+    .message_button {
+      padding: 16px 32px;
+      font-size: large;
+      align-items: center;
+    }
+  }
+
+  @media screen and (max-width: 490px) {
+    .apt_title {
+      text-align: center;
+      padding: 20px;
+    }
+
+    .jumbo_container {
+      margin-bottom: 50px;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .apt_title {
+      text-align: center;
+      padding: 20px;
+    }
+
+    .jumbo_container {
+      margin-bottom: 50px;
+    }
+  }
+
+  @import url("https://fonts.googleapis.com/css2?family=Satisfy&display=swap");
 }
 </style>
