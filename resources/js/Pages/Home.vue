@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid p-0">
+  <div class="container-fluid p-0 container-home">
     <div class="row g-0 backimg">
       <div
         class="
@@ -45,7 +45,7 @@
     </div>
     <section class="subscription">
       <div class="d-flex justify-content-center p-3">
-        <h2 class="text-uppercase font_satisy">subscription rental</h2>
+        <h2 class="text-uppercase font_satisy fz_48">sponsorizzati</h2>
       </div>
       <div class="container">
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
@@ -124,40 +124,70 @@
         </div>
       </div>
     </section>
-    <div class="d-flex justify-content-center pt-5">
       <div class="row g-0 w-100">
-        <div class="col-12 col-lg-6 col-md-12">
-          <img
+        <div class="col-12 col-lg-6 col-md-12 col-sm-12">
+          <div class="h-100 image_container">
+            <img
             :src="photo.image"
             alt=""
-            class="w-100 imgfit"
+            class="imgfit"
             :class="index == activeItem ? 'active_img' : ''"
             v-for="(photo, index) in photos"
             @click="selectedImage(index)"
             :key="index"
-          />
+            />
+          </div>
         </div>
-        <div class="col-12 col-lg-6 text-center align-content-center bg_orange">
-          <div class="pt_7 mb-5">
-            <h1 class="text-uppercase text-white font_satisy">why us ?</h1>
+        <div class="col-12 col-lg-6 col-md-12 col-sm-12 bg_orange ">
+          <div class="d-flex flex-column justify-content-evenly align-items-center h-100 p-3">
+            <h2 class="text-white font_satisy fz_64">Perchè noi?</h2>
             <p class="text-capitalize mt-5 text-white font_monserrat">
               Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente
               dignissimos molestias adipisci fuga, cum ipsa dolores possimus
               animi ab velit! Numquam voluptates, totam ipsa deleniti quae
               deserunt rerum? Doloremque, rerum.
             </p>
+            <div class="why_icons d-flex justify-content-evenly w-100">
+            <div class="icon_and_text text-center">
+              <div class="house_icon">
+                <svg height="50" width="50" fill="white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M575.8 255.5C575.8 273.5 560.8 287.6 543.8 287.6H511.8L512.5 447.7C512.5 450.5 512.3 453.1 512 455.8V472C512 494.1 494.1 512 472 512H456C454.9 512 453.8 511.1 452.7 511.9C451.3 511.1 449.9 512 448.5 512H392C369.9 512 352 494.1 352 472V384C352 366.3 337.7 352 320 352H256C238.3 352 224 366.3 224 384V472C224 494.1 206.1 512 184 512H128.1C126.6 512 125.1 511.9 123.6 511.8C122.4 511.9 121.2 512 120 512H104C81.91 512 64 494.1 64 472V360C64 359.1 64.03 358.1 64.09 357.2V287.6H32.05C14.02 287.6 0 273.5 0 255.5C0 246.5 3.004 238.5 10.01 231.5L266.4 8.016C273.4 1.002 281.4 0 288.4 0C295.4 0 303.4 2.004 309.5 7.014L564.8 231.5C572.8 238.5 576.9 246.5 575.8 255.5L575.8 255.5z"/></svg>
+              </div>
+              <div class="icon_text">
+                <p>Over 3700 <br> Structures</p>
+              </div>
+            </div>
+            <div class="icon_and_text">
+               <div class="customer_icon">
+                <img src="../../img/customer.png" alt="" height="50" width="50">
+              </div>
+              <div class="icon_text">
+                <p class="">24/7 Support</p>
+              </div>
+            </div>
+            <div class="icon_and_text text-center">
+              <div class="rank_icon">
+                <svg height="50" width="50" fill="white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M406.1 61.65C415.4 63.09 419.4 74.59 412.6 81.41L374.6 118.1L383.6 170.1C384.1 179.5 375.3 186.7 366.7 182.4L320.2 157.9L273.3 182.7C264.7 187 255 179.8 256.4 170.5L265.4 118.4L227.4 81.41C220.6 74.59 224.6 63.09 233.9 61.65L286.2 54.11L309.8 6.332C314.1-2.289 326.3-1.93 330.2 6.332L353.8 54.11L406.1 61.65zM384 256C401.7 256 416 270.3 416 288V480C416 497.7 401.7 512 384 512H256C238.3 512 224 497.7 224 480V288C224 270.3 238.3 256 256 256H384zM160 320C177.7 320 192 334.3 192 352V480C192 497.7 177.7 512 160 512H32C14.33 512 0 497.7 0 480V352C0 334.3 14.33 320 32 320H160zM448 416C448 398.3 462.3 384 480 384H608C625.7 384 640 398.3 640 416V480C640 497.7 625.7 512 608 512H480C462.3 512 448 497.7 448 480V416z"/></svg>
+              </div>
+              <div class="icon_text">
+                <p class="">Top 10 Best <br> Rent Sites</p>
+              </div>
+            </div>
           </div>
         </div>
+          </div>
       </div>
-    </div>
-    <div class="footer">
-      <div class="container p-5">
+    <section class="users_comments">
+      <SliderComponent/>
+    </section>
+    <!-- <div class="footer">
+      <div class="container p-3">
         <div class="row">
-          <div class="col-4">
-            <h5 class="pt-4 text-white text-uppercase font_monserrat">
+          <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+            <div class="socials">
+              <h5 class="pt-4 text-white text-uppercase font_monserrat">
               get socials
             </h5>
-            <p class="pt-3 text-white font_monserrat">
+            <p class="text-white font_monserrat">
               Link with us via social networks
             </p>
             <span class="instagram"
@@ -193,36 +223,50 @@
                   d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"
                 /></svg
             ></span>
+            </div>
           </div>
-          <div class="col-4">
-            <h5 class="pt-4 text-white text-uppercase font_monserrat">
+          <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+            <div class="">
+              <h5 class="pt-4 text-white text-uppercase font_monserrat">
               We're here for you
-            </h5>
-            <p class="pt-3 text-white font_monserrat">
+              </h5>
+            <p class="text-white font_monserrat">
               8500, Lorem Street, Chicago, IL, 55030 Phone (123)456-78-90 Phone
               (123)456-78-90 sales@example.com
             </p>
+            </div>
           </div>
-          <div class="col-4">
-            <h5 class="pt-4 text-white text-uppercase font_monserrat">
+          <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+            <div class="">
+              <h5 class="pt-4 text-white text-uppercase font_monserrat">
               contact us
             </h5>
-            <p class="pt-3 text-white font_monserrat">
+            <p class="text-white font_monserrat">
               we love yoyr feedback and are constantly looking
             </p>
-            <p class="pt-3 orange text-uppercase font_monserrat">
+            <p class="orange text-uppercase font_monserrat">
               send us a message
             </p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      <div class="credits text-center text-white font_monserrat p-2">
+        &copy; Team 7 Boolean
+      </div>
+    </div> -->
   </div>
 </template>
 
 <script>
+import SliderComponent from "../components/SliderComponent.vue"
+
 export default {
   name: "Home",
+
+  components:{
+    SliderComponent
+  },
   data() {
     return {
       photos: [
@@ -230,7 +274,7 @@ export default {
           image: "https://wallpaperaccess.com/full/1126760.jpg",
         },
         {
-          image: "https://www.quiq.re/wp-content/uploads/2014/12/bg-1.jpg",
+          image: "https://images.posarellivillas.com/property_posarelli/96071/wide-asra16:10/villa-serapias-posarelli-29-.jpg",
         },
       ],
       activeItem: 0,
@@ -299,12 +343,15 @@ export default {
 };
 </script>
 
-<style>
-.backimg {
+<style lang="scss" scoped>
+
+.container-home{
+  .backimg {
   background-image: url("https://www.myistria.com/UserDocsImages/app/objekti/795/slika_hd/19082020034916_Villas-near-Rovinj-Villa-Prestige-2.jpg");
   height: 400px;
   background-size: cover;
   background-position: center;
+  overflow-x:hidden;
 }
 
 .title {
@@ -372,31 +419,28 @@ export default {
 }
 
 .active_img {
-  display: none;
+  display: none;  
 }
 
-.footer {
-  background-color: rgb(30, 29, 29);
-  height: auto;
+
+.fade{
+  opacity: 0;
+  transition: opacity 4s;
 }
+
+
+
 
 .borderimg {
   border: 1px solid black;
   border-radius: 50%;
 }
 
-.orange {
-  color: orange;
-  transition: 2s;
-}
-
-.orange:hover {
-  cursor: pointer;
-  color: orangered;
-}
 
 .imgfit {
-  aspect-ratio: 2/1;
+  aspect-ratio: 2;
+  height: 100%;
+  width: 100%;
 }
 
 .credit {
@@ -411,14 +455,15 @@ export default {
   width: 26rem;
 }
 
-.instagram,
-.linkedin,
-.facebook:hover {
-  cursor: pointer;
+.fz_64{
+  font-size: 64px;
+}
+
+.fz_48{
+  font-size: 48px;
 }
 
 .font_satisy {
-  font-size: 42px;
   font-family: "Satisfy", cursive;
 }
 
@@ -426,12 +471,65 @@ export default {
   font-family: "Montserrat", sans-serif;
 }
 
+.house_icon{
+  background-color: rgba(255,255,255,.2);
+  max-height: 110px;
+  max-width: 110px;
+  border-radius: 50%;
+  padding: 25px;
+  transition: 0.8s;
+}
+
+.customer_icon{
+  background-color: rgba(255,255,255,.2);
+  max-height: 110px;
+  max-width: 110px;
+  border-radius: 50%;
+  padding: 25px;
+  transition: 0.8s;
+}
+
+.house_icon:hover,
+.customer_icon:hover,
+.rank_icon:hover{
+  background:#0d6efd;
+}
+
+.customer_icon > img{
+  filter: invert(100);
+}
+
+.rank_icon{
+  background-color: rgba(255,255,255,.2);
+  max-height: 110px;
+  max-width: 110px;
+  border-radius: 50%;
+  padding: 25px;
+  transition: 0.8s;
+}
+
+.icon_text{
+  color: white;
+  text-transform: uppercase;
+  margin-top: 16px;
+}
+
+
+
+
 @media screen and(max-width:576px) {
   .margin-3 {
     margin: 0 0 0 0;
+  }
+
+  .socials{
+    margin-bottom: 20px;
   }
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Satisfy&display=swap");
+}
+
+
 </style>

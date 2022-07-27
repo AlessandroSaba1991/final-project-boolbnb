@@ -1,6 +1,6 @@
 <template>
   <div class="page_body">
-    <div class="container shadow-lg rounded mt-3 p-3">
+    <div class="container-fluid  mt-3 p-3">
       <header>
         <div class="page_title">
           <h1 class="text-center text-uppercase">
@@ -411,6 +411,17 @@ export default {
     border: solid 2px rgb(255, 177, 22);
     border-radius: 10px;
     background: linear-gradient(to top left, orange 0%, rgb(255, 140, 0) 100%);
+  }
+
+  .btn_orange {
+  background: linear-gradient(
+      to right,
+      #edc156 0%,
+      #fea759 0%,
+      #fea759 50%,
+      #edc156 100%
+    )
+    no-repeat scroll right bottom/210% 100% #fea759;
   }
 
   .img_resize {
