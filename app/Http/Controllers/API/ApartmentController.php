@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Apartment;
+use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
@@ -95,5 +96,20 @@ class ApartmentController extends Controller
             );
         }
     }
+    public function saveMessage(Request $request) {
 
+        $apartment_id = $request->query('apartment_id');
+        $fullname = $request->query('fullname');
+        $email = $request->query('email');
+        $content = $request->query('content');
+
+       $newMessage = new Message;
+
+       $newMessage->apartment_id = $apartment_id;
+       $newMessage->fullname = $fullname;
+       $newMessage->email = $email;
+       $newMessage->content = $content;
+        $newMessage->save();
+        return 'Messaggio inviato correttamente';
+    }
 }

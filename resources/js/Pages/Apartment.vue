@@ -1,5 +1,5 @@
 <template>
-  <div class="single_page h-100">
+  <div class="single_page h-100 py-5">
     <div class="h-100" v-if="!loading">
       <div class="container">
         <div class="apartment_image mb-5">
@@ -105,63 +105,34 @@
           </div>
         </div>
 
-        <div class="message-form message-style">
+        <div class="message-form message-style p-4 text-white">
           <h2 class="text-white text-uppercase fw-bold">
             Invia un messaggio all' Host
           </h2>
-          <div class="mb-3">
-            <label
-              for="exampleFormControlInput1"
-              class="form-label fw-bold text-white"
-              >Nome Completo</label
-            >
-            <input
-              type="text"
-              class="form-control"
-              id="exampleFormControlInput1"
-              placeholder="Mario Rossi"
-            />
-          </div>
 
           <div class="mb-3">
-            <label
-              for="exampleFormControlInput1"
-              class="form-label fw-bold text-white"
-              >Indirizzo mail</label
-            >
-            <input
-              type="email"
-              class="form-control"
-              id="exampleFormControlInput1"
-              placeholder="name@example.com"
-            />
+            <label for="name" class="form-label">Nome:</label>
+            <input v-model="guestFullName" type="text" class="form-control" name="name" id="name" aria-describedby="namehelpId" placeholder="Mario Rossi">
           </div>
 
+         <div class="mb-3">
+           <label for="email" class="form-label">Email:</label>
+           <input v-model="guestEmail" type="email" class="form-control" name="email" id="email" aria-describedby="emailHelpId" placeholder="mariorossi@example.com">
+         </div>
+
           <div class="mb-3">
-            <label
-              for="exampleFormControlTextarea1"
-              class="form-label fw-bold text-white"
-              >Il tuo messaggio</label
-            >
-            <textarea
-              class="form-control"
-              id="exampleFormControlTextarea1"
-              rows="3"
-            ></textarea>
+            <label for="message" class="form-label">Messaggio:</label>
+            <textarea @keyup.enter="saveMessage()" v-model="guestMessage" class="form-control" name="message" id="message" rows="3"></textarea>
           </div>
-          <button
-            type="submit"
-            class="
-              message_button
-              btn btn-primary
-              text-white text-uppercase
-              fw-bold
-              mt-5
-            "
-          >
-            Invia
-          </button>
+          
+          <button class="btn btn-primary" @click="saveMessage()">Invia</button>
+
+            <div :class="messageSend ? 'position-absolute' : 'd-none'" class="message_send rounded p-1 mb-2 bg-primary text-white fs-3 d-inline-block">
+            Messaggio inviato!
+            </div>
         </div>
+
+       
       </div>
     </div>
   </div>
@@ -174,9 +145,65 @@ export default {
     return {
       apartment: "",
       loading: true,
+      yourIP: '',
+      guestFullName: '',
+      guestEmail: '',
+      guestMessage: '',
+      messageSend: false,
     };
   },
   methods: {
+    getAuthUser() {
+      this.guestEmail = window.user_email
+      this.guestFullName = window.user_name
+    },
+    saveMessage(){
+      axios
+        .get("/api/apartment/message" , {
+          params: {
+            apartment_id: this.$route.params.id,
+            fullname: this.guestFullName,
+            email: this.guestEmail,
+            content: this.guestMessage,
+          },
+        })
+        .then((response) => {
+          //console.log(response);
+          if (response.data.status_code === 404) {
+            this.$router.push({ name: "not-found" });
+          } else {
+            console.log(response);
+            this.guestMessage = '';
+            this.messageSend = true;
+            setTimeout(() => {
+                this.messageSend = false;
+            }, 2000)
+          }
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+    },
+    postView(){
+      axios
+        .get("/api/visualization/" , {
+          params: {
+            ip: this.yourIP,
+            apartment_id: this.$route.params.id,
+          },
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+    },
+    showYourIP() {
+            fetch("https://api.ipify.org?format=json")
+                .then((x) => x.json())
+                .then(({ ip }) => {
+                    this.yourIP = ip;
+                    this.postView();
+                });
+        },
     getApartment() {
       axios
         .get("/api/apartment/" + this.$route.params.id, {
@@ -187,7 +214,7 @@ export default {
           },
         })
         .then((response) => {
-          console.log(response);
+          //console.log(response);
           if (response.data.status_code === 404) {
             this.loading = false;
             this.$router.push({ name: "not-found" });
@@ -203,6 +230,8 @@ export default {
   },
   mounted() {
     this.getApartment();
+    this.showYourIP();
+    this.getAuthUser();
   },
 };
 </script>
@@ -251,7 +280,15 @@ export default {
 
 .message-style {
   background-color: #faad58;
-  padding: 50px;
+  position: relative;
+}
+
+.message_send {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%,0);
+  transition: all 1s;
 }
 
 @media screen and (max-width: 600px) {

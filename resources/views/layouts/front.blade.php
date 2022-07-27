@@ -65,6 +65,14 @@
             @yield('content')
         </main>
     </div>
+    @guest 
+    @else
+    <script> 
+        window.user_email = "{{ Auth::user()->email }}"
+        window.user_name = "{{ Auth::user()->name . ' ' . Auth::user()->surname }}"
+
+    </script>
+    @endguest
 </body>
 
 </html>
