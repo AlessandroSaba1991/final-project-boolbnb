@@ -349,7 +349,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.img_resize {
+    aspect-ratio: 2/1;
+  }
 .bagde_ {
   position: absolute;
   top: 2%;
