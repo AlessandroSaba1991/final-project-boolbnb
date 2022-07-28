@@ -45,82 +45,65 @@
     </div>
     <section class="subscription">
       <div class="d-flex justify-content-center p-3">
-        <h2 class="text-uppercase font_satisy fz_48">sponsorizzati</h2>
+        <h2 class="text-uppercase font_satisy fz_48 mb-0 py-5">sponsorizzati</h2>
       </div>
       <div class="container">
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
-          <div class="col py-4 px-3">
-            <div class="card">
-              <img
-                src="https://wallpapercave.com/wp/wp7111669.jpg"
-                alt=""
-                class="card-img-top"
-              />
-              <div class="card-body">
-                <p class="card-text text-center font_monserrat">
-                  Villa Molto Graziosa
-                </p>
-                <p class="price font_monserrat">300$/notte</p>
-                <button
-                  class="
-                    btn btn_orange
-                    text-uppercase text-white
-                    font_monserrat
-                  "
+        <div class="row gy-3 mb-5 pb-3 show_results">
+          <div
+                  class="col-xs-12 col-sm-12 col-md-6 col-lg-4"
+                  v-for="apartment in apartments"
+                  :key="apartment.id"
                 >
-                  Check it
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="col py-4 px-3">
-            <div class="card">
-              <img
-                src="https://wallpapercave.com/wp/wp7111669.jpg"
-                alt=""
-                class="card-img-top"
-              />
-              <div class="card-body">
-                <p class="card-text text-center font_monserrat">
-                  Villa Molto Graziosa
-                </p>
-                <p class="price font_monserrat">300$/notte</p>
-                <button
-                  class="
-                    btn btn_orange
-                    text-uppercase text-white
-                    font_monserrat
-                  "
-                >
-                  Check it
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="col py-4 px-3">
-            <div class="card">
-              <img
-                src="https://wallpapercave.com/wp/wp7111669.jpg"
-                alt=""
-                class="card-img-top"
-              />
-              <div class="card-body">
-                <p class="card-text text-center font_monserrat">
-                  Villa Molto Graziosa
-                </p>
-                <p class="price font_monserrat">300$ / notte</p>
-                <button
-                  class="
-                    btn btn_orange
-                    text-uppercase text-white
-                    font_monserrat
-                  "
-                >
-                  Check it
-                </button>
-              </div>
-            </div>
-          </div>
+                  <div
+                    class="
+                      card
+                      h-100
+                      rounded-3
+                      shadow
+                      bg-body
+                      border-warning
+                      position-relative
+                    "
+                  >
+                    <div
+                      class="bagde_"
+                      v-if="apartment.sponsorizations.length > 0"
+                    >
+                      Consigliato
+                    </div>
+                    <img
+                      :src="'/storage/' + apartment.cover_image"
+                      alt=""
+                      class="card-img-top img_resize"
+                    />
+                    <div
+                      class="
+                        card-body
+                        d-flex
+                        flex-column
+                        justify-content-between
+                      "
+                    >
+                      <h5 class="card-title">
+                        {{ apartment.title }}
+                      </h5>
+                      <p class="card-text" v-if="apartment.description != null">
+                        {{ splitText(apartment.description, 99) }}...
+                      </p>
+                      <router-link
+                        class="btn btn_orange text-uppercase text-white"
+                        :to="{
+                          name: 'apartment',
+                          params: {
+                            id: apartment.id,
+                          },
+                        }"
+                      >
+                        Visualizza dettagli
+                      </router-link>
+                    </div>
+                  </div>
+                </div>
         </div>
       </div>
     </section>
@@ -281,10 +264,28 @@ export default {
       searchLatitude: "",
       searchLongitude: "",
       searchAddress: "",
+      apartments: "",
     };
   },
 
   methods: {
+    getSponsoredApartments() {
+      axios
+        .get("/api/apartments/sponsored")
+        .then((response) => {
+          //console.log(response);
+          if (response.data.status_code === 404) {
+            this.loading = false;
+            this.$router.push({ name: "not-found" });
+          } else {
+            this.apartments = response.data;
+            this.loading = false;
+          }
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+    },
     selectedImage(index) {
       this.activeItem = index;
       //console.log(this.activeItem);
@@ -337,13 +338,24 @@ export default {
       }
     },
   },
-  mounted: function () {
+  mounted() {
+     this.getSponsoredApartments();
     this.interval = setInterval(this.goDown, 5000);
   },
 };
 </script>
 
 <style lang="scss" scoped>
+
+.bagde_ {
+  position: absolute;
+  top: 2%;
+  left: -2%;
+  background-color: green;
+  padding: 0.5rem;
+  color: white;
+  border-radius: 10px;
+}
 
 .container-home{
   .backimg {
@@ -533,5 +545,7 @@ export default {
 
 
 </style>
+
+
 
 
