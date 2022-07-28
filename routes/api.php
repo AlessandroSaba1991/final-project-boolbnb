@@ -23,6 +23,8 @@ Route::get('apartments','API\ApartmentController@index');
 
 Route::get('apartment/message','API\ApartmentController@saveMessage');
 
+Route::get('apartments/sponsored','API\ApartmentController@sponsoredApartments');
+
 Route::get('apartment/{apartment:id}','API\ApartmentController@show');
 
 Route::get('services','API\ServiceController@index');
