@@ -6531,9 +6531,9 @@ var render = function render() {
   return _c("div", {
     staticClass: "container-fluid p-0 container-home"
   }, [_c("div", {
-    staticClass: "row g-0 backimg"
-  }, [_vm._m(0), _vm._v(" "), _c("div", {
-    staticClass: "d-flex justify-content-center"
+    staticClass: "row align-items-center g-0 backimg"
+  }, [_c("div", {
+    staticClass: "col d-flex justify-content-center"
   }, [_c("div", {
     staticClass: "mb-3 w-50 me-2 position-relative"
   }, [_c("input", {
@@ -6569,7 +6569,7 @@ var render = function render() {
       hidden: ""
     }
   })]), _vm._v(" "), _c("div", [_c("router-link", {
-    staticClass: "btn btn_orange text-uppercase text-white font_monserrat",
+    staticClass: "btn btn_orange text-uppercase",
     attrs: {
       to: {
         name: "advancedsearch",
@@ -6581,8 +6581,10 @@ var render = function render() {
       }
     }
   }, [_vm._v("Cerca")])], 1)])]), _vm._v(" "), _c("section", {
-    staticClass: "subscription"
-  }, [_vm._m(1), _vm._v(" "), _c("div", {
+    staticClass: "subscription text-center"
+  }, [_c("h2", {
+    staticClass: "sponsored_title text-capitalize bg_orange rounded-3 mb-5 font_satisy fz_48 p-4 d-inline-block"
+  }, [_vm._v("in evidenza")]), _vm._v(" "), _c("div", {
     staticClass: "container"
   }, [_c("div", {
     staticClass: "row gy-3 mb-5 pb-3 show_results"
@@ -6603,11 +6605,11 @@ var render = function render() {
     }), _vm._v(" "), _c("div", {
       staticClass: "card-body d-flex flex-column justify-content-between"
     }, [_c("h5", {
-      staticClass: "card-title"
+      staticClass: "card-title text-capitalize"
     }, [_vm._v("\n                      " + _vm._s(apartment.title) + "\n                    ")]), _vm._v(" "), apartment.description != null ? _c("p", {
       staticClass: "card-text"
     }, [_vm._v("\n                      " + _vm._s(_vm.splitText(apartment.description, 99)) + "...\n                    ")]) : _vm._e(), _vm._v(" "), _c("router-link", {
-      staticClass: "btn btn_orange text-uppercase text-white",
+      staticClass: "btn btn_orange text-uppercase",
       attrs: {
         to: {
           name: "apartment",
@@ -6643,20 +6645,18 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "d-flex flex-column justify-content-evenly align-items-center h-100 p-3"
   }, [_c("h2", {
-    staticClass: "text-white font_satisy fz_64"
-  }, [_vm._v("Perchè noi?")]), _vm._v(" "), _c("p", {
-    staticClass: "text-capitalize mt-5 text-white font_monserrat"
-  }, [_vm._v("\n            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente\n            dignissimos molestias adipisci fuga, cum ipsa dolores possimus\n            animi ab velit! Numquam voluptates, totam ipsa deleniti quae\n            deserunt rerum? Doloremque, rerum.\n          ")]), _vm._v(" "), _c("div", {
+    staticClass: "pt-5 font_satisy fz_64"
+  }, [_vm._v("Perchè noi?")]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c("div", {
     staticClass: "why_icons d-flex justify-content-evenly w-100"
   }, [_c("div", {
     staticClass: "icon_and_text text-center"
   }, [_c("div", {
-    staticClass: "house_icon"
+    staticClass: "why_us_icon"
   }, [_c("svg", {
     attrs: {
-      height: "50",
-      width: "50",
-      fill: "white",
+      height: "45",
+      width: "45",
+      fill: "currentColor",
       xmlns: "http://www.w3.org/2000/svg",
       viewBox: "0 0 576 512"
     }
@@ -6664,15 +6664,33 @@ var render = function render() {
     attrs: {
       d: "M575.8 255.5C575.8 273.5 560.8 287.6 543.8 287.6H511.8L512.5 447.7C512.5 450.5 512.3 453.1 512 455.8V472C512 494.1 494.1 512 472 512H456C454.9 512 453.8 511.1 452.7 511.9C451.3 511.1 449.9 512 448.5 512H392C369.9 512 352 494.1 352 472V384C352 366.3 337.7 352 320 352H256C238.3 352 224 366.3 224 384V472C224 494.1 206.1 512 184 512H128.1C126.6 512 125.1 511.9 123.6 511.8C122.4 511.9 121.2 512 120 512H104C81.91 512 64 494.1 64 472V360C64 359.1 64.03 358.1 64.09 357.2V287.6H32.05C14.02 287.6 0 273.5 0 255.5C0 246.5 3.004 238.5 10.01 231.5L266.4 8.016C273.4 1.002 281.4 0 288.4 0C295.4 0 303.4 2.004 309.5 7.014L564.8 231.5C572.8 238.5 576.9 246.5 575.8 255.5L575.8 255.5z"
     }
-  })])]), _vm._v(" "), _vm._m(2)]), _vm._v(" "), _vm._m(3), _vm._v(" "), _c("div", {
+  })])]), _vm._v(" "), _vm._m(1)]), _vm._v(" "), _c("div", {
+    staticClass: "icon_and_text"
+  }, [_c("div", {
+    staticClass: "why_us_icon"
+  }, [_c("svg", {
+    staticClass: "bi bi-telephone-plus-fill",
+    attrs: {
+      xmlns: "http://www.w3.org/2000/svg",
+      width: "45",
+      height: "45",
+      fill: "currentColor",
+      viewBox: "0 0 16 16"
+    }
+  }, [_c("path", {
+    attrs: {
+      "fill-rule": "evenodd",
+      d: "M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511zM12.5 1a.5.5 0 0 1 .5.5V3h1.5a.5.5 0 0 1 0 1H13v1.5a.5.5 0 0 1-1 0V4h-1.5a.5.5 0 0 1 0-1H12V1.5a.5.5 0 0 1 .5-.5z"
+    }
+  })])]), _vm._v(" "), _vm._m(2)]), _vm._v(" "), _c("div", {
     staticClass: "icon_and_text text-center"
   }, [_c("div", {
-    staticClass: "rank_icon"
+    staticClass: "why_us_icon"
   }, [_c("svg", {
     attrs: {
-      height: "50",
-      width: "50",
-      fill: "white",
+      height: "45",
+      width: "45",
+      fill: "currentColor",
       xmlns: "http://www.w3.org/2000/svg",
       viewBox: "0 0 640 512"
     }
@@ -6680,7 +6698,7 @@ var render = function render() {
     attrs: {
       d: "M406.1 61.65C415.4 63.09 419.4 74.59 412.6 81.41L374.6 118.1L383.6 170.1C384.1 179.5 375.3 186.7 366.7 182.4L320.2 157.9L273.3 182.7C264.7 187 255 179.8 256.4 170.5L265.4 118.4L227.4 81.41C220.6 74.59 224.6 63.09 233.9 61.65L286.2 54.11L309.8 6.332C314.1-2.289 326.3-1.93 330.2 6.332L353.8 54.11L406.1 61.65zM384 256C401.7 256 416 270.3 416 288V480C416 497.7 401.7 512 384 512H256C238.3 512 224 497.7 224 480V288C224 270.3 238.3 256 256 256H384zM160 320C177.7 320 192 334.3 192 352V480C192 497.7 177.7 512 160 512H32C14.33 512 0 497.7 0 480V352C0 334.3 14.33 320 32 320H160zM448 416C448 398.3 462.3 384 480 384H608C625.7 384 640 398.3 640 416V480C640 497.7 625.7 512 608 512H480C462.3 512 448 497.7 448 480V416z"
     }
-  })])]), _vm._v(" "), _vm._m(4)])])])])]), _vm._v(" "), _c("section", {
+  })])]), _vm._v(" "), _vm._m(3)])])])])]), _vm._v(" "), _c("section", {
     staticClass: "users_comments"
   }, [_c("SliderComponent")], 1)]);
 };
@@ -6689,52 +6707,36 @@ var staticRenderFns = [function () {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("div", {
-    staticClass: "col-lg-12 col-md-12 col-sm-12 d-flex justify-content-center align-items-center flex-wrap"
-  }, [_c("div", {
-    staticClass: "text-uppercase text-white p-5 title"
-  }, [_vm._v("team 7 boolbnb")])]);
-}, function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("div", {
-    staticClass: "d-flex justify-content-center p-3"
-  }, [_c("h2", {
-    staticClass: "text-uppercase font_satisy fz_48 mb-0 py-5"
-  }, [_vm._v("sponsorizzati")])]);
+  return _c("p", {
+    staticClass: "text-capitalize text-center p-3"
+  }, [_vm._v("\n            Il nostro unico obiettivo è offrire la totale sicurezza nei confronti dei clienti "), _c("br"), _vm._v(" e fornire la miglior esperienza in base alle proprie esigenze. "), _c("br"), _vm._v(" There’s no place like us.\n          ")]);
 }, function () {
   var _vm = this,
       _c = _vm._self._c;
 
   return _c("div", {
     staticClass: "icon_text"
-  }, [_c("p", [_vm._v("Over 3700 "), _c("br"), _vm._v(" Structures")])]);
-}, function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("div", {
-    staticClass: "icon_and_text"
-  }, [_c("div", {
-    staticClass: "customer_icon"
-  }, [_c("img", {
-    attrs: {
-      src: __webpack_require__(/*! ../../img/customer.png */ "./resources/img/customer.png"),
-      alt: "",
-      height: "50",
-      width: "50"
-    }
-  })]), _vm._v(" "), _c("div", {
-    staticClass: "icon_text"
-  }, [_c("p", {}, [_vm._v("24/7 Support")])])]);
+  }, [_c("p", {
+    staticClass: "text-center text-dark"
+  }, [_vm._v("Over 3700 "), _c("br"), _vm._v(" Structures")])]);
 }, function () {
   var _vm = this,
       _c = _vm._self._c;
 
   return _c("div", {
     staticClass: "icon_text"
-  }, [_c("p", {}, [_vm._v("Top 10 Best "), _c("br"), _vm._v(" Rent Sites")])]);
+  }, [_c("p", {
+    staticClass: "text-center text-dark"
+  }, [_vm._v("24/7 "), _c("br"), _vm._v(" Support")])]);
+}, function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("div", {
+    staticClass: "icon_text"
+  }, [_c("p", {
+    staticClass: "text-center text-dark"
+  }, [_vm._v("Top 10 Best "), _c("br"), _vm._v(" Rent Sites")])]);
 }];
 render._withStripped = true;
 
@@ -6787,13 +6789,13 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "slider py-5"
   }, [_c("div", {
-    staticClass: "slider-content"
+    staticClass: "slider-content px-3"
   }, [_c("h2", {
-    staticClass: "text-center pt-3 font_satisy"
+    staticClass: "text-center m-0 py-3 font_satisy"
   }, [_vm._v("Dicono Di Noi")]), _vm._v(" "), _c("p", {
-    staticClass: "review"
+    staticClass: "review m-0 pt-4"
   }, [_vm._v("“ " + _vm._s(_vm.articles[_vm.currentIndex].review) + " ”")]), _vm._v(" "), _c("p", {
-    staticClass: "user"
+    staticClass: "user m-0 py-2"
   }, [_vm._v(_vm._s(_vm.articles[_vm.currentIndex].user))]), _vm._v(" "), _c("div", {
     staticClass: "dots"
   }, _vm._l(_vm.articles, function (item, i) {
@@ -6846,21 +6848,12 @@ var render = function render() {
     staticClass: "logo",
     attrs: {
       src: __webpack_require__(/*! ../../img/logo1.png */ "./resources/img/logo1.png"),
-      alt: "a"
+      alt: "logo"
     }
-  })]), _vm._v(" "), _c("div", {
-    staticClass: "nav-item navbar-nav me-auto"
-  }, [_c("router-link", {
-    staticClass: "text-white nav-link f_18",
-    attrs: {
-      to: {
-        name: "advancedsearch"
-      }
-    }
-  }, [_vm._v("\n                Search Page\n              ")])], 1)], 1)])]), _vm._v(" "), _c("main", [_c("router-view")], 1), _vm._v(" "), _c("div", {
+  })])], 1)])]), _vm._v(" "), _c("main", [_c("router-view")], 1), _vm._v(" "), _c("div", {
     staticClass: "footer"
   }, [_c("div", {
-    staticClass: "container p-3"
+    staticClass: "container px-3 py-5"
   }, [_c("div", {
     staticClass: "row"
   }, [_c("div", {
@@ -6911,7 +6904,7 @@ var render = function render() {
       d: "M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"
     }
   })])])])]), _vm._v(" "), _vm._m(0), _vm._v(" "), _vm._m(1)])]), _vm._v(" "), _c("div", {
-    staticClass: "credits text-center text-white font_monserrat p-2"
+    staticClass: "credits text-center text-white fs-5 p-3"
   }, [_vm._v("\n      © Team 7 Boolean\n    ")])])]);
 };
 
@@ -6925,7 +6918,7 @@ var staticRenderFns = [function () {
     staticClass: "pt-4 text-white text-uppercase font_monserrat"
   }, [_vm._v("\n              We're here for you\n            ")]), _vm._v(" "), _c("p", {
     staticClass: "text-white font_monserrat"
-  }, [_vm._v("\n              8500, Lorem Street, Chicago, IL, 55030 "), _c("br"), _vm._v("\n              Phone (123)456-78-90 "), _c("br"), _vm._v("\n              Phone (123)456-78-90 "), _c("br"), _vm._v("\n              sales@example.com\n            ")])])]);
+  }, [_vm._v("\n              8500, Lorem Street, Chicago, IL, 55030 "), _c("br"), _vm._v("\n              Phone (123)456-78-90 "), _c("br"), _vm._v("\n              Phone (123)456-78-90 "), _c("br"), _vm._v("\n              boolbnb@gmail.com\n            ")])])]);
 }, function () {
   var _vm = this,
       _c = _vm._self._c;
@@ -12018,11 +12011,10 @@ exports.push([module.i, "@charset \"UTF-8\";\n#contact[data-v-2ed98ed9] {\n  wid
 
 exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
 // imports
-exports.push([module.i, "@import url(https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap);", ""]);
-exports.push([module.i, "@import url(https://fonts.googleapis.com/css2?family=Satisfy&display=swap);", ""]);
+
 
 // module
-exports.push([module.i, ".img_resize[data-v-6a63e488] {\n  aspect-ratio: 2/1;\n}\n.bagde_[data-v-6a63e488] {\n  position: absolute;\n  top: 2%;\n  left: -2%;\n  background-color: green;\n  padding: 0.5rem;\n  color: white;\n  border-radius: 10px;\n}\n.container-home[data-v-6a63e488] {\n  /* .bg_blue{\n          background-color: aqua;\n          height: 200px;\n          width: 300px;\n      } */\n}\n.container-home .backimg[data-v-6a63e488] {\n  background-image: url(\"https://www.myistria.com/UserDocsImages/app/objekti/795/slika_hd/19082020034916_Villas-near-Rovinj-Villa-Prestige-2.jpg\");\n  height: 400px;\n  background-size: cover;\n  background-position: center;\n  overflow-x: hidden;\n}\n.container-home .title[data-v-6a63e488] {\n  font-size: 32px;\n}\n.container-home .radius[data-v-6a63e488] {\n  border-radius: 50%;\n}\n.container-home .btn_orange[data-v-6a63e488] {\n  background: linear-gradient(to right, #edc156 0%, #fea759 0%, #fea759 50%, #edc156 100%) no-repeat scroll right bottom/210% 100% #fea759;\n}\n.container-home .price[data-v-6a63e488] {\n  text-align: center;\n  text-transform: capitalize;\n}\n.container-home .img1[data-v-6a63e488] {\n  height: 500px;\n  width: 900px;\n}\n.container-home .pt_7[data-v-6a63e488] {\n  padding-top: 9rem;\n}\n.container-home .bg_img2[data-v-6a63e488] {\n  background-image: url(https://wallpaperaccess.com/full/1126760.jpg);\n  width: 100%;\n  height: 500px;\n  background-size: cover;\n  background-repeat: no-repeat;\n}\n.container-home .bg_orange[data-v-6a63e488] {\n  background: linear-gradient(to right, #edc156 0%, #fea759 0%, #fea759 50%, #edc156 100%) no-repeat scroll right bottom/210% 100% #fea759;\n}\n.container-home .border-black[data-v-6a63e488] {\n  border: 1px solid black;\n  border-radius: 50%;\n  padding: 10px;\n}\n.container-home .active_img[data-v-6a63e488] {\n  display: none;\n}\n.container-home .fade[data-v-6a63e488] {\n  opacity: 0;\n  transition: opacity 4s;\n}\n.container-home .borderimg[data-v-6a63e488] {\n  border: 1px solid black;\n  border-radius: 50%;\n}\n.container-home .imgfit[data-v-6a63e488] {\n  aspect-ratio: 2;\n  height: 100%;\n  width: 100%;\n}\n.container-home .credit[data-v-6a63e488] {\n  background-color: orange;\n}\n.container-home .w-10[data-v-6a63e488] {\n  width: 10%;\n}\n.container-home .w26rem[data-v-6a63e488] {\n  width: 26rem;\n}\n.container-home .fz_64[data-v-6a63e488] {\n  font-size: 64px;\n}\n.container-home .fz_48[data-v-6a63e488] {\n  font-size: 48px;\n}\n.container-home .font_satisy[data-v-6a63e488] {\n  font-family: \"Satisfy\", cursive;\n}\n.container-home .font_monserrat[data-v-6a63e488] {\n  font-family: \"Montserrat\", sans-serif;\n}\n.container-home .house_icon[data-v-6a63e488] {\n  background-color: rgba(255, 255, 255, 0.2);\n  max-height: 110px;\n  max-width: 110px;\n  border-radius: 50%;\n  padding: 25px;\n  transition: 0.8s;\n}\n.container-home .customer_icon[data-v-6a63e488] {\n  background-color: rgba(255, 255, 255, 0.2);\n  max-height: 110px;\n  max-width: 110px;\n  border-radius: 50%;\n  padding: 25px;\n  transition: 0.8s;\n}\n.container-home .house_icon[data-v-6a63e488]:hover,\n.container-home .customer_icon[data-v-6a63e488]:hover,\n.container-home .rank_icon[data-v-6a63e488]:hover {\n  background: #0d6efd;\n}\n.container-home .customer_icon > img[data-v-6a63e488] {\n  filter: invert(100);\n}\n.container-home .rank_icon[data-v-6a63e488] {\n  background-color: rgba(255, 255, 255, 0.2);\n  max-height: 110px;\n  max-width: 110px;\n  border-radius: 50%;\n  padding: 25px;\n  transition: 0.8s;\n}\n.container-home .icon_text[data-v-6a63e488] {\n  color: white;\n  text-transform: uppercase;\n  margin-top: 16px;\n}\n@media screen and (max-width: 576px) {\n.container-home .margin-3[data-v-6a63e488] {\n    margin: 0 0 0 0;\n}\n.container-home .socials[data-v-6a63e488] {\n    margin-bottom: 20px;\n}\n}", ""]);
+exports.push([module.i, ".sponsored_title[data-v-6a63e488] {\n  margin: -50px 0;\n}\n.img_resize[data-v-6a63e488] {\n  aspect-ratio: 2/1;\n}\n.bagde_[data-v-6a63e488] {\n  position: absolute;\n  top: 2%;\n  left: -2%;\n  background-color: green;\n  padding: 0.5rem;\n  color: white;\n  border-radius: 10px;\n}\n.container-home[data-v-6a63e488] {\n  /* .bg_blue{\n          background-color: aqua;\n          height: 200px;\n          width: 300px;\n      } */\n}\n.container-home .backimg[data-v-6a63e488] {\n  background-image: url(\"https://www.myistria.com/UserDocsImages/app/objekti/795/slika_hd/19082020034916_Villas-near-Rovinj-Villa-Prestige-2.jpg\");\n  height: 500px;\n  background-size: cover;\n  background-position: center;\n  overflow-x: hidden;\n}\n.container-home .title[data-v-6a63e488] {\n  font-size: 32px;\n}\n.container-home .radius[data-v-6a63e488] {\n  border-radius: 50%;\n}\n.container-home .btn_orange[data-v-6a63e488] {\n  background: linear-gradient(to right, #edc156 0%, #fea759 0%, #fea759 50%, #edc156 100%) no-repeat scroll right bottom/210% 100% #fea759;\n}\n.container-home .price[data-v-6a63e488] {\n  text-align: center;\n  text-transform: capitalize;\n}\n.container-home .img1[data-v-6a63e488] {\n  height: 500px;\n  width: 900px;\n}\n.container-home .pt_7[data-v-6a63e488] {\n  padding-top: 9rem;\n}\n.container-home .bg_img2[data-v-6a63e488] {\n  background-image: url(https://wallpaperaccess.com/full/1126760.jpg);\n  width: 100%;\n  height: 500px;\n  background-size: cover;\n  background-repeat: no-repeat;\n}\n.container-home .bg_orange[data-v-6a63e488] {\n  background: linear-gradient(to right, #edc156 0%, #fea759 0%, #fea759 50%, #edc156 100%) no-repeat scroll right bottom/210% 100% #fea759;\n}\n.container-home .border-black[data-v-6a63e488] {\n  border: 1px solid black;\n  border-radius: 50%;\n  padding: 10px;\n}\n.container-home .active_img[data-v-6a63e488] {\n  display: none;\n}\n.container-home .fade[data-v-6a63e488] {\n  opacity: 0;\n  transition: opacity 4s;\n}\n.container-home .borderimg[data-v-6a63e488] {\n  border: 1px solid black;\n  border-radius: 50%;\n}\n.container-home .imgfit[data-v-6a63e488] {\n  aspect-ratio: 2;\n  height: 100%;\n  width: 100%;\n}\n.container-home .credit[data-v-6a63e488] {\n  background-color: orange;\n}\n.container-home .w-10[data-v-6a63e488] {\n  width: 10%;\n}\n.container-home .w26rem[data-v-6a63e488] {\n  width: 26rem;\n}\n.container-home .fz_64[data-v-6a63e488] {\n  font-size: 64px;\n}\n.container-home .fz_48[data-v-6a63e488] {\n  font-size: 48px;\n}\n.container-home .why_us_icon[data-v-6a63e488] {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  background-color: rgba(255, 255, 255, 0.2);\n  height: 80px;\n  width: 80px;\n  border-radius: 50%;\n  padding: 25px;\n  transition: 0.8s;\n}\n.container-home .why_us_icon[data-v-6a63e488]:hover {\n  background: #0d6efd;\n  background-image: var(--bs-gradient) !important;\n  color: white;\n}\n.container-home .customer_icon > img[data-v-6a63e488] {\n  filter: invert(100);\n}\n.container-home .icon_text[data-v-6a63e488] {\n  color: white;\n  text-transform: uppercase;\n  margin-top: 16px;\n}\n@media screen and (max-width: 576px) {\n.container-home .margin-3[data-v-6a63e488] {\n    margin: 0 0 0 0;\n}\n.container-home .socials[data-v-6a63e488] {\n    margin-bottom: 20px;\n}\n}", ""]);
 
 // exports
 
@@ -12041,7 +12033,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".slider[data-v-5e4b60fe] {\n  position: relative;\n}\n.slider-content[data-v-5e4b60fe] {\n  min-height: 370px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  flex-direction: column;\n  width: 50%;\n  margin: 0 auto;\n  text-align: center;\n  position: relative;\n}\n.review[data-v-5e4b60fe] {\n  line-height: 24px;\n  max-width: 630px;\n  margin-top: 40px;\n  color: black;\n  font-size: 20px;\n  font-weight: bold;\n  text-transform: uppercase;\n}\n.user[data-v-5e4b60fe] {\n  color: orangered;\n  font-size: 16px;\n  margin: 10px 0 50px 0;\n  text-transform: uppercase;\n}\n.dots[data-v-5e4b60fe] {\n  text-align: center;\n  z-index: 1;\n  position: absolute;\n  bottom: 10%;\n}\n.dot[data-v-5e4b60fe] {\n  width: 8px;\n  height: 8px;\n  background-color: #ebebde;\n  border-radius: 50%;\n  margin: 0 7px;\n  border: none;\n}\n.dot[data-v-5e4b60fe]:hover {\n  cursor: pointer;\n}\n.currentDot[data-v-5e4b60fe] {\n  background-color: lightslategray;\n}\n.prev[data-v-5e4b60fe],\n.next[data-v-5e4b60fe] {\n  cursor: pointer;\n  position: absolute;\n  top: 45%;\n  background-color: orange;\n  padding: 10px 20px;\n  font-size: 12px;\n  border-top-left-radius: 68px;\n  border-top-right-radius: 68px;\n  text-decoration: none;\n  text-transform: uppercase;\n}\n.next[data-v-5e4b60fe] {\n  right: -16px;\n  transform: rotate(270deg);\n}\n.prev[data-v-5e4b60fe] {\n  left: -17px;\n  transform: rotate(90deg);\n}\na[data-v-5e4b60fe] {\n  text-decoration: none;\n  color: white;\n}\n.font_satisy[data-v-5e4b60fe] {\n  font-size: 86px;\n  font-family: \"Satisfy\", cursive;\n}", ""]);
+exports.push([module.i, ".slider[data-v-5e4b60fe] {\n  position: relative;\n}\n.slider-content[data-v-5e4b60fe] {\n  min-height: 370px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  flex-direction: column;\n  margin: 0 auto;\n  text-align: center;\n}\n.review[data-v-5e4b60fe] {\n  height: 200px;\n  max-width: 630px;\n  color: black;\n  font-weight: bold;\n  text-transform: uppercase;\n}\n.user[data-v-5e4b60fe] {\n  color: orangered;\n  font-size: 16px;\n  text-transform: uppercase;\n}\n.dots[data-v-5e4b60fe] {\n  text-align: center;\n  z-index: 1;\n  position: absolute;\n  bottom: 4%;\n}\n.dot[data-v-5e4b60fe] {\n  width: 8px;\n  height: 8px;\n  background-color: #ebebde;\n  border-radius: 50%;\n  margin: 0 7px;\n  border: none;\n}\n.dot[data-v-5e4b60fe]:hover {\n  cursor: pointer;\n}\n.currentDot[data-v-5e4b60fe] {\n  background: linear-gradient(to top left, #ffa500 0%, rgb(255, 140, 0) 100%);\n}\n.prev[data-v-5e4b60fe],\n.next[data-v-5e4b60fe] {\n  cursor: pointer;\n  position: absolute;\n  top: 45%;\n  background-color: orange;\n  padding: 10px 20px;\n  font-size: 12px;\n  border-top-left-radius: 68px;\n  border-top-right-radius: 68px;\n  text-decoration: none;\n  text-transform: uppercase;\n}\n.next[data-v-5e4b60fe] {\n  right: -16px;\n  transform: rotate(270deg);\n}\n.prev[data-v-5e4b60fe] {\n  left: -17px;\n  transform: rotate(90deg);\n}\na[data-v-5e4b60fe] {\n  text-decoration: none;\n  color: white;\n}\n.font_satisy[data-v-5e4b60fe] {\n  font-size: 86px;\n  font-family: \"Satisfy\", cursive;\n}", ""]);
 
 // exports
 
@@ -12060,7 +12052,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "h1[data-v-91ac6b5c] {\n  text-align: center;\n  margin-top: 2rem;\n}\n.f_18[data-v-91ac6b5c] {\n  font-size: 18px;\n}\n.bg_orange[data-v-91ac6b5c] {\n  background: linear-gradient(to left, #f46b45, #eea849);\n}\n.logo[data-v-91ac6b5c] {\n  height: 70px;\n  margin-right: 32px;\n  filter: invert(100%);\n}\n.footer[data-v-91ac6b5c] {\n  background-color: rgb(30, 29, 29);\n  height: auto;\n}\n.instagram[data-v-91ac6b5c],\n.linkedin[data-v-91ac6b5c],\n.facebook[data-v-91ac6b5c]:hover {\n  cursor: pointer;\n}\n.orange[data-v-91ac6b5c] {\n  color: orange;\n  transition: 2s;\n}\n.orange[data-v-91ac6b5c]:hover {\n  cursor: pointer;\n  color: orangered;\n}", ""]);
+exports.push([module.i, "h1[data-v-91ac6b5c] {\n  text-align: center;\n  margin-top: 2rem;\n}\n.f_18[data-v-91ac6b5c] {\n  font-size: 18px;\n}\n.bg_orange[data-v-91ac6b5c] {\n  background: linear-gradient(to right, #edc156 0%, #fea759 0%, #fea759 50%, #edc156 100%) no-repeat scroll right bottom/210% 100% #fea759;\n}\n.logo[data-v-91ac6b5c] {\n  height: 60px;\n}\n.footer[data-v-91ac6b5c] {\n  background-color: rgb(30, 29, 29);\n  height: auto;\n}\n.instagram[data-v-91ac6b5c],\n.linkedin[data-v-91ac6b5c],\n.facebook[data-v-91ac6b5c]:hover {\n  cursor: pointer;\n}\n.orange[data-v-91ac6b5c] {\n  color: orange;\n  transition: 2s;\n}", ""]);
 
 // exports
 
@@ -59110,17 +59102,6 @@ module.exports = "/images/bathroom.png?c9355005b15c8a265f78c16253ebd3fd";
 
 /***/ }),
 
-/***/ "./resources/img/customer.png":
-/*!************************************!*\
-  !*** ./resources/img/customer.png ***!
-  \************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "/images/customer.png?8f88928de5bde49a4adf7006bda54e29";
-
-/***/ }),
-
 /***/ "./resources/img/logo1.png":
 /*!*********************************!*\
   !*** ./resources/img/logo1.png ***!
@@ -59868,7 +59849,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\saba_\OneDrive\Desktop\Progetto-finale\final-project-boolbnb\resources\js\front.js */"./resources/js/front.js");
+module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/LARAVEL/final-project-boolbnb/resources/js/front.js */"./resources/js/front.js");
 
 
 /***/ })
