@@ -5252,7 +5252,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.filterApartment();
     },
-    createMarker: function createMarker(position, color, popupText, map) {
+    createMarker: function createMarker(position, color, popupText, icon, map) {
       var markerElement = document.createElement("div");
       markerElement.className = "marker";
       var markerContentElement = document.createElement("div");
@@ -5261,7 +5261,7 @@ __webpack_require__.r(__webpack_exports__);
       markerElement.appendChild(markerContentElement);
       var iconElement = document.createElement("div");
       iconElement.className = "marker-icon";
-      iconElement.style.backgroundImage = "url(https://cdn.icon-icons.com/icons2/936/PNG/512/home_icon-icons.com_73532.png)";
+      iconElement.style.backgroundImage = "url(" + icon + ")";
       markerContentElement.appendChild(iconElement);
       var popup = new _tomtom_international_web_sdk_maps__WEBPACK_IMPORTED_MODULE_0___default.a.Popup({
         offset: 30
@@ -5288,11 +5288,20 @@ __webpack_require__.r(__webpack_exports__);
         });
         map.addControl(new _tomtom_international_web_sdk_maps__WEBPACK_IMPORTED_MODULE_0___default.a.FullscreenControl());
         map.addControl(new _tomtom_international_web_sdk_maps__WEBPACK_IMPORTED_MODULE_0___default.a.NavigationControl());
+        var markupPos = "<div class=\"card text-center\">\n                <div class=\"card-body\">\n                <h5>Sei qui</h5>\n                </div>\n                <div class=\"card-footer\">\n                <p class=\"mb-0\"> ".concat(_this4.longitude, " ").concat(_this4.latitude, " </p>\n                </div>\n                </div>");
+
+        _this4.createMarker([_this4.longitude, _this4.latitude], "#000", markupPos, "https://cdn.icon-icons.com/icons2/936/PNG/512/home_icon-icons.com_73532.png)", map);
 
         _this4.apartments.forEach(function (apartment) {
-          var markup = "<div class=\"card text-center\">\n        <img class=\"img-fluid\" src=\"/storage/".concat(apartment.cover_image, "\" alt=\"\">\n        <div class=\"card-body\">\n            <p>").concat(apartment.title, "</p>\n        </div>\n        <div class=\"mb-4\">\n            <a class=\"btn btn-warning\" href=\"/apartment/").concat(apartment.id, "\">Vedi annuncio</a>\n        </div>\n    </div>");
+          if (apartment.sponsorizations.length > 0) {
+            var markup = "<div class=\"card text-center\">\n                <img class=\"img-fluid\" src=\"/storage/".concat(apartment.cover_image, "\" alt=\"\">\n                <div class=\"card-body\">\n                <p>").concat(apartment.title, "</p>\n                </div>\n                <div class=\"mb-4\">\n                <a class=\"btn btn_orange text-white\" href=\"/apartment/").concat(apartment.id, "\">Vedi annuncio</a>\n                </div>\n                </div>");
 
-          _this4.createMarker([apartment.longitude, apartment.latitude], "#ffa500", markup, map);
+            _this4.createMarker([apartment.longitude, apartment.latitude], "#008000", markup, "https://cdn.icon-icons.com/icons2/936/PNG/512/home_icon-icons.com_73532.png)", map);
+          } else {
+            var _markup = "<div class=\"card text-center\">\n                <img class=\"img-fluid\" src=\"/storage/".concat(apartment.cover_image, "\" alt=\"\">\n                <div class=\"card-body\">\n                <p>").concat(apartment.title, "</p>\n                </div>\n                <div class=\"mb-4\">\n                <a class=\"btn btn_orange text-white\" href=\"/apartment/").concat(apartment.id, "\">Vedi annuncio</a>\n                </div>\n                </div>");
+
+            _this4.createMarker([apartment.longitude, apartment.latitude], "#ffa500", _markup, map);
+          }
         });
       }, 100);
     },

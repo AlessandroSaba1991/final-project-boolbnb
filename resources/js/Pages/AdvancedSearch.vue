@@ -511,7 +511,7 @@ export default {
       }
       this.filterApartment();
     },
-    createMarker(position, color, popupText, map) {
+    createMarker(position, color, popupText,icon, map) {
       const markerElement = document.createElement("div");
       markerElement.className = "marker";
       const markerContentElement = document.createElement("div");
@@ -521,7 +521,7 @@ export default {
       const iconElement = document.createElement("div");
       iconElement.className = "marker-icon";
       iconElement.style.backgroundImage =
-        "url(https://cdn.icon-icons.com/icons2/936/PNG/512/home_icon-icons.com_73532.png)";
+       "url(" + icon +")" ;
       markerContentElement.appendChild(iconElement);
       const popup = new tt.Popup({ offset: 30 }).setHTML(popupText);
       // add marker to map
@@ -544,22 +544,55 @@ export default {
         });
         map.addControl(new tt.FullscreenControl());
         map.addControl(new tt.NavigationControl());
+        const markupPos =  `<div class="card text-center">
+                <div class="card-body">
+                <h5>Sei qui</h5>
+                </div>
+                <div class="card-footer">
+                <p class="mb-0"> ${this.longitude} ${this.latitude} </p>
+                </div>
+                </div>`;
+        this.createMarker([this.longitude, this.latitude],
+            "#000",
+            markupPos,
+            "https://cdn.icon-icons.com/icons2/936/PNG/512/home_icon-icons.com_73532.png)",
+            map,)
         this.apartments.forEach((apartment) => {
-          const markup = `<div class="card text-center">
-        <img class="img-fluid" src="/storage/${apartment.cover_image}" alt="">
-        <div class="card-body">
-            <p>${apartment.title}</p>
-        </div>
-        <div class="mb-4">
-            <a class="btn btn-warning" href="/apartment/${apartment.id}">Vedi annuncio</a>
-        </div>
-    </div>`;
+            if(apartment.sponsorizations.length > 0){
+                const markup = `<div class="card text-center">
+                <img class="img-fluid" src="/storage/${apartment.cover_image}" alt="">
+                <div class="card-body">
+                <p>${apartment.title}</p>
+                </div>
+                <div class="mb-4">
+                <a class="btn btn_orange text-white" href="/apartment/${apartment.id}">Vedi annuncio</a>
+                </div>
+                </div>`;
+          this.createMarker(
+            [apartment.longitude, apartment.latitude],
+            "#008000",
+            markup,
+            "https://cdn.icon-icons.com/icons2/936/PNG/512/home_icon-icons.com_73532.png)",
+            map,
+          );
+            } else {
+                const markup = `<div class="card text-center">
+                <img class="img-fluid" src="/storage/${apartment.cover_image}" alt="">
+                <div class="card-body">
+                <p>${apartment.title}</p>
+                </div>
+                <div class="mb-4">
+                <a class="btn btn_orange text-white" href="/apartment/${apartment.id}">Vedi annuncio</a>
+                </div>
+                </div>`;
           this.createMarker(
             [apartment.longitude, apartment.latitude],
             "#ffa500",
             markup,
             map,
-          );
+            );
+            }
+
         });
       }, 100);
     },

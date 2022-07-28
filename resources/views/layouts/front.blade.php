@@ -13,7 +13,6 @@
     <!-- Scripts -->
     <script src="{{ asset('js/front.js') }}" defer></script>
     <script src="{{ asset('js/mobile-or-tablet.js') }}" defer></script>
-    <script src="{{ asset('js/formatter.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
