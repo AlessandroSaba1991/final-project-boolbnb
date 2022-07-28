@@ -555,7 +555,7 @@ export default {
         this.createMarker([this.longitude, this.latitude],
             "#000",
             markupPos,
-            "https://cdn.icon-icons.com/icons2/936/PNG/512/home_icon-icons.com_73532.png)",
+            "https://cdn1.iconfinder.com/data/icons/office-22/48/flag-512.png",
             map,)
         this.apartments.forEach((apartment) => {
             if(apartment.sponsorizations.length > 0){
@@ -572,7 +572,7 @@ export default {
             [apartment.longitude, apartment.latitude],
             "#008000",
             markup,
-            "https://cdn.icon-icons.com/icons2/936/PNG/512/home_icon-icons.com_73532.png)",
+            "https://cdn.icon-icons.com/icons2/936/PNG/512/home_icon-icons.com_73532.png",
             map,
           );
             } else {
@@ -589,6 +589,7 @@ export default {
             [apartment.longitude, apartment.latitude],
             "#ffa500",
             markup,
+            "https://cdn.icon-icons.com/icons2/936/PNG/512/home_icon-icons.com_73532.png",
             map,
             );
             }
