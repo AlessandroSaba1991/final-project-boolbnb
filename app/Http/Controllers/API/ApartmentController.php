@@ -112,4 +112,26 @@ class ApartmentController extends Controller
         $newMessage->save();
         return 'Messaggio inviato correttamente';
     }
+
+    public function sponsoredApartments() {
+        $apartments = Apartment::with('sponsorizations')->get();
+        //dd($apartments);
+        $sponsoredApartments = [];
+        foreach($apartments as $apartment) {
+            //dd($apartment->sponsorizations);
+            if(count($apartment->sponsorizations) > 0) {
+                //dd($apartment->sponsorizations);
+                foreach($apartment->sponsorizations as $sponsorization) {
+                    //dd($sponsorization->sponsor->end_sponsorization);
+                    if(date('Y-m-d H:i:s') < date('Y-m-d H:i:s', strtotime($sponsorization->sponsor->end_sponsorization))) {
+                        if(!in_array($apartment, $sponsoredApartments)) {
+                            array_push($sponsoredApartments, $apartment);
+                        } 
+                    }
+                }
+            }
+        }
+        //dd($sponsoredApartments);
+        return $sponsoredApartments;
+    }
 }

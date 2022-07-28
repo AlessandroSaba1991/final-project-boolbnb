@@ -25,6 +25,8 @@ Route::get('apartment/message','API\ApartmentController@saveMessage');
 
 Route::get('apartment/{apartment:id}','API\ApartmentController@show');
 
+Route::get('apartments/sponsored','API\ApartmentController@sponsoredApartments');
+
 Route::get('services','API\ServiceController@index');
 
 Route::get('visualization', 'API\VisualizationController@store');
