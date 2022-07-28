@@ -5517,6 +5517,9 @@ __webpack_require__.r(__webpack_exports__);
     startInterval: function startInterval() {
       this.interval = setInterval(this.goDown, 5000);
     },
+    splitText: function splitText(data, num) {
+      return data.slice(0, num);
+    },
     callAddress: function callAddress() {
       var _this2 = this;
 
@@ -59865,7 +59868,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/LARAVEL/final-project-boolbnb/resources/js/front.js */"./resources/js/front.js");
+module.exports = __webpack_require__(/*! C:\Users\saba_\OneDrive\Desktop\Progetto-finale\final-project-boolbnb\resources\js\front.js */"./resources/js/front.js");
 
 
 /***/ })

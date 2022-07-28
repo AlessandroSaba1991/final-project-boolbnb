@@ -303,6 +303,9 @@ export default {
     startInterval() {
       this.interval = setInterval(this.goDown, 5000);
     },
+    splitText(data, num) {
+      return data.slice(0, num);
+    },
     callAddress() {
       window.axios.defaults.headers.common = {
         Accept: "application/json",
@@ -431,7 +434,7 @@ export default {
 }
 
 .active_img {
-  display: none;  
+  display: none;
 }
 
 
