@@ -54,11 +54,11 @@
   }
   .laravel_button {
     position: absolute;
-    height: 96.22px;
+    height: 86.22px;
     font-size: 18px;
     top: 0;
-    right: 50%;
-    transform: translate(50%, 0);
+    right:0;
+    padding-right: 12px;
     align-items: center;
     z-index: 1;
 }
