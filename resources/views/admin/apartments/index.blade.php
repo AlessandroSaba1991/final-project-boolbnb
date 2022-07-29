@@ -80,7 +80,7 @@
                                 <div class="text-uppercase fs-6">Indirizzo: {{ $apartment->address }}</div>
                             </div>
 
-                            <div class="d-flex justify-content-between flex-wrap align-items-center mt-2 p-2 rounded-bottom fs-6">
+                            <div class="d-flex justify-content-around flex-wrap align-items-center mt-2 p-2 rounded-bottom fs-6">
                             <a class="btn btn-primary bg-gradient btn-lg" href="{{ route('admin.apartments.show', $apartment->id) }}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                         fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
