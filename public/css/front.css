@@ -10231,12 +10231,11 @@ button:hover,
   border: 1px solid orange !important;
 }
 
-input:focus:valid {
+form input:focus:valid {
   border: 2px solid green;
   outline: none;
 }
-
-input:focus:invalid {
+form input:focus:invalid {
   border: 2px solid red;
   outline: none;
 }
