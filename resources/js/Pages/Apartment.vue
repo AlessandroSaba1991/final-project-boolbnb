@@ -15,7 +15,7 @@
       </div>
     </div>
 
-    <div class="h-100" v-if="!loading">
+    <div class="h-100 pt-5" v-if="!loading">
       <div class="container">
         <div class="apartment_image mb-5">
           <img
@@ -24,7 +24,8 @@
             alt=""
           />
         </div>
-        <div class="first_info">
+
+        <div class="first_info mb-5">
           <div class="section_title">
             <h2 class="bg_label">{{ apartment.title }}</h2>
           </div>
@@ -134,58 +135,44 @@
             </div>
           </div>
         </div>
-        <div id="contact">
-          <div class="message-form message-style p-4 text-white mb-5">
-            <h2 class="text-white text-uppercase fw-bold">
-              Invia un messaggio all' Host
-            </h2>
-            <label for="checkcontact" class="contactbutton mb-3">
-              <div class="button_form"></div>
-            </label>
 
-            <input id="checkcontact" type="checkbox" />
-            <div class="contactform mb-3">
-              <div class="input_wrapper">
-                <label for="name" class="form-label">Nome:</label>
-                <input
-                  v-model="guestFullName"
-                  type="text"
-                  class="form-control"
-                  name="name"
-                  id="name"
-                  aria-describedby="namehelpId"
-                  placeholder="Mario Rossi"
-                />
-              </div>
+        <div class="d-flex justify-content-center pb-5">
+          <div class="form_">
+            <h2 class="text-uppercase">contatta l' host</h2>
+            <label for="name" class="mt-3">Nome:</label>
+            <input
+              placeholder="scrivi il tuo nome qui.."
+              type="text"
+              v-model="guestFullName"
+              name="name"
+              id="name"
+              aria-describedby="namehelpId"
+            />
 
-              <div class="input_wrapper mb-3">
-                <label for="email" class="form-label">Email:</label>
-                <input
-                  v-model="guestEmail"
-                  type="email"
-                  class="form-control"
-                  name="email"
-                  id="email"
-                  aria-describedby="emailHelpId"
-                  placeholder="mariorossi@example.com"
-                />
-              </div>
+            <label for="email" class="mt-3">Email:</label>
+            <input
+              placeholder="scrivi qui la tua mail.."
+              type="email"
+              v-model="guestEmail"
+              name="email"
+              id="email"
+              aria-describedby="emailHelpId"
+            />
 
-              <div class="textarea_wrapper mb-3">
-                <label for="message" class="form-label">Messaggio:</label>
-                <textarea
-                  @keyup.enter="saveMessage()"
-                  v-model="guestMessage"
-                  class="form-control"
-                  name="message"
-                  id="message"
-                  rows="3"
-                ></textarea>
-              </div>
-            </div>
-            <div class="submit_wrapper">
-              <input type="submit" value="INVIA" @click="saveMessage()" />
-            </div>
+            <label for="message" class="mt-3">Messaggio:</label>
+            <textarea
+              @keyup.enter="saveMessage()"
+              v-model="guestMessage"
+              class="mod_txtarea"
+              name="message"
+              id="message"
+              cols="30"
+              rows="5"
+            ></textarea>
+
+            <button type="submit" value="INVIA" @click="saveMessage()">
+              Invia
+            </button>
 
             <div
               :class="messageSend ? 'position-absolute' : 'd-none'"
@@ -195,7 +182,7 @@
                 p-1
                 mb-2
                 bg-primary
-                text-white
+                text-white text-center
                 fs-3
                 d-inline-block
               "
@@ -310,15 +297,16 @@ export default {
 <style lang="scss" scoped>
 @import "../../sass/message.scss";
 .single_page {
-  .jumbo_container {
-    margin-bottom: 156px;
-  }
-
+  background: linear-gradient(
+    132deg,
+    rgb(238 238 238) 0%,
+    rgb(214 214 214 / 45%) 100%
+  );
   .jumbotron {
     height: 500px;
     background-image: url("../../img/1126773.jpg");
     background-position: center;
-    overflow-x: hidden;
+    background-size: cover;
     filter: brightness(50%);
   }
 
@@ -349,6 +337,7 @@ export default {
     color: white;
     padding: 5px 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    margin-left: -10px;
   }
 
   .section_title,
@@ -356,12 +345,14 @@ export default {
     padding-bottom: 50px;
   }
 
-  .apartment_address,
+  .first_info,
   .apartment_details,
   .apartment_services,
-  .apartment_description,
-  .maps {
-    border-bottom: 1px dotted lightgrey;
+  .apartment_description {
+    background-color: white;
+    border: 1px solid #ffecba;
+    box-shadow: 3px 3px 8px 0px #fea759;
+    padding: 0px 20px 0px 20px;
   }
 
   .list {
@@ -393,19 +384,6 @@ export default {
     width: 100%;
   }
 
-  .message-style {
-    background-color: #faad58;
-    position: relative;
-  }
-
-  .message_send {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translate(-50%, 0);
-    transition: all 1s;
-  }
-
   @media screen and (max-width: 600px) {
     .details-list,
     .list {
@@ -421,16 +399,6 @@ export default {
     .detail-element {
       margin-bottom: 20px;
       font-size: 20px;
-    }
-
-    .message-form {
-      display: flex;
-      flex-direction: column;
-    }
-    .message_button {
-      padding: 16px 32px;
-      font-size: large;
-      align-items: center;
     }
   }
 
@@ -453,6 +421,12 @@ export default {
 
     .jumbo_container {
       margin-bottom: 50px;
+    }
+  }
+
+  @media screen and (max-width: 375px) {
+    .Message_send {
+      left: 137px;
     }
   }
 
