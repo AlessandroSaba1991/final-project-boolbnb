@@ -4,13 +4,8 @@
      <nav class="navbar bg_orange">
         <div class="container">
           <router-link class="navbar-brand" :to="{ name: 'home' }">
-            <img src="../../img/logo1.png" alt="a" class="logo">
+            <img src="../../img/logo1.png" alt="logo" class="logo">
           </router-link>
-           <div class="nav-item navbar-nav me-auto">
-                <router-link class="text-white nav-link f_18" :to="{ name: 'advancedsearch' }">
-                  Search Page
-                </router-link>
-            </div>
         </div>
       </nav>
     </header>
@@ -20,7 +15,7 @@
       <router-view></router-view>
     </main>
     <div class="footer">
-      <div class="container p-3">
+      <div class="container px-3 py-5">
         <div class="row">
           <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
             <div class="socials">
@@ -74,7 +69,7 @@
                 8500, Lorem Street, Chicago, IL, 55030 <br />
                 Phone (123)456-78-90 <br />
                 Phone (123)456-78-90 <br />
-                sales@example.com
+                boolbnb@gmail.com
               </p>
             </div>
           </div>
@@ -93,7 +88,7 @@
           </div>
         </div>
       </div>
-      <div class="credits text-center text-white font_monserrat p-2">
+      <div class="credits text-center text-white fs-5 p-3">
         &copy; Team 7 Boolean
       </div>
     </div>
@@ -117,13 +112,11 @@ h1 {
 }
 
 .bg_orange{
-  background: linear-gradient(to left, #f46b45, #eea849);
+  background: linear-gradient(to right, #edc156 0%, #fea759 0%, #fea759 50%, #edc156 100%) no-repeat scroll right bottom/210% 100% #fea759;
 }
 
 .logo{
-  height: 70px;
-  margin-right: 32px;
-  filter: invert(100%);
+  height: 60px;
 }
 
 .footer {
@@ -140,11 +133,6 @@ h1 {
 .orange {
   color: orange;
   transition: 2s;
-}
-
-.orange:hover {
-  cursor: pointer;
-  color: orangered;
 }
 
 </style>

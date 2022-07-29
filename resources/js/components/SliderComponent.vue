@@ -1,10 +1,10 @@
 <template>
   <section id="articles">
     <div class="slider py-5">
-      <div class="slider-content">
-        <h2 class="text-center pt-3 font_satisy">Dicono Di Noi</h2>
-        <p class="review ">“ {{ articles[currentIndex].review }} ”</p>
-        <p class="user">{{ articles[currentIndex].user }}</p>
+      <div class="slider-content px-3">
+        <h2 class="text-center m-0 py-3 font_satisy">Dicono Di Noi</h2>
+        <p class="review m-0 pt-4">“ {{ articles[currentIndex].review }} ”</p>
+        <p class="user m-0 py-2">{{ articles[currentIndex].user }}</p>
 
         <div class="dots">
           <button
@@ -77,31 +77,25 @@ export default {
     position: relative;
 }
 .slider-content {
-  
   min-height: 370px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  width: 50%;
   margin: 0 auto;
   text-align: center;
-  position: relative;
 }
 
 .review {
-  line-height: 24px;
+  height: 200px;
   max-width: 630px;
-  margin-top: 40px;
   color: black;
-  font-size: 20px;
   font-weight: bold;
   text-transform: uppercase;
 }
 .user {
   color: orangered;
   font-size: 16px;
-  margin: 10px 0 50px 0;
   text-transform: uppercase;
 }
 .dots {
@@ -109,7 +103,7 @@ export default {
   text-align: center;
   z-index: 1;
   position: absolute;
-  bottom: 10%;
+  bottom: 4%;
 }
 .dot {
   width: 8px;
@@ -123,7 +117,7 @@ export default {
   }
 }
 .currentDot {
-  background-color: lightslategray;
+  background: linear-gradient(to top left, #ffa500 0%, rgb(255, 140, 0) 100%);
 }
 .prev,
 .next {
