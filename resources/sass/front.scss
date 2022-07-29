@@ -9,8 +9,29 @@
 
 @import "~@tomtom-international/web-sdk-maps/dist/maps.css";
 
+body{
+    background: linear-gradient(
+    132deg,
+    rgb(238 238 238) 0%,
+    rgb(214 214 214 / 45%) 100%)
+}
 
+button:hover,
+.btn:hover {
+    background: white!important;
+    color: #212529!important;
+    border: 1px solid orange!important;
+}
 
+input:focus:valid {
+    border: 2px solid green;
+    outline: none;
+}
+
+input:focus:invalid {
+    border: 2px solid red;
+    outline: none;
+}
 
 .mapboxgl-popup-content {
     border-radius: 0.25rem;
@@ -109,6 +130,14 @@
       }
     }
   }
-  .btn_orange{
-    background: linear-gradient(to top left, #ffa500 0%, rgb(255, 140, 0) 100%);
+  .btn_orange {
+    background: linear-gradient(
+        to right,
+        #edc156 0%,
+        #fea759 0%,
+        #fea759 50%,
+        #edc156 100%
+      )
+      no-repeat scroll right bottom/210% 100% #fea759;
+      transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   }

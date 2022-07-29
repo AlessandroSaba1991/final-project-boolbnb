@@ -1,13 +1,10 @@
 .form_ {
-    width: 340px;
-    height: 440px;
     background: #f6f6f6;
-    border-radius: 8px;
-    box-shadow: 5px 5px 5px rgb(228, 156, 48);
-    padding: 20px 30px;
-    box-sizing: border-box;
+    background-color: white;
+    border: 1px solid #ffecba;
+    box-shadow: 3px 3px 8px 0px #fea759;
+    padding: 0px 20px 0px 20px;
     position: relative;
-    border: 1px solid orange;
 }
 
 input {
@@ -30,20 +27,15 @@ button {
     float: left;
     padding: 8px 12px;
     margin: 8px 0 0;
-    border: none;
-    color: #000000;
+    color: #212629;
     cursor: pointer;
     background: linear-gradient(to right, #edc156 0%, #fea759 0%, #fea759 50%, #edc156 100%);
-    transition: all .3s;
+    border: 1px solid orange;
     text-transform: uppercase;
     font-weight: bold;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-button:hover {
-    /*  box-shadow: 0px 0px 10px 5px #fea759; */
-    background: #1875FD;
-    color: white;
-}
 
 .mod_txtarea {
     width: 100%;
@@ -54,8 +46,8 @@ button:hover {
 
 .message_send {
     position: absolute;
-    bottom: 170px;
-    left: 167px;
-    transform: translate(-50%, 0);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     transition: all 1s;
 }

@@ -110,7 +110,7 @@ export default {
 .dot {
   width: 8px;
   height: 8px;
-  background-color: #ebebde;
+  background-color: #9d9d90;
   border-radius: 50%;
   margin: 0 7px;
   border: none;

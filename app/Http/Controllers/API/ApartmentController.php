@@ -115,24 +115,19 @@ class ApartmentController extends Controller
 
     public function sponsoredApartments() {
         $apartments = Apartment::with('sponsorizations')->get();
-        //dd($apartments);
         $sponsoredApartments = [];
         foreach($apartments as $apartment) {
-            //dd($apartment->sponsorizations);
             if(count($apartment->sponsorizations) > 0) {
-                //dd($apartment->sponsorizations);
                 foreach($apartment->sponsorizations as $sponsorization) {
-                    //dd($sponsorization->sponsor->end_sponsorization);
                     if(date('Y-m-d H:i:s') < date('Y-m-d H:i:s', strtotime($sponsorization->sponsor->end_sponsorization))) {
-                        if(!in_array($apartment, $sponsoredApartments)) {
-                            array_push($sponsoredApartments, $apartment);
-                        } 
+                        if(!in_array($apartment->id, $sponsoredApartments)) {
+                            array_push($sponsoredApartments, $apartment->id);
+                        }
                     }
                 }
             }
         }
-        //dd($sponsoredApartments);
-        return $sponsoredApartments;
+        return Apartment::with('services', 'sponsorizations')->whereIn('id', $sponsoredApartments)->paginate(6);
     }
 
 }

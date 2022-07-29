@@ -11,20 +11,32 @@
           text-white
         "
       >
-        <h1 class="font_satisfy">{{ apartment.title }}</h1>
+        <h1 class="font_satisfy text-center">{{ apartment.title }}</h1>
       </div>
     </div>
 
     <div class="h-100 pt-5" v-if="!loading">
-      <div class="container">
-        <div class="apartment_image mb-5">
-          <img
-            class="apt-img"
-            :src="'/storage/' + apartment.cover_image"
-            alt=""
-          />
-        </div>
+      <div class="container-fluid mt-lg-5">
+        <div class="row gx-3">
+          <div class="col-12 col-lg-8 position-relative mb-5">
+            <div class="apartment_image">
+              <h2 class="bg_label_absolute">Foto</h2>
+              <img
+                class="apt-img"
+                :src="'/storage/' + apartment.cover_image"
+                alt=""
+              />
+            </div>
+          </div>
+          <div class="col-12 col-lg-4 position-relative col_map mb-5">
+            <h2 class="bg_label_absolute">Mappa</h2>
 
+            <div id="map" class="map border_shadow"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
         <div class="first_info mb-5">
           <div class="section_title">
             <h2 class="bg_label">{{ apartment.title }}</h2>
@@ -108,71 +120,49 @@
           </ul>
         </div>
 
-        <div class="maps pb-5 mb-5">
-          <div class="section_title">
-            <h2 class="bg_label">Posizione sulla mappa</h2>
-          </div>
+        <div class="d-flex justify-content-center pb-5 mt-5 position-relative">
+          <div class="form_ py-5">
+            <h2 class="bg_label_absolute left_">Contatta il proprietario</h2>
 
-          <div class="map-container">
-            <div class="mapouter">
-              <div class="gmap_canvas">
-                <iframe
-                  width="100%"
-                  height="500"
-                  id="gmap_canvas"
-                  src="https://maps.google.com/maps?q=2880%20Broadway,%20New%20York&t=&z=13&ie=UTF8&iwloc=&output=embed"
-                  frameborder="0"
-                  scrolling="no"
-                  marginheight="0"
-                  marginwidth="0"
-                ></iframe>
-                <a href="https://fmovies-online.net"></a>
-                <br />
-                <a href="https://www.embedgooglemap.net"
-                  >google maps create map</a
-                >
-              </div>
-            </div>
-          </div>
-        </div>
+            <form @submit.prevent="saveMessage()" method="post">
+              <label for="name" class="mt-3">Nome*:</label>
+              <input
+                placeholder="scrivi il tuo nome qui.."
+                type="text"
+                v-model="guestFullName"
+                name="name"
+                id="name"
+                min="3"
+                max="25"
+                aria-describedby="namehelpId"
+                required
+              />
 
-        <div class="d-flex justify-content-center pb-5">
-          <div class="form_">
-            <h2 class="text-uppercase">contatta l' host</h2>
-            <label for="name" class="mt-3">Nome:</label>
-            <input
-              placeholder="scrivi il tuo nome qui.."
-              type="text"
-              v-model="guestFullName"
-              name="name"
-              id="name"
-              aria-describedby="namehelpId"
-            />
+              <label for="email" class="mt-3">Email*:</label>
+              <input
+                placeholder="scrivi qui la tua mail.."
+                type="email"
+                v-model="guestEmail"
+                name="email"
+                id="email"
+                required
+                aria-describedby="emailHelpId"
+              />
 
-            <label for="email" class="mt-3">Email:</label>
-            <input
-              placeholder="scrivi qui la tua mail.."
-              type="email"
-              v-model="guestEmail"
-              name="email"
-              id="email"
-              aria-describedby="emailHelpId"
-            />
+              <label for="message" class="mt-3">Messaggio*:</label>
+              <textarea
+                @keyup.enter="saveMessage()"
+                required
+                v-model="guestMessage"
+                class="mod_txtarea"
+                name="message"
+                id="message"
+                cols="30"
+                rows="5"
+              ></textarea>
 
-            <label for="message" class="mt-3">Messaggio:</label>
-            <textarea
-              @keyup.enter="saveMessage()"
-              v-model="guestMessage"
-              class="mod_txtarea"
-              name="message"
-              id="message"
-              cols="30"
-              rows="5"
-            ></textarea>
-
-            <button type="submit" value="INVIA" @click="saveMessage()">
-              Invia
-            </button>
+              <button type="submit" value="INVIA">Invia</button>
+            </form>
 
             <div
               :class="messageSend ? 'position-absolute' : 'd-none'"
@@ -181,7 +171,7 @@
                 rounded
                 p-1
                 mb-2
-                bg-primary
+                bg-success bg-gradient
                 text-white text-center
                 fs-3
                 d-inline-block
@@ -197,6 +187,8 @@
 </template>
 
 <script>
+import tt from "@tomtom-international/web-sdk-maps";
+
 export default {
   name: "Apartment",
   data() {
@@ -211,6 +203,52 @@ export default {
     };
   },
   methods: {
+    createMarker(position, color, popupText, icon, map) {
+      const markerElement = document.createElement("div");
+      markerElement.className = "marker";
+      const markerContentElement = document.createElement("div");
+      markerContentElement.className = "marker-content";
+      markerContentElement.style.backgroundColor = color;
+      markerElement.appendChild(markerContentElement);
+      const iconElement = document.createElement("div");
+      iconElement.className = "marker-icon";
+      iconElement.style.backgroundImage = "url(" + icon + ")";
+      markerContentElement.appendChild(iconElement);
+      const popup = new tt.Popup({ offset: 30 }).setHTML(popupText);
+      // add marker to map
+      new tt.Marker({ element: markerElement, anchor: "bottom" })
+        .setLngLat(position)
+        .setPopup(popup)
+        .addTo(map);
+    },
+    createMap(apartment) {
+      setTimeout(() => {
+        document.getElementById("map").innerHTML = "";
+        tt.setProductInfo("BoolBNB", "1.0");
+        const map = tt.map({
+          key: "MtC8XS7dGHVqDy6SPK1zWiLfRmG28cBF",
+          container: "map",
+          center: [apartment.longitude, apartment.latitude],
+          zoom: 16,
+          dragPan: !isMobileOrTablet(),
+        });
+        map.addControl(new tt.FullscreenControl());
+        map.addControl(new tt.NavigationControl());
+        const markupPos = `<div class="card text-center">
+                <img class="img-fluid" src="/storage/${apartment.cover_image}" alt="">
+                <div class="card-body">
+                <p>${apartment.title}</p>
+                </div>
+                </div>`;
+        this.createMarker(
+          [apartment.longitude, apartment.latitude],
+          "#000",
+          markupPos,
+          "https://cdn1.iconfinder.com/data/icons/office-22/48/flag-512.png",
+          map
+        );
+      }, 100);
+    },
     getAuthUser() {
       this.guestEmail = window.user_email;
       this.guestFullName = window.user_name;
@@ -279,6 +317,7 @@ export default {
           } else {
             this.apartment = response.data;
             this.loading = false;
+            this.createMap(response.data);
           }
         })
         .catch((e) => {
@@ -296,6 +335,14 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../sass/message.scss";
+.map {
+  height: 100%;
+  position: absolute;
+  width: 97%;
+}
+.left_ {
+  left: 10px !important;
+}
 .single_page {
   background: linear-gradient(
     132deg,
@@ -323,8 +370,25 @@ export default {
   }
   .apt-img {
     width: 100%;
+    height: 100%;
+    aspect-ratio: 2/1;
   }
 
+  .bg_label_absolute {
+    position: absolute;
+    z-index: 1;
+    top: -9px;
+    left: 16px;
+    background: linear-gradient(
+      to right,
+      #edc156 0%,
+      #fea759 0%,
+      #fea759 50%,
+      #edc156 100%
+    );
+    padding: 5px 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  }
   .bg_label {
     display: inline;
     background: linear-gradient(
@@ -334,7 +398,6 @@ export default {
       #fea759 50%,
       #edc156 100%
     );
-    color: white;
     padding: 5px 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     margin-left: -10px;
@@ -353,6 +416,11 @@ export default {
     border: 1px solid #ffecba;
     box-shadow: 3px 3px 8px 0px #fea759;
     padding: 0px 20px 0px 20px;
+  }
+
+  .border_shadow {
+    border: 1px solid #ffecba;
+    box-shadow: 3px 3px 8px 0px #fea759;
   }
 
   .list {
@@ -402,31 +470,14 @@ export default {
     }
   }
 
-  @media screen and (max-width: 490px) {
-    .apt_title {
-      text-align: center;
-      padding: 20px;
+  @media screen and (max-width: 991.98px) {
+    .map {
+      height: 97%;
+      position: absolute;
+      width: 95.5%;
     }
-
-    .jumbo_container {
-      margin-bottom: 50px;
-    }
-  }
-
-  @media screen and (max-width: 768px) {
-    .apt_title {
-      text-align: center;
-      padding: 20px;
-    }
-
-    .jumbo_container {
-      margin-bottom: 50px;
-    }
-  }
-
-  @media screen and (max-width: 375px) {
-    .Message_send {
-      left: 137px;
+    .col_map {
+      aspect-ratio: 2/1;
     }
   }
 

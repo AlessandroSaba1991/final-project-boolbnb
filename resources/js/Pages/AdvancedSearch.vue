@@ -235,7 +235,7 @@
           >
             <div v-if="!maps_view">
               <a
-                class="btn btn-warning position-absolute top-0 end-0"
+                class="btn bg_orange position-absolute top-0 end-0"
                 @click="createMap()"
                 >Mappa</a
               >
@@ -287,7 +287,7 @@
                         {{ splitText(apartment.description, 99) }}...
                       </p>
                       <router-link
-                        class="btn btn_orange text-uppercase text-white"
+                        class="btn bg_orange text-uppercase"
                         :to="{
                           name: 'apartment',
                           params: {
@@ -569,7 +569,7 @@ export default {
                 <p>${apartment.title}</p>
                 </div>
                 <div class="mb-4">
-                <a class="btn btn_orange text-white" href="/apartment/${apartment.id}">Vedi annuncio</a>
+                <a class="btn bg_orange" href="/apartment/${apartment.id}">Vedi annuncio</a>
                 </div>
                 </div>`;
             this.createMarker(
@@ -653,12 +653,18 @@ export default {
   .left_bar,
   .destination {
     padding: 15px;
-    color: white;
     text-transform: uppercase;
     font-weight: bold;
     border-radius: 10px;
     border: solid 2px rgb(255, 177, 22);
-    background: linear-gradient(to top left, #ffa500 0%, rgb(255, 140, 0) 100%);
+     background: linear-gradient(
+            to right,
+            #edc156 0%,
+            #fea759 0%,
+            #fea759 50%,
+            #edc156 100%
+        )
+        no-repeat scroll right bottom/210% 100% #fea759;;
   }
 
   .img_resize {
@@ -715,7 +721,14 @@ main {
   z-index: 3;
   color: #fff;
   border: solid 2px rgb(255, 177, 22);
-  background: linear-gradient(to top left, orange 0%, rgb(255, 140, 0) 100%);
+   background: linear-gradient(
+        to right,
+        #edc156 0%,
+        #fea759 0%,
+        #fea759 50%,
+        #edc156 100%
+      )
+      no-repeat scroll right bottom/210% 100% #fea759;
 }
 .page_link {
   padding: 0.375rem 0.75rem;

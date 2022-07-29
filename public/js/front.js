@@ -5294,7 +5294,7 @@ __webpack_require__.r(__webpack_exports__);
 
         _this4.apartments.forEach(function (apartment) {
           if (apartment.sponsorizations.length > 0) {
-            var markup = "<div class=\"card text-center\">\n                <img class=\"img-fluid\" src=\"/storage/".concat(apartment.cover_image, "\" alt=\"\">\n                <div class=\"card-body\">\n                <p>").concat(apartment.title, "</p>\n                </div>\n                <div class=\"mb-4\">\n                <a class=\"btn btn_orange text-white\" href=\"/apartment/").concat(apartment.id, "\">Vedi annuncio</a>\n                </div>\n                </div>");
+            var markup = "<div class=\"card text-center\">\n                <img class=\"img-fluid\" src=\"/storage/".concat(apartment.cover_image, "\" alt=\"\">\n                <div class=\"card-body\">\n                <p>").concat(apartment.title, "</p>\n                </div>\n                <div class=\"mb-4\">\n                <a class=\"btn bg_orange\" href=\"/apartment/").concat(apartment.id, "\">Vedi annuncio</a>\n                </div>\n                </div>");
 
             _this4.createMarker([apartment.longitude, apartment.latitude], "#008000", markup, "https://cdn.icon-icons.com/icons2/936/PNG/512/home_icon-icons.com_73532.png", map);
           } else {
@@ -5333,6 +5333,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _tomtom_international_web_sdk_maps__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @tomtom-international/web-sdk-maps */ "./node_modules/@tomtom-international/web-sdk-maps/dist/maps.min.js");
+/* harmony import */ var _tomtom_international_web_sdk_maps__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_tomtom_international_web_sdk_maps__WEBPACK_IMPORTED_MODULE_0__);
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Apartment",
   data: function data() {
@@ -5347,12 +5350,52 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    createMarker: function createMarker(position, color, popupText, icon, map) {
+      var markerElement = document.createElement("div");
+      markerElement.className = "marker";
+      var markerContentElement = document.createElement("div");
+      markerContentElement.className = "marker-content";
+      markerContentElement.style.backgroundColor = color;
+      markerElement.appendChild(markerContentElement);
+      var iconElement = document.createElement("div");
+      iconElement.className = "marker-icon";
+      iconElement.style.backgroundImage = "url(" + icon + ")";
+      markerContentElement.appendChild(iconElement);
+      var popup = new _tomtom_international_web_sdk_maps__WEBPACK_IMPORTED_MODULE_0___default.a.Popup({
+        offset: 30
+      }).setHTML(popupText); // add marker to map
+
+      new _tomtom_international_web_sdk_maps__WEBPACK_IMPORTED_MODULE_0___default.a.Marker({
+        element: markerElement,
+        anchor: "bottom"
+      }).setLngLat(position).setPopup(popup).addTo(map);
+    },
+    createMap: function createMap(apartment) {
+      var _this = this;
+
+      setTimeout(function () {
+        document.getElementById("map").innerHTML = "";
+        _tomtom_international_web_sdk_maps__WEBPACK_IMPORTED_MODULE_0___default.a.setProductInfo("BoolBNB", "1.0");
+        var map = _tomtom_international_web_sdk_maps__WEBPACK_IMPORTED_MODULE_0___default.a.map({
+          key: "MtC8XS7dGHVqDy6SPK1zWiLfRmG28cBF",
+          container: "map",
+          center: [apartment.longitude, apartment.latitude],
+          zoom: 16,
+          dragPan: !isMobileOrTablet()
+        });
+        map.addControl(new _tomtom_international_web_sdk_maps__WEBPACK_IMPORTED_MODULE_0___default.a.FullscreenControl());
+        map.addControl(new _tomtom_international_web_sdk_maps__WEBPACK_IMPORTED_MODULE_0___default.a.NavigationControl());
+        var markupPos = "<div class=\"card text-center\">\n                <img class=\"img-fluid\" src=\"/storage/".concat(apartment.cover_image, "\" alt=\"\">\n                <div class=\"card-body\">\n                <p>").concat(apartment.title, "</p>\n                </div>\n                </div>");
+
+        _this.createMarker([apartment.longitude, apartment.latitude], "#000", markupPos, "https://cdn1.iconfinder.com/data/icons/office-22/48/flag-512.png", map);
+      }, 100);
+    },
     getAuthUser: function getAuthUser() {
       this.guestEmail = window.user_email;
       this.guestFullName = window.user_name;
     },
     saveMessage: function saveMessage() {
-      var _this = this;
+      var _this2 = this;
 
       axios.get("/api/apartment/message", {
         params: {
@@ -5364,15 +5407,15 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         //console.log(response);
         if (response.data.status_code === 404) {
-          _this.$router.push({
+          _this2.$router.push({
             name: "not-found"
           });
         } else {
           console.log(response);
-          _this.guestMessage = "";
-          _this.messageSend = true;
+          _this2.guestMessage = "";
+          _this2.messageSend = true;
           setTimeout(function () {
-            _this.messageSend = false;
+            _this2.messageSend = false;
           }, 2000);
         }
       })["catch"](function (e) {
@@ -5390,19 +5433,19 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     showYourIP: function showYourIP() {
-      var _this2 = this;
+      var _this3 = this;
 
       fetch("https://api.ipify.org?format=json").then(function (x) {
         return x.json();
       }).then(function (_ref) {
         var ip = _ref.ip;
-        _this2.yourIP = ip;
+        _this3.yourIP = ip;
 
-        _this2.postView();
+        _this3.postView();
       });
     },
     getApartment: function getApartment() {
-      var _this3 = this;
+      var _this4 = this;
 
       axios.get("/api/apartment/" + this.$route.params.id, {
         params: {
@@ -5413,14 +5456,16 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         //console.log(response);
         if (response.data.status_code === 404) {
-          _this3.loading = false;
+          _this4.loading = false;
 
-          _this3.$router.push({
+          _this4.$router.push({
             name: "not-found"
           });
         } else {
-          _this3.apartment = response.data;
-          _this3.loading = false;
+          _this4.apartment = response.data;
+          _this4.loading = false;
+
+          _this4.createMap(response.data);
         }
       })["catch"](function (e) {
         console.error(e);
@@ -5478,14 +5523,19 @@ __webpack_require__.r(__webpack_exports__);
       searchLatitude: "",
       searchLongitude: "",
       searchAddress: "",
-      apartments: ""
+      apartments: "",
+      response_apartments: null
     };
   },
   methods: {
-    getSponsoredApartments: function getSponsoredApartments() {
+    getSponsoredApartments: function getSponsoredApartments(selectPage) {
       var _this = this;
 
-      axios.get("/api/apartments/sponsored").then(function (response) {
+      axios.get("/api/apartments/sponsored", {
+        params: {
+          page: selectPage
+        }
+      }).then(function (response) {
         //console.log(response);
         if (response.data.status_code === 404) {
           _this.loading = false;
@@ -5494,7 +5544,8 @@ __webpack_require__.r(__webpack_exports__);
             name: "not-found"
           });
         } else {
-          _this.apartments = response.data;
+          _this.apartments = response.data.data;
+          _this.response_apartments = response.data;
           _this.loading = false;
         }
       })["catch"](function (e) {
@@ -6016,7 +6067,7 @@ var render = function render() {
       "min-height": "430px"
     }
   }, [!_vm.maps_view ? _c("div", [_c("a", {
-    staticClass: "btn btn-warning position-absolute top-0 end-0",
+    staticClass: "btn bg_orange position-absolute top-0 end-0",
     on: {
       click: function click($event) {
         return _vm.createMap();
@@ -6047,7 +6098,7 @@ var render = function render() {
     }, [_vm._v("\n                      " + _vm._s(apartment.title) + "\n                    ")]), _vm._v(" "), apartment.description != null ? _c("p", {
       staticClass: "card-text"
     }, [_vm._v("\n                      " + _vm._s(_vm.splitText(apartment.description, 99)) + "...\n                    ")]) : _vm._e(), _vm._v(" "), _c("router-link", {
-      staticClass: "btn btn_orange text-uppercase text-white",
+      staticClass: "btn bg_orange text-uppercase",
       attrs: {
         to: {
           name: "apartment",
@@ -6211,21 +6262,29 @@ var render = function render() {
   }), _vm._v(" "), _c("div", {
     staticClass: "apt_title d-flex justify-content-center align-items-center text-white"
   }, [_c("h1", {
-    staticClass: "font_satisfy"
+    staticClass: "font_satisfy text-center"
   }, [_vm._v(_vm._s(_vm.apartment.title))])])]), _vm._v(" "), !_vm.loading ? _c("div", {
-    staticClass: "h-100"
+    staticClass: "h-100 pt-5"
   }, [_c("div", {
-    staticClass: "container"
+    staticClass: "container-fluid mt-lg-5"
   }, [_c("div", {
-    staticClass: "apartment_image mb-5"
-  }, [_c("img", {
+    staticClass: "row gx-3"
+  }, [_c("div", {
+    staticClass: "col-12 col-lg-8 position-relative mb-5"
+  }, [_c("div", {
+    staticClass: "apartment_image"
+  }, [_c("h2", {
+    staticClass: "bg_label_absolute"
+  }, [_vm._v("Foto")]), _vm._v(" "), _c("img", {
     staticClass: "apt-img",
     attrs: {
       src: "/storage/" + _vm.apartment.cover_image,
       alt: ""
     }
-  })]), _vm._v(" "), _c("div", {
-    staticClass: "first_info"
+  })])]), _vm._v(" "), _vm._m(0)])]), _vm._v(" "), _c("div", {
+    staticClass: "container"
+  }, [_c("div", {
+    staticClass: "first_info mb-5"
   }, [_c("div", {
     staticClass: "section_title"
   }, [_c("h2", {
@@ -6234,9 +6293,9 @@ var render = function render() {
     staticClass: "apartment_address mb-5"
   }, [_c("h5", [_vm._v(_vm._s(_vm.apartment.address))])])]), _vm._v(" "), _c("div", {
     staticClass: "apartment_description mb-5"
-  }, [_vm._m(0), _vm._v(" "), _c("p", [_vm._v(_vm._s(_vm.apartment.description))])]), _vm._v(" "), _c("div", {
+  }, [_vm._m(1), _vm._v(" "), _c("p", [_vm._v(_vm._s(_vm.apartment.description))])]), _vm._v(" "), _c("div", {
     staticClass: "apartment_details mb-5"
-  }, [_vm._m(1), _vm._v(" "), _c("div", {
+  }, [_vm._m(2), _vm._v(" "), _c("div", {
     staticClass: "details-list d-flex justify-content-around align-items-center mb-5"
   }, [_c("div", {
     staticClass: "detail-element"
@@ -6275,49 +6334,50 @@ var render = function render() {
     staticClass: "fw-bold"
   }, [_vm._v(_vm._s(_vm.apartment.square_meters))])])])]), _vm._v(" "), _vm.apartment.services.length > 0 ? _c("div", {
     staticClass: "apartment_services mb-5"
-  }, [_vm._m(2), _vm._v(" "), _c("ul", {
+  }, [_vm._m(3), _vm._v(" "), _c("ul", {
     staticClass: "list"
   }, _vm._l(_vm.apartment.services, function (service) {
     return _c("li", {
       key: service.id,
       staticClass: "services-elements"
     }, [_vm._v("\n            " + _vm._s(service.name) + "\n          ")]);
-  }), 0)]) : _vm._e(), _vm._v(" "), _vm._m(3), _vm._v(" "), _c("div", {
-    attrs: {
-      id: "contact"
-    }
+  }), 0)]) : _vm._e(), _vm._v(" "), _c("div", {
+    staticClass: "d-flex justify-content-center pb-5 mt-5 position-relative"
   }, [_c("div", {
-    staticClass: "message-form message-style p-4 text-white mb-5"
+    staticClass: "form_ py-5"
   }, [_c("h2", {
-    staticClass: "text-white text-uppercase fw-bold"
-  }, [_vm._v("\n            Invia un messaggio all' Host\n          ")]), _vm._v(" "), _vm._m(4), _vm._v(" "), _c("input", {
+    staticClass: "bg_label_absolute left_"
+  }, [_vm._v("Contatta il proprietario")]), _vm._v(" "), _c("form", {
     attrs: {
-      id: "checkcontact",
-      type: "checkbox"
+      method: "post"
+    },
+    on: {
+      submit: function submit($event) {
+        $event.preventDefault();
+        return _vm.saveMessage();
+      }
     }
-  }), _vm._v(" "), _c("div", {
-    staticClass: "contactform mb-3"
-  }, [_c("div", {
-    staticClass: "input_wrapper"
   }, [_c("label", {
-    staticClass: "form-label",
+    staticClass: "mt-3",
     attrs: {
       "for": "name"
     }
-  }, [_vm._v("Nome:")]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Nome*:")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
       value: _vm.guestFullName,
       expression: "guestFullName"
     }],
-    staticClass: "form-control",
     attrs: {
+      placeholder: "scrivi il tuo nome qui..",
       type: "text",
       name: "name",
       id: "name",
+      min: "3",
+      max: "25",
       "aria-describedby": "namehelpId",
-      placeholder: "Mario Rossi"
+      required: ""
     },
     domProps: {
       value: _vm.guestFullName
@@ -6328,27 +6388,25 @@ var render = function render() {
         _vm.guestFullName = $event.target.value;
       }
     }
-  })]), _vm._v(" "), _c("div", {
-    staticClass: "input_wrapper mb-3"
-  }, [_c("label", {
-    staticClass: "form-label",
+  }), _vm._v(" "), _c("label", {
+    staticClass: "mt-3",
     attrs: {
       "for": "email"
     }
-  }, [_vm._v("Email:")]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Email*:")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
       value: _vm.guestEmail,
       expression: "guestEmail"
     }],
-    staticClass: "form-control",
     attrs: {
+      placeholder: "scrivi qui la tua mail..",
       type: "email",
       name: "email",
       id: "email",
-      "aria-describedby": "emailHelpId",
-      placeholder: "mariorossi@example.com"
+      required: "",
+      "aria-describedby": "emailHelpId"
     },
     domProps: {
       value: _vm.guestEmail
@@ -6359,25 +6417,25 @@ var render = function render() {
         _vm.guestEmail = $event.target.value;
       }
     }
-  })]), _vm._v(" "), _c("div", {
-    staticClass: "textarea_wrapper mb-3"
-  }, [_c("label", {
-    staticClass: "form-label",
+  }), _vm._v(" "), _c("label", {
+    staticClass: "mt-3",
     attrs: {
       "for": "message"
     }
-  }, [_vm._v("Messaggio:")]), _vm._v(" "), _c("textarea", {
+  }, [_vm._v("Messaggio*:")]), _vm._v(" "), _c("textarea", {
     directives: [{
       name: "model",
       rawName: "v-model",
       value: _vm.guestMessage,
       expression: "guestMessage"
     }],
-    staticClass: "form-control",
+    staticClass: "mod_txtarea",
     attrs: {
+      required: "",
       name: "message",
       id: "message",
-      rows: "3"
+      cols: "30",
+      rows: "5"
     },
     domProps: {
       value: _vm.guestMessage
@@ -6392,25 +6450,32 @@ var render = function render() {
         _vm.guestMessage = $event.target.value;
       }
     }
-  })])]), _vm._v(" "), _c("div", {
-    staticClass: "submit_wrapper"
-  }, [_c("input", {
+  }), _vm._v(" "), _c("button", {
     attrs: {
       type: "submit",
       value: "INVIA"
-    },
-    on: {
-      click: function click($event) {
-        return _vm.saveMessage();
-      }
     }
-  })]), _vm._v(" "), _c("div", {
-    staticClass: "message_send rounded p-1 mb-2 bg-primary text-white fs-3 d-inline-block",
+  }, [_vm._v("Invia")])]), _vm._v(" "), _c("div", {
+    staticClass: "message_send rounded p-1 mb-2 bg-success bg-gradient text-white text-center fs-3 d-inline-block",
     "class": _vm.messageSend ? "position-absolute" : "d-none"
   }, [_vm._v("\n            Messaggio inviato!\n          ")])])])])]) : _vm._e()]);
 };
 
 var staticRenderFns = [function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("div", {
+    staticClass: "col-12 col-lg-4 position-relative col_map mb-5"
+  }, [_c("h2", {
+    staticClass: "bg_label_absolute"
+  }, [_vm._v("Mappa")]), _vm._v(" "), _c("div", {
+    staticClass: "map border_shadow",
+    attrs: {
+      id: "map"
+    }
+  })]);
+}, function () {
   var _vm = this,
       _c = _vm._self._c;
 
@@ -6437,54 +6502,6 @@ var staticRenderFns = [function () {
   }, [_c("h2", {
     staticClass: "bg_label"
   }, [_vm._v("Servizi")])]);
-}, function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("div", {
-    staticClass: "maps pb-5 mb-5"
-  }, [_c("div", {
-    staticClass: "section_title"
-  }, [_c("h2", {
-    staticClass: "bg_label"
-  }, [_vm._v("Posizione sulla mappa")])]), _vm._v(" "), _c("div", {
-    staticClass: "map-container"
-  }, [_c("div", {
-    staticClass: "mapouter"
-  }, [_c("div", {
-    staticClass: "gmap_canvas"
-  }, [_c("iframe", {
-    attrs: {
-      width: "100%",
-      height: "500",
-      id: "gmap_canvas",
-      src: "https://maps.google.com/maps?q=2880%20Broadway,%20New%20York&t=&z=13&ie=UTF8&iwloc=&output=embed",
-      frameborder: "0",
-      scrolling: "no",
-      marginheight: "0",
-      marginwidth: "0"
-    }
-  }), _vm._v(" "), _c("a", {
-    attrs: {
-      href: "https://fmovies-online.net"
-    }
-  }), _vm._v(" "), _c("br"), _vm._v(" "), _c("a", {
-    attrs: {
-      href: "https://www.embedgooglemap.net"
-    }
-  }, [_vm._v("google maps create map")])])])])]);
-}, function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("label", {
-    staticClass: "contactbutton mb-3",
-    attrs: {
-      "for": "checkcontact"
-    }
-  }, [_c("div", {
-    staticClass: "button_form"
-  })]);
 }];
 render._withStripped = true;
 
@@ -6586,8 +6603,8 @@ var render = function render() {
     staticClass: "subscription text-center"
   }, [_c("h2", {
     staticClass: "sponsored_title text-capitalize bg_orange rounded-3 mb-5 font_satisy fz_48 p-4 d-inline-block"
-  }, [_vm._v("in evidenza")]), _vm._v(" "), _c("div", {
-    staticClass: "container"
+  }, [_vm._v("\n      in evidenza\n    ")]), _vm._v(" "), _vm.apartments.length > 0 ? _c("div", {
+    staticClass: "container position-relative pb-3 mb-4"
   }, [_c("div", {
     staticClass: "row gy-3 mb-5 pb-3 show_results"
   }, _vm._l(_vm.apartments, function (apartment) {
@@ -6598,7 +6615,7 @@ var render = function render() {
       staticClass: "card h-100 rounded-3 shadow bg-body border-warning position-relative"
     }, [apartment.sponsorizations.length > 0 ? _c("div", {
       staticClass: "bagde_"
-    }, [_vm._v("\n                    Consigliato\n                  ")]) : _vm._e(), _vm._v(" "), _c("img", {
+    }, [_vm._v("\n              Consigliato\n            ")]) : _vm._e(), _vm._v(" "), _c("img", {
       staticClass: "card-img-top img_resize",
       attrs: {
         src: "/storage/" + apartment.cover_image,
@@ -6608,9 +6625,9 @@ var render = function render() {
       staticClass: "card-body d-flex flex-column justify-content-between"
     }, [_c("h5", {
       staticClass: "card-title text-capitalize"
-    }, [_vm._v("\n                      " + _vm._s(apartment.title) + "\n                    ")]), _vm._v(" "), apartment.description != null ? _c("p", {
+    }, [_vm._v("\n                " + _vm._s(apartment.title) + "\n              ")]), _vm._v(" "), apartment.description != null ? _c("p", {
       staticClass: "card-text"
-    }, [_vm._v("\n                      " + _vm._s(_vm.splitText(apartment.description, 99)) + "...\n                    ")]) : _vm._e(), _vm._v(" "), _c("router-link", {
+    }, [_vm._v("\n                " + _vm._s(_vm.splitText(apartment.description, 99)) + "...\n              ")]) : _vm._e(), _vm._v(" "), _c("router-link", {
       staticClass: "btn btn_orange text-uppercase",
       attrs: {
         to: {
@@ -6620,8 +6637,66 @@ var render = function render() {
           }
         }
       }
-    }, [_vm._v("\n                      Visualizza dettagli\n                    ")])], 1)])]);
-  }), 0)])]), _vm._v(" "), _c("div", {
+    }, [_vm._v("\n                Visualizza dettagli\n              ")])], 1)])]);
+  }), 0), _vm._v(" "), _c("nav", {
+    staticClass: "mt-3 position-absolute bottom-0 start-50 translate-middle-x",
+    attrs: {
+      "aria-label": "Page navigation"
+    }
+  }, [_c("ul", {
+    staticClass: "pagination justify-content-center mb-0"
+  }, [_vm.response_apartments.current_page > 1 ? _c("li", {
+    staticClass: "page-item"
+  }, [_c("a", {
+    staticClass: "page_link",
+    attrs: {
+      "aria-label": "Previous"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.getSponsoredApartments(_vm.response_apartments.current_page - 1);
+      }
+    }
+  }, [_c("span", {
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }, [_vm._v("«")]), _vm._v(" "), _c("span", {
+    staticClass: "visually-hidden"
+  }, [_vm._v("Previous")])])]) : _vm._e(), _vm._v(" "), _vm._l(_vm.response_apartments.last_page, function (page) {
+    return _c("li", {
+      key: page,
+      "class": {
+        "page-item": true,
+        active: _vm.response_apartments.current_page == page
+      }
+    }, [_c("a", {
+      staticClass: "page_link",
+      on: {
+        click: function click($event) {
+          return _vm.getSponsoredApartments(page);
+        }
+      }
+    }, [_vm._v(_vm._s(page))])]);
+  }), _vm._v(" "), _vm.response_apartments.current_page < _vm.response_apartments.last_page ? _c("li", {
+    staticClass: "page-item"
+  }, [_c("a", {
+    staticClass: "page_link",
+    attrs: {
+      "aria-label": "Next"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.getSponsoredApartments(_vm.response_apartments.current_page + 1);
+      }
+    }
+  }, [_c("span", {
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }, [_vm._v("»")]), _vm._v(" "), _c("span", {
+    staticClass: "visually-hidden"
+  }, [_vm._v("Next")])])]) : _vm._e()], 2)])]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "row g-0 w-100"
   }, [_c("div", {
     staticClass: "col-12 col-lg-6 col-md-12 col-sm-12"
@@ -6711,7 +6786,7 @@ var staticRenderFns = [function () {
 
   return _c("p", {
     staticClass: "text-capitalize text-center p-3"
-  }, [_vm._v("\n            Il nostro unico obiettivo è offrire la totale sicurezza nei confronti dei clienti "), _c("br"), _vm._v(" e fornire la miglior esperienza in base alle proprie esigenze. "), _c("br"), _vm._v(" There’s no place like us.\n          ")]);
+  }, [_vm._v("\n          Il nostro unico obiettivo è offrire la totale sicurezza nei\n          confronti dei clienti "), _c("br"), _vm._v("\n          e fornire la miglior esperienza in base alle proprie esigenze.\n          "), _c("br"), _vm._v("\n          There’s no place like us.\n        ")]);
 }, function () {
   var _vm = this,
       _c = _vm._self._c;
@@ -6720,7 +6795,7 @@ var staticRenderFns = [function () {
     staticClass: "icon_text"
   }, [_c("p", {
     staticClass: "text-center text-dark"
-  }, [_vm._v("Over 3700 "), _c("br"), _vm._v(" Structures")])]);
+  }, [_vm._v("\n                Over 3700 "), _c("br"), _vm._v("\n                Structures\n              ")])]);
 }, function () {
   var _vm = this,
       _c = _vm._self._c;
@@ -6729,7 +6804,7 @@ var staticRenderFns = [function () {
     staticClass: "icon_text"
   }, [_c("p", {
     staticClass: "text-center text-dark"
-  }, [_vm._v("24/7 "), _c("br"), _vm._v(" Support")])]);
+  }, [_vm._v("\n                24/7 "), _c("br"), _vm._v("\n                Support\n              ")])]);
 }, function () {
   var _vm = this,
       _c = _vm._self._c;
@@ -6738,7 +6813,7 @@ var staticRenderFns = [function () {
     staticClass: "icon_text"
   }, [_c("p", {
     staticClass: "text-center text-dark"
-  }, [_vm._v("Top 10 Best "), _c("br"), _vm._v(" Rent Sites")])]);
+  }, [_vm._v("\n                Top 10 Best "), _c("br"), _vm._v("\n                Rent Sites\n              ")])]);
 }];
 render._withStripped = true;
 
@@ -11977,7 +12052,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".fit_content[data-v-fa3ded5a] {\n  width: -webkit-fit-content;\n  width: -moz-fit-content;\n  width: fit-content;\n  margin: 0 auto;\n}\n.close_map[data-v-fa3ded5a] {\n  z-index: 1;\n}\n.map[data-v-fa3ded5a] {\n  height: 100%;\n  position: absolute;\n  width: 99%;\n}\n.page_title[data-v-fa3ded5a] {\n  height: 310px;\n}\n.jumbo_[data-v-fa3ded5a] {\n  background-image: url(\"https://r4.wallpaperflare.com/wallpaper/913/856/991/sea-luxury-homes-beach-swimming-pool-wallpaper-cd36a8ddba116c06982b224d74416ed6.jpg\");\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: cover;\n  filter: brightness(0.5);\n  height: 100%;\n}\n.page_body .destination[data-v-fa3ded5a] {\n  margin-bottom: 30px;\n}\n.page_body .left_bar[data-v-fa3ded5a] {\n  display: none;\n}\n.page_body .left_bar[data-v-fa3ded5a],\n.page_body .destination[data-v-fa3ded5a] {\n  padding: 15px;\n  color: white;\n  text-transform: uppercase;\n  font-weight: bold;\n  border-radius: 10px;\n  border: solid 2px rgb(255, 177, 22);\n  background: linear-gradient(to top left, #ffa500 0%, rgb(255, 140, 0) 100%);\n}\n.page_body .img_resize[data-v-fa3ded5a] {\n  aspect-ratio: 2/1;\n}\n.page_body .accordion-item:last-of-type .accordion-button.collapsed[data-v-fa3ded5a] {\n  border-bottom-right-radius: 10px;\n  border-bottom-left-radius: 10px;\n}\n.page_body .accordion-button[data-v-fa3ded5a]:focus {\n  border-color: transparent;\n  box-shadow: 0 0 0 0 rgba(13, 110, 253, 0.25);\n}\n.page_body .accordion-button[data-v-fa3ded5a]:not(.collapsed)::after {\n  background-image: url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='white'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e\");\n}\n.page_body .accordion-button[data-v-fa3ded5a]::after {\n  background-image: url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='white'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e\");\n}\n.page_body .acc_btn[data-v-fa3ded5a] {\n  border-top-right-radius: 10px;\n  border-top-left-radius: 10px;\n  color: white;\n  background: linear-gradient(to top left, orange 0%, rgb(255, 140, 0) 100%);\n  text-transform: uppercase;\n}\n.page_body .acc_body[data-v-fa3ded5a] {\n  background: linear-gradient(to top left, orange 0%, rgb(255, 140, 0) 100%);\n  border-bottom-left-radius: 10px;\n  border-bottom-right-radius: 10px;\n}\nmain[data-v-fa3ded5a] {\n  min-height: 816px;\n}\nmain aside[data-v-fa3ded5a] {\n  height: 100%;\n}\nmain .article[data-v-fa3ded5a] {\n  height: 100%;\n}\n.page-item:last-child .page_link[data-v-fa3ded5a] {\n  border-top-right-radius: 0.25rem;\n  border-bottom-right-radius: 0.25rem;\n}\n.page-item:first-child .page_link[data-v-fa3ded5a] {\n  border-top-left-radius: 0.25rem;\n  border-bottom-left-radius: 0.25rem;\n}\n.page-item.active .page_link[data-v-fa3ded5a] {\n  z-index: 3;\n  color: #fff;\n  border: solid 2px rgb(255, 177, 22);\n  background: linear-gradient(to top left, orange 0%, rgb(255, 140, 0) 100%);\n}\n.page_link[data-v-fa3ded5a] {\n  padding: 0.375rem 0.75rem;\n  cursor: pointer;\n}\n.page_link[data-v-fa3ded5a] {\n  position: relative;\n  display: block;\n  color: orange;\n  text-decoration: none;\n  background-color: #fff;\n  border: 1px solid #dee2e6;\n  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;\n}\n.font_satify[data-v-fa3ded5a] {\n  font-family: \"Satisfy\", cursive;\n}\n.bagde_[data-v-fa3ded5a] {\n  position: absolute;\n  top: 2%;\n  left: -2%;\n  background-color: green;\n  padding: 0.5rem;\n  color: white;\n  border-radius: 10px;\n}\n@media (min-width: 768px) {\n.page_title[data-v-fa3ded5a] {\n    height: 450px;\n}\n.accordion[data-v-fa3ded5a] {\n    display: none;\n}\n.page_body .left_bar[data-v-fa3ded5a] {\n    display: block;\n}\n}\n@media (min-width: 1200px) {\n.page_title[data-v-fa3ded5a] {\n    height: 600px;\n}\n}", ""]);
+exports.push([module.i, ".fit_content[data-v-fa3ded5a] {\n  width: -webkit-fit-content;\n  width: -moz-fit-content;\n  width: fit-content;\n  margin: 0 auto;\n}\n.close_map[data-v-fa3ded5a] {\n  z-index: 1;\n}\n.map[data-v-fa3ded5a] {\n  height: 100%;\n  position: absolute;\n  width: 99%;\n}\n.page_title[data-v-fa3ded5a] {\n  height: 310px;\n}\n.jumbo_[data-v-fa3ded5a] {\n  background-image: url(\"https://r4.wallpaperflare.com/wallpaper/913/856/991/sea-luxury-homes-beach-swimming-pool-wallpaper-cd36a8ddba116c06982b224d74416ed6.jpg\");\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: cover;\n  filter: brightness(0.5);\n  height: 100%;\n}\n.page_body .destination[data-v-fa3ded5a] {\n  margin-bottom: 30px;\n}\n.page_body .left_bar[data-v-fa3ded5a] {\n  display: none;\n}\n.page_body .left_bar[data-v-fa3ded5a],\n.page_body .destination[data-v-fa3ded5a] {\n  padding: 15px;\n  text-transform: uppercase;\n  font-weight: bold;\n  border-radius: 10px;\n  border: solid 2px rgb(255, 177, 22);\n  background: linear-gradient(to right, #edc156 0%, #fea759 0%, #fea759 50%, #edc156 100%) no-repeat scroll right bottom/210% 100% #fea759;\n}\n.page_body .img_resize[data-v-fa3ded5a] {\n  aspect-ratio: 2/1;\n}\n.page_body .accordion-item:last-of-type .accordion-button.collapsed[data-v-fa3ded5a] {\n  border-bottom-right-radius: 10px;\n  border-bottom-left-radius: 10px;\n}\n.page_body .accordion-button[data-v-fa3ded5a]:focus {\n  border-color: transparent;\n  box-shadow: 0 0 0 0 rgba(13, 110, 253, 0.25);\n}\n.page_body .accordion-button[data-v-fa3ded5a]:not(.collapsed)::after {\n  background-image: url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='white'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e\");\n}\n.page_body .accordion-button[data-v-fa3ded5a]::after {\n  background-image: url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='white'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e\");\n}\n.page_body .acc_btn[data-v-fa3ded5a] {\n  border-top-right-radius: 10px;\n  border-top-left-radius: 10px;\n  color: white;\n  background: linear-gradient(to top left, orange 0%, rgb(255, 140, 0) 100%);\n  text-transform: uppercase;\n}\n.page_body .acc_body[data-v-fa3ded5a] {\n  background: linear-gradient(to top left, orange 0%, rgb(255, 140, 0) 100%);\n  border-bottom-left-radius: 10px;\n  border-bottom-right-radius: 10px;\n}\nmain[data-v-fa3ded5a] {\n  min-height: 816px;\n}\nmain aside[data-v-fa3ded5a] {\n  height: 100%;\n}\nmain .article[data-v-fa3ded5a] {\n  height: 100%;\n}\n.page-item:last-child .page_link[data-v-fa3ded5a] {\n  border-top-right-radius: 0.25rem;\n  border-bottom-right-radius: 0.25rem;\n}\n.page-item:first-child .page_link[data-v-fa3ded5a] {\n  border-top-left-radius: 0.25rem;\n  border-bottom-left-radius: 0.25rem;\n}\n.page-item.active .page_link[data-v-fa3ded5a] {\n  z-index: 3;\n  color: #fff;\n  border: solid 2px rgb(255, 177, 22);\n  background: linear-gradient(to right, #edc156 0%, #fea759 0%, #fea759 50%, #edc156 100%) no-repeat scroll right bottom/210% 100% #fea759;\n}\n.page_link[data-v-fa3ded5a] {\n  padding: 0.375rem 0.75rem;\n  cursor: pointer;\n}\n.page_link[data-v-fa3ded5a] {\n  position: relative;\n  display: block;\n  color: orange;\n  text-decoration: none;\n  background-color: #fff;\n  border: 1px solid #dee2e6;\n  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;\n}\n.font_satify[data-v-fa3ded5a] {\n  font-family: \"Satisfy\", cursive;\n}\n.bagde_[data-v-fa3ded5a] {\n  position: absolute;\n  top: 2%;\n  left: -2%;\n  background-color: green;\n  padding: 0.5rem;\n  color: white;\n  border-radius: 10px;\n}\n@media (min-width: 768px) {\n.page_title[data-v-fa3ded5a] {\n    height: 450px;\n}\n.accordion[data-v-fa3ded5a] {\n    display: none;\n}\n.page_body .left_bar[data-v-fa3ded5a] {\n    display: block;\n}\n}\n@media (min-width: 1200px) {\n.page_title[data-v-fa3ded5a] {\n    height: 600px;\n}\n}", ""]);
 
 // exports
 
@@ -11997,7 +12072,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css2?family=Satisfy&display=swap);", ""]);
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n#contact[data-v-2ed98ed9] {\n  width: 500px;\n  margin: 2em auto;\n  background: white;\n  position: relative;\n}\n#contact[data-v-2ed98ed9]::after {\n  content: \"\";\n  display: block;\n  height: 30px;\n  width: 90%;\n  left: 5%;\n  bottom: 0;\n  position: absolute;\n  box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.19);\n  border-radius: 100%;\n  z-index: -1;\n}\n#contact h2[data-v-2ed98ed9] {\n  font-size: 1.75em;\n  padding: 0.6em 0 0.6em 0.4em;\n  color: white;\n  text-shadow: 0 0.06em 0 #424242;\n  position: relative;\n}\n.contactbutton[data-v-2ed98ed9] {\n  background: linear-gradient(to right, #edc156 0%, #fea759 0%, #fea759 50%, #edc156 100%);\n  box-shadow: 1px 1px 0 0 #832032, 2px 2px 0 0 #832032, 3px 3px 0 0 #832032;\n  text-align: center;\n  display: block;\n  width: 100%;\n  height: 50px;\n  margin-top: 20px;\n  margin-bottom: 2px;\n  cursor: pointer;\n}\n.contactbutton[data-v-2ed98ed9]:hover {\n  box-shadow: 1px 1px 0 0 #832032, 0px 0px 0 0 #832032, 0px 0px 0 0 #832032;\n  margin-top: 22px;\n  margin-left: 2px;\n  margin-bottom: 0px;\n}\n.button_form[data-v-2ed98ed9] {\n  margin-top: 11px;\n  font-size: 15px;\n  display: inline-block;\n  border-top: 2em solid transparent;\n  border-left: 2.6em solid #832032;\n  height: 0;\n  width: 0;\n  position: relative;\n}\n.button_form[data-v-2ed98ed9]:before {\n  content: \"\";\n  top: -2.5em;\n  left: -2.95em;\n  display: block;\n  position: absolute;\n  border-top: 1.2em solid #832032;\n  border-left: 1.6em solid transparent;\n  border-right: 1.6em solid transparent;\n  border-bottom: 1em solid transparent;\n  font-size: 0.8em;\n}\n.button_form[data-v-2ed98ed9]::after {\n  display: block;\n  content: \"\";\n  position: absolute;\n  border-top: 2em solid transparent;\n  border-right: 2.6em solid #832032;\n  height: 0;\n  width: 0;\n  left: -2.18em;\n  bottom: 0;\n}\n#checkcontact[data-v-2ed98ed9] {\n  position: absolute;\n  left: -9999px;\n}\n.contactform[data-v-2ed98ed9] {\n  overflow: hidden;\n  max-height: 0px;\n  transition: all linear 1s;\n}\n#checkcontact:checked + .contactform[data-v-2ed98ed9] {\n  max-height: 1000px;\n}\n.input_wrapper[data-v-2ed98ed9] {\n  position: relative;\n}\n.textarea_wrapper textarea[data-v-2ed98ed9] {\n  margin-top: 20px;\n  display: block;\n  width: 100%;\n  background: white;\n  border: 1px solid #dadada;\n  box-shadow: 0 0 1px 0 #e4e4e4;\n  box-sizing: border-box;\n  padding: 1em;\n  transition: all 250ms ease;\n  color: #5e5e5e;\n}\n.textarea_wrapper textarea[data-v-2ed98ed9] {\n  margin-top: 20px;\n  display: block;\n  width: 100%;\n  min-height: 150px;\n  background: white;\n  border: 1px solid #dadada;\n  box-shadow: 0 0 1px 0 #e4e4e4;\n  box-sizing: border-box;\n  padding: 1em;\n  color: #5e5e5e;\n}\n.submit_wrapper[data-v-2ed98ed9] {\n  text-align: center;\n}\n.submit_wrapper input[data-v-2ed98ed9] {\n  text-align: center;\n  display: inline-block;\n  width: 40%;\n  height: 50px;\n  margin-top: 1em;\n  margin-bottom: 6px;\n  cursor: pointer;\n  background: linear-gradient(to right, #edc156 0%, #fea759 0%, #fea759 50%, #edc156 100%);\n  color: white;\n  font-family: Oswald, sans-serif;\n  font-size: 1em;\n  border: none;\n  box-shadow: 1px 1px 0 0 #832032, 2px 2px 0 0 #832032, 3px 3px 0 0 #832032;\n  transition: all 250ms ease;\n}\n.submit_wrapper input[data-v-2ed98ed9]:hover {\n  box-shadow: 1px 1px 0 0 #832032, 0px 0px 0 0 #832032, 0px 0px 0 0 #832032;\n  margin-top: 22px;\n  margin-left: 2px;\n  margin-bottom: 0px;\n}\n@media (max-width: 500px) {\n#contact[data-v-2ed98ed9] {\n    width: 100%;\n}\n.input_wrapper label[data-v-2ed98ed9] {\n    line-height: 3.5em;\n    font-size: 0.8em;\n}\n}\n.single_page[data-v-2ed98ed9] {\n}\n.single_page .jumbo_container[data-v-2ed98ed9] {\n  margin-bottom: 156px;\n}\n.single_page .jumbotron[data-v-2ed98ed9] {\n  height: 500px;\n  background-image: url(" + escape(__webpack_require__(/*! ../../img/1126773.jpg */ "./resources/img/1126773.jpg")) + ");\n  background-position: center;\n  overflow-x: hidden;\n  filter: brightness(50%);\n}\n.single_page .apt_title[data-v-2ed98ed9] {\n  height: 500px;\n  width: 100%;\n  position: absolute;\n  top: 0;\n}\n.single_page .font_satisfy[data-v-2ed98ed9] {\n  font-size: 62px;\n  font-family: \"Satisfy\", cursive;\n}\n.single_page .apt-img[data-v-2ed98ed9] {\n  width: 100%;\n}\n.single_page .bg_label[data-v-2ed98ed9] {\n  display: inline;\n  background: linear-gradient(to right, #edc156 0%, #fea759 0%, #fea759 50%, #edc156 100%);\n  color: white;\n  padding: 5px 10px;\n  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);\n}\n.single_page .section_title[data-v-2ed98ed9],\n.single_page .apartment_description[data-v-2ed98ed9] {\n  padding-bottom: 50px;\n}\n.single_page .apartment_address[data-v-2ed98ed9],\n.single_page .apartment_details[data-v-2ed98ed9],\n.single_page .apartment_services[data-v-2ed98ed9],\n.single_page .apartment_description[data-v-2ed98ed9],\n.single_page .maps[data-v-2ed98ed9] {\n  border-bottom: 1px dotted lightgrey;\n}\n.single_page .list[data-v-2ed98ed9] {\n  -moz-column-count: 4;\n       column-count: 4;\n  -moz-column-gap: 20px;\n       column-gap: 20px;\n  list-style: none;\n}\n.single_page .list li[data-v-2ed98ed9]:before {\n  content: \"\\2713\";\n  color: #faad58;\n  font-weight: bold;\n  display: inline-block;\n  width: 1em;\n  margin-left: -1em;\n}\n.single_page .mapouter[data-v-2ed98ed9] {\n  position: relative;\n  text-align: right;\n  height: 500px;\n  width: 100%;\n}\n.single_page .gmap_canvas[data-v-2ed98ed9] {\n  overflow: hidden;\n  background: none !important;\n  height: 500px;\n  width: 100%;\n}\n.single_page .message-style[data-v-2ed98ed9] {\n  background-color: #faad58;\n  position: relative;\n}\n.single_page .message_send[data-v-2ed98ed9] {\n  position: absolute;\n  bottom: 0;\n  left: 50%;\n  transform: translate(-50%, 0);\n  transition: all 1s;\n}\n@media screen and (max-width: 600px) {\n.single_page .details-list[data-v-2ed98ed9],\n.single_page .list[data-v-2ed98ed9] {\n    flex-direction: column;\n    justify-content: space-between;\n    -moz-column-count: 1;\n         column-count: 1;\n}\n.single_page .services-elements[data-v-2ed98ed9] {\n    font-size: 20px;\n}\n.single_page .detail-element[data-v-2ed98ed9] {\n    margin-bottom: 20px;\n    font-size: 20px;\n}\n.single_page .message-form[data-v-2ed98ed9] {\n    display: flex;\n    flex-direction: column;\n}\n.single_page .message_button[data-v-2ed98ed9] {\n    padding: 16px 32px;\n    font-size: large;\n    align-items: center;\n}\n}\n@media screen and (max-width: 490px) {\n.single_page .apt_title[data-v-2ed98ed9] {\n    text-align: center;\n    padding: 20px;\n}\n.single_page .jumbo_container[data-v-2ed98ed9] {\n    margin-bottom: 50px;\n}\n}\n@media screen and (max-width: 768px) {\n.single_page .apt_title[data-v-2ed98ed9] {\n    text-align: center;\n    padding: 20px;\n}\n.single_page .jumbo_container[data-v-2ed98ed9] {\n    margin-bottom: 50px;\n}\n}", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n.form_[data-v-2ed98ed9] {\n  background: #f6f6f6;\n  background-color: white;\n  border: 1px solid #ffecba;\n  box-shadow: 3px 3px 8px 0px #fea759;\n  padding: 0px 20px 0px 20px;\n  position: relative;\n}\ninput[data-v-2ed98ed9] {\n  width: 100%;\n  padding: 10px;\n  box-sizing: border-box;\n  background: none;\n  outline: none;\n  resize: none;\n  border: 0;\n  transition: all 0.3s;\n  border-bottom: 2px solid #bebed2;\n}\ninput[data-v-2ed98ed9]:focus {\n  border-bottom: 2px solid #78788c;\n}\nbutton[data-v-2ed98ed9] {\n  float: left;\n  padding: 8px 12px;\n  margin: 8px 0 0;\n  color: #212629;\n  cursor: pointer;\n  background: linear-gradient(to right, #edc156 0%, #fea759 0%, #fea759 50%, #edc156 100%);\n  border: 1px solid orange;\n  text-transform: uppercase;\n  font-weight: bold;\n  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;\n}\n.mod_txtarea[data-v-2ed98ed9] {\n  width: 100%;\n  height: 80px;\n  background: #f6f6f6;\n  border: 1px solid lightgray;\n}\n.message_send[data-v-2ed98ed9] {\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n  transition: all 1s;\n}\n.map[data-v-2ed98ed9] {\n  height: 100%;\n  position: absolute;\n  width: 97%;\n}\n.left_[data-v-2ed98ed9] {\n  left: 10px !important;\n}\n.single_page[data-v-2ed98ed9] {\n  background: linear-gradient(132deg, rgb(238, 238, 238) 0%, rgba(214, 214, 214, 0.45) 100%);\n}\n.single_page .jumbotron[data-v-2ed98ed9] {\n  height: 500px;\n  background-image: url(" + escape(__webpack_require__(/*! ../../img/1126773.jpg */ "./resources/img/1126773.jpg")) + ");\n  background-position: center;\n  background-size: cover;\n  filter: brightness(50%);\n}\n.single_page .apt_title[data-v-2ed98ed9] {\n  height: 500px;\n  width: 100%;\n  position: absolute;\n  top: 0;\n}\n.single_page .font_satisfy[data-v-2ed98ed9] {\n  font-size: 62px;\n  font-family: \"Satisfy\", cursive;\n}\n.single_page .apt-img[data-v-2ed98ed9] {\n  width: 100%;\n  height: 100%;\n  aspect-ratio: 2/1;\n}\n.single_page .bg_label_absolute[data-v-2ed98ed9] {\n  position: absolute;\n  z-index: 1;\n  top: -9px;\n  left: 16px;\n  background: linear-gradient(to right, #edc156 0%, #fea759 0%, #fea759 50%, #edc156 100%);\n  padding: 5px 10px;\n  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);\n}\n.single_page .bg_label[data-v-2ed98ed9] {\n  display: inline;\n  background: linear-gradient(to right, #edc156 0%, #fea759 0%, #fea759 50%, #edc156 100%);\n  padding: 5px 10px;\n  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);\n  margin-left: -10px;\n}\n.single_page .section_title[data-v-2ed98ed9],\n.single_page .apartment_description[data-v-2ed98ed9] {\n  padding-bottom: 50px;\n}\n.single_page .first_info[data-v-2ed98ed9],\n.single_page .apartment_details[data-v-2ed98ed9],\n.single_page .apartment_services[data-v-2ed98ed9],\n.single_page .apartment_description[data-v-2ed98ed9] {\n  background-color: white;\n  border: 1px solid #ffecba;\n  box-shadow: 3px 3px 8px 0px #fea759;\n  padding: 0px 20px 0px 20px;\n}\n.single_page .border_shadow[data-v-2ed98ed9] {\n  border: 1px solid #ffecba;\n  box-shadow: 3px 3px 8px 0px #fea759;\n}\n.single_page .list[data-v-2ed98ed9] {\n  -moz-column-count: 4;\n       column-count: 4;\n  -moz-column-gap: 20px;\n       column-gap: 20px;\n  list-style: none;\n}\n.single_page .list li[data-v-2ed98ed9]:before {\n  content: \"\\2713\";\n  color: #faad58;\n  font-weight: bold;\n  display: inline-block;\n  width: 1em;\n  margin-left: -1em;\n}\n.single_page .mapouter[data-v-2ed98ed9] {\n  position: relative;\n  text-align: right;\n  height: 500px;\n  width: 100%;\n}\n.single_page .gmap_canvas[data-v-2ed98ed9] {\n  overflow: hidden;\n  background: none !important;\n  height: 500px;\n  width: 100%;\n}\n@media screen and (max-width: 600px) {\n.single_page .details-list[data-v-2ed98ed9],\n.single_page .list[data-v-2ed98ed9] {\n    flex-direction: column;\n    justify-content: space-between;\n    -moz-column-count: 1;\n         column-count: 1;\n}\n.single_page .services-elements[data-v-2ed98ed9] {\n    font-size: 20px;\n}\n.single_page .detail-element[data-v-2ed98ed9] {\n    margin-bottom: 20px;\n    font-size: 20px;\n}\n}\n@media screen and (max-width: 991.98px) {\n.single_page .map[data-v-2ed98ed9] {\n    height: 97%;\n    position: absolute;\n    width: 95.5%;\n}\n.single_page .col_map[data-v-2ed98ed9] {\n    aspect-ratio: 2/1;\n}\n}", ""]);
 
 // exports
 
@@ -12016,7 +12091,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".sponsored_title[data-v-6a63e488] {\n  margin: -50px 0;\n}\n.img_resize[data-v-6a63e488] {\n  aspect-ratio: 2/1;\n}\n.bagde_[data-v-6a63e488] {\n  position: absolute;\n  top: 2%;\n  left: -2%;\n  background-color: green;\n  padding: 0.5rem;\n  color: white;\n  border-radius: 10px;\n}\n.container-home[data-v-6a63e488] {\n  /* .bg_blue{\n          background-color: aqua;\n          height: 200px;\n          width: 300px;\n      } */\n}\n.container-home .backimg[data-v-6a63e488] {\n  background-image: url(\"https://www.myistria.com/UserDocsImages/app/objekti/795/slika_hd/19082020034916_Villas-near-Rovinj-Villa-Prestige-2.jpg\");\n  height: 500px;\n  background-size: cover;\n  background-position: center;\n  overflow-x: hidden;\n}\n.container-home .title[data-v-6a63e488] {\n  font-size: 32px;\n}\n.container-home .radius[data-v-6a63e488] {\n  border-radius: 50%;\n}\n.container-home .btn_orange[data-v-6a63e488] {\n  background: linear-gradient(to right, #edc156 0%, #fea759 0%, #fea759 50%, #edc156 100%) no-repeat scroll right bottom/210% 100% #fea759;\n}\n.container-home .price[data-v-6a63e488] {\n  text-align: center;\n  text-transform: capitalize;\n}\n.container-home .img1[data-v-6a63e488] {\n  height: 500px;\n  width: 900px;\n}\n.container-home .pt_7[data-v-6a63e488] {\n  padding-top: 9rem;\n}\n.container-home .bg_img2[data-v-6a63e488] {\n  background-image: url(https://wallpaperaccess.com/full/1126760.jpg);\n  width: 100%;\n  height: 500px;\n  background-size: cover;\n  background-repeat: no-repeat;\n}\n.container-home .border-black[data-v-6a63e488] {\n  border: 1px solid black;\n  border-radius: 50%;\n  padding: 10px;\n}\n.container-home .active_img[data-v-6a63e488] {\n  display: none;\n}\n.container-home .fade[data-v-6a63e488] {\n  opacity: 0;\n  transition: opacity 4s;\n}\n.container-home .borderimg[data-v-6a63e488] {\n  border: 1px solid black;\n  border-radius: 50%;\n}\n.container-home .imgfit[data-v-6a63e488] {\n  aspect-ratio: 2;\n  height: 100%;\n  width: 100%;\n}\n.container-home .credit[data-v-6a63e488] {\n  background-color: orange;\n}\n.container-home .w-10[data-v-6a63e488] {\n  width: 10%;\n}\n.container-home .w26rem[data-v-6a63e488] {\n  width: 26rem;\n}\n.container-home .fz_64[data-v-6a63e488] {\n  font-size: 64px;\n}\n.container-home .fz_48[data-v-6a63e488] {\n  font-size: 48px;\n}\n.container-home .why_us_icon[data-v-6a63e488] {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  background-color: rgba(255, 255, 255, 0.2);\n  height: 80px;\n  width: 80px;\n  border-radius: 50%;\n  padding: 25px;\n  transition: 0.8s;\n}\n.container-home .why_us_icon[data-v-6a63e488]:hover {\n  background: #0d6efd;\n  background-image: var(--bs-gradient) !important;\n  color: white;\n}\n.container-home .customer_icon > img[data-v-6a63e488] {\n  filter: invert(100);\n}\n.container-home .icon_text[data-v-6a63e488] {\n  color: white;\n  text-transform: uppercase;\n  margin-top: 16px;\n}\n@media screen and (max-width: 576px) {\n.container-home .margin-3[data-v-6a63e488] {\n    margin: 0 0 0 0;\n}\n.container-home .socials[data-v-6a63e488] {\n    margin-bottom: 20px;\n}\n}", ""]);
+exports.push([module.i, ".page-item:last-child .page_link[data-v-6a63e488] {\n  border-top-right-radius: 0.25rem;\n  border-bottom-right-radius: 0.25rem;\n}\n.page-item:first-child .page_link[data-v-6a63e488] {\n  border-top-left-radius: 0.25rem;\n  border-bottom-left-radius: 0.25rem;\n}\n.page-item.active .page_link[data-v-6a63e488] {\n  z-index: 3;\n  color: #fff;\n  border: solid 2px rgb(255, 177, 22);\n  background: linear-gradient(to right, #edc156 0%, #fea759 0%, #fea759 50%, #edc156 100%) no-repeat scroll right bottom/210% 100% #fea759;\n}\n.page_link[data-v-6a63e488] {\n  padding: 0.375rem 0.75rem;\n  cursor: pointer;\n}\n.page_link[data-v-6a63e488] {\n  position: relative;\n  display: block;\n  color: orange;\n  text-decoration: none;\n  background-color: #fff;\n  border: 1px solid #dee2e6;\n  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;\n}\n.sponsored_title[data-v-6a63e488] {\n  margin: -50px 0;\n}\n.img_resize[data-v-6a63e488] {\n  aspect-ratio: 2/1;\n}\n.bagde_[data-v-6a63e488] {\n  position: absolute;\n  top: 2%;\n  left: -2%;\n  background-color: green;\n  padding: 0.5rem;\n  color: white;\n  border-radius: 10px;\n}\n.container-home[data-v-6a63e488] {\n  /* .bg_blue{\n        background-color: aqua;\n        height: 200px;\n        width: 300px;\n    } */\n}\n.container-home .backimg[data-v-6a63e488] {\n  background-image: url(\"https://www.myistria.com/UserDocsImages/app/objekti/795/slika_hd/19082020034916_Villas-near-Rovinj-Villa-Prestige-2.jpg\");\n  height: 500px;\n  background-size: cover;\n  background-position: center;\n  overflow-x: hidden;\n}\n.container-home .title[data-v-6a63e488] {\n  font-size: 32px;\n}\n.container-home .radius[data-v-6a63e488] {\n  border-radius: 50%;\n}\n.container-home .price[data-v-6a63e488] {\n  text-align: center;\n  text-transform: capitalize;\n}\n.container-home .img1[data-v-6a63e488] {\n  height: 500px;\n  width: 900px;\n}\n.container-home .pt_7[data-v-6a63e488] {\n  padding-top: 9rem;\n}\n.container-home .bg_img2[data-v-6a63e488] {\n  background-image: url(https://wallpaperaccess.com/full/1126760.jpg);\n  width: 100%;\n  height: 500px;\n  background-size: cover;\n  background-repeat: no-repeat;\n}\n.container-home .border-black[data-v-6a63e488] {\n  border: 1px solid black;\n  border-radius: 50%;\n  padding: 10px;\n}\n.container-home .active_img[data-v-6a63e488] {\n  display: none;\n}\n.container-home .fade[data-v-6a63e488] {\n  opacity: 0;\n  transition: opacity 4s;\n}\n.container-home .borderimg[data-v-6a63e488] {\n  border: 1px solid black;\n  border-radius: 50%;\n}\n.container-home .imgfit[data-v-6a63e488] {\n  aspect-ratio: 2;\n  height: 100%;\n  width: 100%;\n}\n.container-home .credit[data-v-6a63e488] {\n  background-color: orange;\n}\n.container-home .w-10[data-v-6a63e488] {\n  width: 10%;\n}\n.container-home .w26rem[data-v-6a63e488] {\n  width: 26rem;\n}\n.container-home .fz_64[data-v-6a63e488] {\n  font-size: 64px;\n}\n.container-home .fz_48[data-v-6a63e488] {\n  font-size: 48px;\n}\n.container-home .why_us_icon[data-v-6a63e488] {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  background-color: rgba(255, 255, 255, 0.2);\n  height: 80px;\n  width: 80px;\n  border-radius: 50%;\n  padding: 25px;\n  transition: 0.8s;\n}\n.container-home .why_us_icon[data-v-6a63e488]:hover {\n  background: #0d6efd;\n  background-image: var(--bs-gradient) !important;\n  color: white;\n}\n.container-home .customer_icon > img[data-v-6a63e488] {\n  filter: invert(100);\n}\n.container-home .icon_text[data-v-6a63e488] {\n  color: white;\n  text-transform: uppercase;\n  margin-top: 16px;\n}\n@media screen and (max-width: 576px) {\n.container-home .margin-3[data-v-6a63e488] {\n    margin: 0 0 0 0;\n}\n.container-home .socials[data-v-6a63e488] {\n    margin-bottom: 20px;\n}\n}", ""]);
 
 // exports
 
@@ -12035,7 +12110,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".fz_64[data-v-5e4b60fe] {\n  font-size: 64px;\n}\n.slider[data-v-5e4b60fe] {\n  position: relative;\n}\n.slider-content[data-v-5e4b60fe] {\n  min-height: 370px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  flex-direction: column;\n  margin: 0 auto;\n  text-align: center;\n}\n.review[data-v-5e4b60fe] {\n  height: 200px;\n  max-width: 630px;\n  color: black;\n  font-weight: bold;\n  text-transform: uppercase;\n}\n.user[data-v-5e4b60fe] {\n  color: orangered;\n  font-size: 16px;\n  text-transform: uppercase;\n}\n.dots[data-v-5e4b60fe] {\n  text-align: center;\n  z-index: 1;\n  position: absolute;\n  bottom: 4%;\n}\n.dot[data-v-5e4b60fe] {\n  width: 8px;\n  height: 8px;\n  background-color: #ebebde;\n  border-radius: 50%;\n  margin: 0 7px;\n  border: none;\n}\n.dot[data-v-5e4b60fe]:hover {\n  cursor: pointer;\n}\n.currentDot[data-v-5e4b60fe] {\n  background: linear-gradient(to top left, #ffa500 0%, rgb(255, 140, 0) 100%);\n}\n.prev[data-v-5e4b60fe],\n.next[data-v-5e4b60fe] {\n  cursor: pointer;\n  position: absolute;\n  top: 45%;\n  background-color: orange;\n  padding: 10px 20px;\n  font-size: 12px;\n  border-top-left-radius: 68px;\n  border-top-right-radius: 68px;\n  text-decoration: none;\n  text-transform: uppercase;\n}\n.next[data-v-5e4b60fe] {\n  right: -16px;\n  transform: rotate(270deg);\n}\n.prev[data-v-5e4b60fe] {\n  left: -17px;\n  transform: rotate(90deg);\n}\na[data-v-5e4b60fe] {\n  text-decoration: none;\n  color: white;\n}", ""]);
+exports.push([module.i, ".fz_64[data-v-5e4b60fe] {\n  font-size: 64px;\n}\n.slider[data-v-5e4b60fe] {\n  position: relative;\n}\n.slider-content[data-v-5e4b60fe] {\n  min-height: 370px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  flex-direction: column;\n  margin: 0 auto;\n  text-align: center;\n}\n.review[data-v-5e4b60fe] {\n  height: 200px;\n  max-width: 630px;\n  color: black;\n  font-weight: bold;\n  text-transform: uppercase;\n}\n.user[data-v-5e4b60fe] {\n  color: orangered;\n  font-size: 16px;\n  text-transform: uppercase;\n}\n.dots[data-v-5e4b60fe] {\n  text-align: center;\n  z-index: 1;\n  position: absolute;\n  bottom: 4%;\n}\n.dot[data-v-5e4b60fe] {\n  width: 8px;\n  height: 8px;\n  background-color: #9d9d90;\n  border-radius: 50%;\n  margin: 0 7px;\n  border: none;\n}\n.dot[data-v-5e4b60fe]:hover {\n  cursor: pointer;\n}\n.currentDot[data-v-5e4b60fe] {\n  background: linear-gradient(to top left, #ffa500 0%, rgb(255, 140, 0) 100%);\n}\n.prev[data-v-5e4b60fe],\n.next[data-v-5e4b60fe] {\n  cursor: pointer;\n  position: absolute;\n  top: 45%;\n  background-color: orange;\n  padding: 10px 20px;\n  font-size: 12px;\n  border-top-left-radius: 68px;\n  border-top-right-radius: 68px;\n  text-decoration: none;\n  text-transform: uppercase;\n}\n.next[data-v-5e4b60fe] {\n  right: -16px;\n  transform: rotate(270deg);\n}\n.prev[data-v-5e4b60fe] {\n  left: -17px;\n  transform: rotate(90deg);\n}\na[data-v-5e4b60fe] {\n  text-decoration: none;\n  color: white;\n}", ""]);
 
 // exports
 
