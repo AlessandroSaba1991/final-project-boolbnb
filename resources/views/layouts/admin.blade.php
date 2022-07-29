@@ -24,7 +24,7 @@
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <img style="height: 50px;" src="{{ asset('img/logo.png') }}" alt="logo">
@@ -36,11 +36,11 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-                        <a class="me-3 btn border-dark text-dark fs-5 text-decoration-none" href="{{route('admin.apartments.index')}}">Dashboard</a>
+                        <a class="me-3 btn border-dark text-dark text-decoration-none" style="font-size: 14px;" href="{{route('admin.apartments.index')}}">Dashboard</a>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
+                    <ul class="navbar-nav ms-auto" style="font-size: 14px;">
                         <!-- Authentication Links -->
                         @guest
                         <li class="nav-item">

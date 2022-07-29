@@ -10212,6 +10212,10 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+#visible {
+  width: auto;
+}
+
 .pop_up_message {
   width: -webkit-fit-content;
   width: -moz-fit-content;
@@ -10220,7 +10224,6 @@ textarea.form-control-lg {
 }
 
 .bg_orange {
-  color: white;
   background: linear-gradient(to top left, #ffa500 0%, rgb(255, 140, 0) 100%);
 }
 
@@ -10289,4 +10292,10 @@ input:focus:valid {
 input:focus:invalid {
   border: 2px solid red;
   outline: none;
+}
+
+@media screen and (min-width: 768px) {
+  #visible {
+    width: 100%;
+  }
 }

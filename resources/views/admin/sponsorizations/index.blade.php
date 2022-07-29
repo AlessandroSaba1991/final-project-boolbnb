@@ -2,7 +2,7 @@
 @section('content')
 <div class="bg_orange py-4 shadow mb-5">
     <div class="container">
-        <h2 class="text-center filter_text mb-0">Sponsorizzazione for {{$apartment->title}}</h2>
+        <h2 class="text-center text-uppercase mb-0">Sponsorizzazione for {{$apartment->title}}</h2>
     </div>
 </div>
 <div class="container">
@@ -11,7 +11,7 @@
         <div class="col">
             <div class="card shadow">
                 <div class="card-header bg_orange">
-                    <h4 class="mb-0 filter_text py-2 px-1">Piano: {{$sponsorization->name}}</h4>
+                    <h4 class="mb-0 py-2 px-1">Piano: {{$sponsorization->name}}</h4>
                 </div>
                 <div class="card-body">
                     <p><strong>Descrizione: </strong>Il tuo annuncio verra' sponsorizzato e messo in evidenza</p>

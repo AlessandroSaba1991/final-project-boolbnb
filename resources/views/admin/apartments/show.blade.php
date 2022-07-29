@@ -1,13 +1,18 @@
 @extends('layouts.admin')
 
 @section('content')
+<section class="bg_orange py-4 shadow">
+    <div class="container">
+        <h2 class="text-uppercase text-center mb-0">Stai visualizzando: {{ $apartment->title }}</h2>
+    </div>
+</section>
 @if (session('message'))
 <div class="alert alert-success my-3 pop_up_message">
     {{ session('message') }}
 </div>
 @endif
 <div class="container">
-    <div class="card apartment my-5">
+    <div class="card apartment mt-5">
         <div class="badge_">
             @if($apartment->visible)
             <div class="visible green">
@@ -48,9 +53,13 @@
         </div>
         <div class="row g-0">
             <div class="col-6">
-                <img class="h-100 w-100" src="{{asset('storage/' . $apartment->cover_image)}}" alt="{{$apartment->title}}">
+                @if($apartment->cover_image)
+                <img src="{{ asset('storage/' . $apartment->cover_image) }}" class="w-100 h-100" alt="...">
+                @else
+                <img src="{{ asset('storage/apartment_images/image-not-found.png') }}" class="w-100 h-100" alt="...">
+                @endif
             </div>
-            <div class="col-6">
+            <div class="col-6 position-relative">
                 <div class="card-body">
                     <h3>{{$apartment->title}}</h3>
                     <p>{{$apartment->description}}</p>
@@ -82,7 +91,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-footer">
+                <div class="card-footer bg_orange position-absolute bottom-0 w-100">
                     <p>
                         <span>Servizi: </span>
                         @if (count($apartment->services) > 0)

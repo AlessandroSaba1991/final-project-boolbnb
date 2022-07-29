@@ -5,7 +5,7 @@
 @section('content')
 <div class="bg_orange py-4 shadow mb-5">
     <div class="container">
-        <h2 class="text-center filter_text mb-0">Pagamento Sponsorizzazione</h2>
+        <h2 class="text-uppercase text-center mb-0">Pagamento Sponsorizzazione</h2>
     </div>
 </div>
 @if (session('error'))
@@ -18,7 +18,7 @@
         <div class="col">
             <div class="card h-100 shadow">
                 <div class="card-header bg_orange">
-                    <h4 class="mb-0 filter_text py-2 px-1">Riepilogo</h4>
+                    <h4 class="mb-0 py-2 px-1">Riepilogo</h4>
                 </div>
                 <div class="card-body">
                     <p><strong>Piano: </strong>{{$sponsorization->name}}</p>
@@ -30,9 +30,9 @@
         </div>
         <div class="col">
             <div class="card bg-transparent border-0">
-                <div class="card-header  bg_orange">
+                <div class="card-header bg_orange">
                     <header>
-                        <h1 class="mb-0 filter_text py-2 px-1">Metodo di Pagamento</h1>
+                        <h1 class="mb-0 py-2 px-1">Metodo di Pagamento</h1>
                     </header>
                 </div>
                 <div class="card-body p-0">
