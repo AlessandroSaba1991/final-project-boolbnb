@@ -60,11 +60,11 @@
                 @endif
             </div>
             <div class="col-6 position-relative">
-                <div class="card-body">
-                    <h3>{{$apartment->title}}</h3>
+                <div class="card-body h-100">
+                    <h3 class="text-center">{{$apartment->title}}</h3>
                     <p>{{$apartment->description}}</p>
                     <div class="row">
-                        <div class="col">
+                        <div class="col mb-5">
                             <p>
                                 <span>Camere: </span>{{$apartment->rooms}}
                             </p>
@@ -77,16 +77,8 @@
                             <p>
                                 <span>Metratura: </span>{{$apartment->square_meters}} m²
                             </p>
-                        </div>
-                        <div class="col">
-                            <p>
+                            <p class="mb-3">
                                 <span>Indirizzo: </span>{{$apartment->address}}
-                            </p>
-                            <p>
-                                <span>Latitudine: </span>{{$apartment->latitude}}
-                            </p>
-                            <p>
-                                <span>Longitudine: </span>{{$apartment->longitude}}
                             </p>
                         </div>
                     </div>

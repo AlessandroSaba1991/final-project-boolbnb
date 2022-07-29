@@ -2,7 +2,7 @@
   <section id="articles">
     <div class="slider py-5">
       <div class="slider-content px-3">
-        <h2 class="text-center m-0 py-3 font_satisy">Dicono Di Noi</h2>
+        <h2 class="text-center m-0 py-3 font_satisy fz_64">Dicono Di Noi</h2>
         <p class="review m-0 pt-4">“ {{ articles[currentIndex].review }} ”</p>
         <p class="user m-0 py-2">{{ articles[currentIndex].user }}</p>
 
@@ -72,7 +72,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.fz_64{
+    font-size: 64px;
+}
 .slider {
     position: relative;
 }
@@ -143,11 +145,7 @@ export default {
 a{
     text-decoration: none;
     color: white;
-    
+
 }
 
-.font_satisy {
-  font-size: 86px;
-  font-family: "Satisfy", cursive;
-}
 </style>

@@ -33,7 +33,7 @@
       </div>
     </div>
     <section class="subscription text-center">
-      
+
       <h2 class="sponsored_title text-capitalize bg_orange rounded-3 mb-5 font_satisy fz_48 p-4 d-inline-block">in evidenza</h2>
 
       <div class="container">
@@ -335,16 +335,6 @@ export default {
   background-repeat: no-repeat;
 }
 
-.bg_orange {
-  background: linear-gradient(
-      to right,
-      #edc156 0%,
-      #fea759 0%,
-      #fea759 50%,
-      #edc156 100%
-    )
-    no-repeat scroll right bottom/210% 100% #fea759;
-}
 
 .border-black {
   border: 1px solid black;
@@ -395,7 +385,7 @@ export default {
   font-size: 48px;
 }
 
- 
+
 // .font_monserrat {
 //   font-family: "Montserrat", sans-serif;
 // }

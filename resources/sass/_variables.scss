@@ -2,19 +2,28 @@
 $body-bg: #f8fafc;
 
 // Typography
-$font-family-sans-serif: 'Nunito', sans-serif;
+$font-family-sans-serif: "Nunito", sans-serif;
 $font-size-base: 0.9rem;
 $line-height-base: 1.6;
 
-
 // Font
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap");
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Satisfy&display=swap");
 .font_satisy {
     font-family: "Satisfy", cursive;
-  }
- 
+}
+
+.bg_orange {
+    background: linear-gradient(
+            to right,
+            #edc156 0%,
+            #fea759 0%,
+            #fea759 50%,
+            #edc156 100%
+        )
+        no-repeat scroll right bottom/210% 100% #fea759;
+}

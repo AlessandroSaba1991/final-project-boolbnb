@@ -6,20 +6,24 @@
     </div>
 </section>
     <div class="container py-5">
-         <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xxl-4 g-3">
+         <div class="row row-cols-1 g-3">
             @forelse($messages as $message)
                 <div class="col">
 
                     <div class="card h-100 shadow  border-dark mb-3">
                         <div class="card-header bg_orange border-dark fs-6">
-                            From: {{$message->fullname}} <br>
+                            Da: {{$message->fullname}} <br>
                             Email: {{$message->email}}
                         </div>
                             <div class="card-body">
-                                <h5>Message:</h5>
+                                <h5>Messaggio:</h5>
                                 <p class="card-text">{{$message->content}}</p>
                             </div>
-                        <div class="card-footer bg_orange border-dark">Received: {{(date('d/m/y H:i', strtotime($message->created_at)))}}</div>
+                        <div class="card-footer bg_orange border-dark">
+                            <span>Ricevuto il: {{(date('d/m/y', strtotime($message->created_at)))}}</span>
+                            <span> alle {{(date('H:i', strtotime($message->created_at)))}}</span>
+
+                        </div>
                     </div>
 
                 </div>

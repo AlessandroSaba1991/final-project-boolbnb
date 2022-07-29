@@ -1,6 +1,7 @@
 <template>
   <div class="page_body">
     <div class="page_title position-relative">
+      <div class="jumbo_"></div>
       <h1
         class="
           text-center text-uppercase
@@ -238,7 +239,9 @@
                 @click="createMap()"
                 >Mappa</a
               >
-              <h2 class="font_satify text-uppercase py-3 text-center">
+              <h2
+                class="font_satify text-uppercase py-3 pt-5 pt-md-0 text-center"
+              >
                 Annunci Appartamenti
               </h2>
               <div class="row gy-3 mb-5 pb-3 show_results">
@@ -372,8 +375,8 @@
               <div id="map" class="map h-100"></div>
             </div>
           </div>
-          <div class="col" v-else>
-            <div class="destination text-center">
+          <div class="col align-self-center" v-else>
+            <div class="destination fit_content text-center">
               <span>La ricerca non ha portato nessun risultato</span>
             </div>
           </div>
@@ -511,7 +514,7 @@ export default {
       }
       this.filterApartment();
     },
-    createMarker(position, color, popupText,icon, map) {
+    createMarker(position, color, popupText, icon, map) {
       const markerElement = document.createElement("div");
       markerElement.className = "marker";
       const markerContentElement = document.createElement("div");
@@ -520,12 +523,11 @@ export default {
       markerElement.appendChild(markerContentElement);
       const iconElement = document.createElement("div");
       iconElement.className = "marker-icon";
-      iconElement.style.backgroundImage =
-       "url(" + icon +")" ;
+      iconElement.style.backgroundImage = "url(" + icon + ")";
       markerContentElement.appendChild(iconElement);
       const popup = new tt.Popup({ offset: 30 }).setHTML(popupText);
       // add marker to map
-      new tt.Marker({ element: markerElement, anchor: "bottom"})
+      new tt.Marker({ element: markerElement, anchor: "bottom" })
         .setLngLat(position)
         .setPopup(popup)
         .addTo(map);
@@ -544,7 +546,7 @@ export default {
         });
         map.addControl(new tt.FullscreenControl());
         map.addControl(new tt.NavigationControl());
-        const markupPos =  `<div class="card text-center">
+        const markupPos = `<div class="card text-center">
                 <div class="card-body">
                 <h5>Sei qui</h5>
                 </div>
@@ -552,14 +554,16 @@ export default {
                 <p class="mb-0"> ${this.longitude} ${this.latitude} </p>
                 </div>
                 </div>`;
-        this.createMarker([this.longitude, this.latitude],
-            "#000",
-            markupPos,
-            "https://cdn1.iconfinder.com/data/icons/office-22/48/flag-512.png",
-            map,)
+        this.createMarker(
+          [this.longitude, this.latitude],
+          "#000",
+          markupPos,
+          "https://cdn1.iconfinder.com/data/icons/office-22/48/flag-512.png",
+          map
+        );
         this.apartments.forEach((apartment) => {
-            if(apartment.sponsorizations.length > 0){
-                const markup = `<div class="card text-center">
+          if (apartment.sponsorizations.length > 0) {
+            const markup = `<div class="card text-center">
                 <img class="img-fluid" src="/storage/${apartment.cover_image}" alt="">
                 <div class="card-body">
                 <p>${apartment.title}</p>
@@ -568,32 +572,31 @@ export default {
                 <a class="btn btn_orange text-white" href="/apartment/${apartment.id}">Vedi annuncio</a>
                 </div>
                 </div>`;
-          this.createMarker(
-            [apartment.longitude, apartment.latitude],
-            "#008000",
-            markup,
-            "https://cdn.icon-icons.com/icons2/936/PNG/512/home_icon-icons.com_73532.png",
-            map,
-          );
-            } else {
-                const markup = `<div class="card text-center">
-                <img class="img-fluid" src="/storage/${apartment.cover_image}" alt="">
-                <div class="card-body">
-                <p>${apartment.title}</p>
-                </div>
-                <div class="mb-4">
-                <a class="btn btn_orange text-white" href="/apartment/${apartment.id}">Vedi annuncio</a>
-                </div>
-                </div>`;
-          this.createMarker(
-            [apartment.longitude, apartment.latitude],
-            "#ffa500",
-            markup,
-            "https://cdn.icon-icons.com/icons2/936/PNG/512/home_icon-icons.com_73532.png",
-            map,
+            this.createMarker(
+              [apartment.longitude, apartment.latitude],
+              "#008000",
+              markup,
+              "https://cdn.icon-icons.com/icons2/936/PNG/512/home_icon-icons.com_73532.png",
+              map
             );
-            }
-
+          } else {
+            const markup = `<div class="card text-center">
+                <img class="img-fluid" src="/storage/${apartment.cover_image}" alt="">
+                <div class="card-body">
+                <p>${apartment.title}</p>
+                </div>
+                <div class="mb-4">
+                <a class="btn btn_orange text-white" href="/apartment/${apartment.id}">Vedi annuncio</a>
+                </div>
+                </div>`;
+            this.createMarker(
+              [apartment.longitude, apartment.latitude],
+              "#ffa500",
+              markup,
+              "https://cdn.icon-icons.com/icons2/936/PNG/512/home_icon-icons.com_73532.png",
+              map
+            );
+          }
         });
       }, 100);
     },
@@ -617,6 +620,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.fit_content{
+    width: fit-content;
+    margin: 0 auto;
+}
 .close_map {
   z-index: 1;
 }
@@ -627,10 +634,14 @@ export default {
 }
 .page_title {
   height: 310px;
-  background-image: url("https://wallpaperaccess.com/full/4213391.jpg");
+}
+.jumbo_ {
+  background-image: url("https://r4.wallpaperflare.com/wallpaper/913/856/991/sea-luxury-homes-beach-swimming-pool-wallpaper-cd36a8ddba116c06982b224d74416ed6.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  filter: brightness(0.5);
+  height: 100%;
 }
 .page_body {
   .destination {
