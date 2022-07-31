@@ -175,7 +175,7 @@ for($i = 0; $i < $interval_week; $i++) {
 
 
 //visualizzazioni per 1 mese -------------- 1
-for($i = 0; $i < $interval_week; $i++) {
+for($i = 0; $i < $interval_one_month; $i++) {
     $views = 0;
     foreach($visualizations as $visualization) {
         //dd($visualization);
@@ -401,7 +401,7 @@ for($i = 0; $i < $interval_one_month; $i++) {
     const selectInput = document.getElementById('stats');
     const selectInputValue = selectInput.value;
 
-    const data_week = {
+            const data_week = {
                 labels: <?php echo json_encode($labels_week) ?>,
                 datasets: [{
                 label: 'Visite all\' Annuncio',
@@ -410,7 +410,7 @@ for($i = 0; $i < $interval_one_month; $i++) {
                 data: <?php echo json_encode($views_week) ?>,
                 }]
             };
-    const config_week = {
+            const config_week = {
                 type: 'line',
                 data: data_week,
                 options: {
@@ -442,7 +442,7 @@ for($i = 0; $i < $interval_one_month; $i++) {
                 data: <?php echo json_encode($views_one_month) ?>,
                 }]
             };
-    const config_month = {
+            const config_month = {
                 type: 'line',
                 data: data_month,
                 options: {
@@ -474,7 +474,7 @@ for($i = 0; $i < $interval_one_month; $i++) {
                 data: <?php echo json_encode($views_six_months) ?>,
                 }]
             };
-    const config_six_months = {
+            const config_six_months = {
                 type: 'line',
                 data: data_six_months,
                 options: {
@@ -506,7 +506,7 @@ for($i = 0; $i < $interval_one_month; $i++) {
                 data: <?php echo json_encode($views_one_year) ?>,
                 }]
             };
-    const config_one_year = {
+            const config_one_year = {
                 type: 'line',
                 data: data_one_year,
                 options: {
@@ -535,8 +535,8 @@ for($i = 0; $i < $interval_one_month; $i++) {
                 config_week,
             );
 
-    selectInput.addEventListener('change', function(event){
-        event.preventDefault()
+    selectInput.addEventListener('change', function(){
+
             if(this.value == 7) {
                 myChart.destroy();
                 myChart = new Chart(
