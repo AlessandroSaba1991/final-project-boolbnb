@@ -140,7 +140,7 @@ return [
             "visible" => true,
         ],
         [
-            "title" => "Villetta a Schiera in Vendita in Via Acquedotto a Ferrara",
+            "title" => "Villetta a Schiera in affitto in Via Acquedotto a Ferrara",
             "rooms" => 10,
             "beds" => 4,
             "bathrooms" => 2,
@@ -153,7 +153,7 @@ return [
             "visible" => true,
         ],
         [
-            "title" => "Villa in Vendita in Via Bologna 913 a Ferrara",
+            "title" => "Villa in affitto in Via Bologna 913 a Ferrara",
             "rooms" => 6,
             "beds" => 3,
             "bathrooms" => 2,
@@ -166,7 +166,7 @@ return [
             "visible" => true,
         ],
         [
-            "title" => "Casa Bifamiliare, Trifamiliare in Vendita in Via Mario Dotti a Ferrara",
+            "title" => "Casa Bifamiliare, Trifamiliare in affitto in Via Mario Dotti a Ferrara",
             "rooms" => 5,
             "beds" => 3,
             "bathrooms" => 2,
@@ -181,7 +181,7 @@ return [
             "visible" => true,
         ],
         [
-            "title" => "Villa in Vendita in zona Borgo Punta a Ferrara",
+            "title" => "Villa in affitto in zona Borgo Punta a Ferrara",
             "rooms" => 10,
             "beds" => 3,
             "bathrooms" => 1,
@@ -190,7 +190,7 @@ return [
             "latitude" => "44.8461044",
             "longitude" => "11.6541479",
             "cover_image" => "apartment_images/39a9c54fad33b734c4973021a3e3da5e.jpeg",
-            "description" => "VIA COPPARO AD.ZE VIA DELLE STATUE - (VILLA INDIPENDENTE - VENDITA- POSSIBILE DIVISIONE - PARCO) Realkasa propone in vendita una villa di design unica nel suo genere in contesto signorile e riservato.
+            "description" => "VIA COPPARO AD.ZE VIA DELLE STATUE - (VILLA INDIPENDENTE - affitto- POSSIBILE DIVISIONE - PARCO) Realkasa propone in affitto una villa di design unica nel suo genere in contesto signorile e riservato.
             POSIZIONE - L'unità immobiliare è in zona strategica, vicino al centro commerciale Le Mura, comoda alla viabilità ma totalmente immersa nel verde.
             PARTE INTERNA - La villa è stata progettata secondo idee architettoniche di design. Si sviluppa su due livelli. L'intero appartamento si sviluppa al piano terra ed è così composto: doppio ingresso, su zona giorno e su disimpegno notte, ampio salone soppalcato con camino ed accesso ad un meraviglioso portico, sala da pranzo, cucina abitabile ed un bagno. Nella zona notte troviamo tre camere matrimoniali e due bagni. Ogni ambiente ha accesso diretto al parco tramite grandi porte finestre. Possibilità di recupero funzionale del sottotetto per creare ulteriori camere.
             Garage collegato con la casa, posti auto esterni.
@@ -201,7 +201,7 @@ return [
             "visible" => true,
         ],
         [
-            "title" => "Casa Indipendente in Vendita in Via dell'uccellino 18 a Ferrara",
+            "title" => "Casa Indipendente in affitto in Via dell'uccellino 18 a Ferrara",
             "rooms" => 4,
             "beds" => 1,
             "bathrooms" => 2,

@@ -175,7 +175,7 @@
           </p>
           <div class="why_icons d-flex justify-content-evenly w-100">
             <div class="icon_and_text text-center">
-              <div class="why_us_icon">
+              <div class="why_us_icon mx-auto">
                 <svg
                   height="45"
                   width="45"
@@ -197,7 +197,7 @@
               </div>
             </div>
             <div class="icon_and_text">
-              <div class="why_us_icon">
+              <div class="why_us_icon mx-auto">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="45"
@@ -220,7 +220,7 @@
               </div>
             </div>
             <div class="icon_and_text text-center">
-              <div class="why_us_icon">
+              <div class="why_us_icon mx-auto">
                 <svg
                   height="45"
                   width="45"
@@ -270,6 +270,7 @@ export default {
           image:
             "https://images.posarellivillas.com/property_posarelli/96071/wide-asra16:10/villa-serapias-posarelli-29-.jpg",
         },
+
       ],
       activeItem: 0,
       searchLatitude: "",

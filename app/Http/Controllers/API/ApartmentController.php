@@ -120,8 +120,8 @@ class ApartmentController extends Controller
             if(count($apartment->sponsorizations) > 0) {
                 foreach($apartment->sponsorizations as $sponsorization) {
                     if(date('Y-m-d H:i:s') < date('Y-m-d H:i:s', strtotime($sponsorization->sponsor->end_sponsorization))) {
-                        if(!in_array($apartment->id, $sponsoredApartments)) {
-                            array_push($sponsoredApartments, $apartment->id);
+                        if(!in_array($sponsorization->sponsor->apartment_id, $sponsoredApartments)) {
+                            array_push($sponsoredApartments, $sponsorization->sponsor->apartment_id);
                         }
                     }
                 }

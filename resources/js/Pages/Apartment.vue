@@ -95,7 +95,7 @@
             </div>
 
             <div class="detail-element">
-              metri quadri:
+              Metri quadri:
               <span class="fw-bold">{{ apartment.square_meters }}</span>
             </div>
           </div>

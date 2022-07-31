@@ -5797,6 +5797,7 @@ var render = function render() {
       id: "radius",
       type: "range",
       min: "1",
+      max: "40",
       name: "radius",
       value: ""
     },
@@ -5945,6 +5946,7 @@ var render = function render() {
       id: "radius",
       type: "range",
       min: "1",
+      max: "40",
       name: "radius",
       value: ""
     },
@@ -6330,7 +6332,7 @@ var render = function render() {
     staticClass: "fw-bold"
   }, [_vm._v(" " + _vm._s(_vm.apartment.rooms))])]), _vm._v(" "), _c("div", {
     staticClass: "detail-element"
-  }, [_vm._v("\n            metri quadri:\n            "), _c("span", {
+  }, [_vm._v("\n            Metri quadri:\n            "), _c("span", {
     staticClass: "fw-bold"
   }, [_vm._v(_vm._s(_vm.apartment.square_meters))])])])]), _vm._v(" "), _vm.apartment.services.length > 0 ? _c("div", {
     staticClass: "apartment_services mb-5"
@@ -6728,7 +6730,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "icon_and_text text-center"
   }, [_c("div", {
-    staticClass: "why_us_icon"
+    staticClass: "why_us_icon mx-auto"
   }, [_c("svg", {
     attrs: {
       height: "45",
@@ -6744,7 +6746,7 @@ var render = function render() {
   })])]), _vm._v(" "), _vm._m(1)]), _vm._v(" "), _c("div", {
     staticClass: "icon_and_text"
   }, [_c("div", {
-    staticClass: "why_us_icon"
+    staticClass: "why_us_icon mx-auto"
   }, [_c("svg", {
     staticClass: "bi bi-telephone-plus-fill",
     attrs: {
@@ -6762,7 +6764,7 @@ var render = function render() {
   })])]), _vm._v(" "), _vm._m(2)]), _vm._v(" "), _c("div", {
     staticClass: "icon_and_text text-center"
   }, [_c("div", {
-    staticClass: "why_us_icon"
+    staticClass: "why_us_icon mx-auto"
   }, [_c("svg", {
     attrs: {
       height: "45",
