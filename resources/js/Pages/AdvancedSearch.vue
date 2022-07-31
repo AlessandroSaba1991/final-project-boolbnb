@@ -620,9 +620,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.fit_content{
-    width: fit-content;
-    margin: 0 auto;
+.fit_content {
+  width: fit-content;
+  margin: 0 auto;
 }
 .close_map {
   z-index: 1;
@@ -657,14 +657,14 @@ export default {
     font-weight: bold;
     border-radius: 10px;
     border: solid 2px rgb(255, 177, 22);
-     background: linear-gradient(
-            to right,
-            #edc156 0%,
-            #fea759 0%,
-            #fea759 50%,
-            #edc156 100%
-        )
-        no-repeat scroll right bottom/210% 100% #fea759;;
+    background: linear-gradient(
+        to right,
+        #edc156 0%,
+        #fea759 0%,
+        #fea759 50%,
+        #edc156 100%
+      )
+      no-repeat scroll right bottom/210% 100% #fea759;
   }
 
   .img_resize {
@@ -687,13 +687,24 @@ export default {
   .acc_btn {
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
-    color: white;
-    background: linear-gradient(to top left, orange 0%, rgb(255, 140, 0) 100%);
+    background: linear-gradient(
+      to right,
+      #edc156 0%,
+      #fea759 0%,
+      #fea759 50%,
+      #edc156 100%
+    );
     text-transform: uppercase;
   }
 
   .acc_body {
-    background: linear-gradient(to top left, orange 0%, rgb(255, 140, 0) 100%);
+    background: linear-gradient(
+      to right,
+      #edc156 0%,
+      #fea759 0%,
+      #fea759 50%,
+      #edc156 100%
+    );
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
   }
@@ -721,14 +732,14 @@ main {
   z-index: 3;
   color: #fff;
   border: solid 2px rgb(255, 177, 22);
-   background: linear-gradient(
-        to right,
-        #edc156 0%,
-        #fea759 0%,
-        #fea759 50%,
-        #edc156 100%
-      )
-      no-repeat scroll right bottom/210% 100% #fea759;
+  background: linear-gradient(
+      to right,
+      #edc156 0%,
+      #fea759 0%,
+      #fea759 50%,
+      #edc156 100%
+    )
+    no-repeat scroll right bottom/210% 100% #fea759;
 }
 .page_link {
   padding: 0.375rem 0.75rem;
