@@ -47,7 +47,7 @@ class ApartmentController extends Controller
         $poi_list = [];
         $apartments = Apartment::with('services')->whereHas("services", function ($query) use ($servicesSelect) {
             $query->whereIn("id", $servicesSelect);
-        }, "=", count($servicesSelect))->where('beds', '>=', $beds)->where('rooms', '>=', $rooms)->get();
+        }, "=", count($servicesSelect))->where('visible', true)->where('beds', '>=', $beds)->where('rooms', '>=', $rooms)->get();
 
         foreach ($apartments as $apartment) {
             $single_poi = [
@@ -114,7 +114,7 @@ class ApartmentController extends Controller
     }
 
     public function sponsoredApartments() {
-        $apartments = Apartment::with('sponsorizations')->get();
+        $apartments = Apartment::with('sponsorizations')->where('visible', true)->get();
         $sponsoredApartments = [];
         foreach($apartments as $apartment) {
             if(count($apartment->sponsorizations) > 0) {
